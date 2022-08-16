@@ -6,6 +6,7 @@ const cors = require("cors");
 
 const candidatRoute = require("./routes/candidat.routes");
 const entrepriseRoute = require("./routes/entreprise.routes");
+const offreRoute = require("./routes/offre.routes");
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -35,6 +36,7 @@ app.get("jwtid", requireAuth, (req, res) => {
 //routes
 app.use("/api/user/candidat", candidatRoute);
 app.use("/api/user/entreprise", entrepriseRoute);
+app.use("/api/offre", offreRoute);
 
 //serveur
 app.listen(process.env.PORT, (req, res) => {
