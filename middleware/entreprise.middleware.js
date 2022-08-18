@@ -1,27 +1,26 @@
 const jwt = require("jsonwebtoken");
-const Candidat = require("../models/Candidat.model");
+const Entreprise = require("../models/Entreprise.model");
 
-module.exports.checkCandidat = (req, res, next) => {
+module.exports.checkEntreprise = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {
       if (err) {
-        res.locals.candidat = null;
+        res.locals.entreprise = null;
         res.cookie("jwt", "", { maxAge: 1 });
-        next();
       } else {
-        let candidat = await Candidat.findById(decodedToken.id);
-        res.locals.candidat = candidat;
+        let entreprise = await Entreprise.findById(decodedToken.id);
+        res.locals.entreprise = entreprise;
         next();
       }
     });
   } else {
-    res.locals.candidat = null;
+    res.locals.entreprise = null;
     next();
   }
 };
 
-module.exports.requireAuth = (req, res, next) => {
+module.exports.requireAuthEntreprise = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {

@@ -16,6 +16,11 @@ const {
   requireAuth,
 } = require("./middleware/candidat.middleware");
 
+const {
+  checkEntreprise,
+  requireAuthEntreprise,
+} = require("./middleware/entreprise.middleware");
+
 const app = express();
 
 //app.use(express.json());
@@ -25,12 +30,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+/**Candidat*/
 //jwt
 //verification de token à chaque action dans le site
 app.get("*", checkCandidat);
 //verification de token à la première authentification
-app.get("jwtid", requireAuth, (req, res) => {
+app.get("/jwtid", requireAuth, (req, res) => {
   res.status(200).send(res.locals.candidat._id);
+});
+
+/**Entreprise*/
+//jwt
+app.get("*", checkEntreprise);
+app.get("/jwtid", requireAuthEntreprise, (req, res) => {
+  res.status(200).send(res.locals.entreprise._id);
 });
 
 //routes
