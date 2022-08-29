@@ -2,6 +2,8 @@ const Candidat = require("../models/Candidat.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const { signUperrors, signInErrors } = require("../utils/error.utils");
+
 const maxAge = 3 * 24 * 60 * 60 * 1000; // token valide pendant 3 jours
 
 const createToken = (id) => {
@@ -10,7 +12,7 @@ const createToken = (id) => {
   });
 };
 
-exports.signup = (req, res, next) => {
+/* exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -28,7 +30,28 @@ exports.signup = (req, res, next) => {
         .then(() => res.status(201).json({ message: "Candidat créé" }))
         .catch((error) => res.status(400).json({ error }));
     })
-    .catch((error) => res.status(500).json({ error }));
+    //.catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(200).send(error));
+}; */
+
+module.exports.signup = async (req, res) => {
+  const { nom, prenom, dateNaissance, localisation, email, password } =
+    req.body;
+
+  try {
+    const candidat = await Candidat.create({
+      nom,
+      prenom,
+      dateNaissance,
+      localisation,
+      email,
+      password,
+    });
+    res.status(201).json({ candidat: candidat._id });
+  } catch (err) {
+    const errors = signUperrors(err);
+    res.status(200).send({ errors });
+  }
 };
 
 module.exports.singIn = async (req, res) => {
@@ -41,7 +64,8 @@ module.exports.singIn = async (req, res) => {
     res.cookie("jwt", token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
     res.status(200).json({ candidat: candidat._id });
   } catch (err) {
-    res.status(200).json(err);
+    const errors = signInErrors(err);
+    res.status(200).json({ errors });
   }
 };
 

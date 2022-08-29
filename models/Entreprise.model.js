@@ -22,6 +22,12 @@ const entrepriseSchema = mongoose.Schema(
 );
 entrepriseSchema.plugin(uniqueValidator);
 
+entrepriseSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
 entrepriseSchema.statics.login = async function (email, password) {
   const entreprise = await this.findOne({ email });
   if (entreprise) {
