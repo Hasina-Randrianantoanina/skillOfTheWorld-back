@@ -21,6 +21,7 @@ module.exports.checkCandidat = (req, res, next) => {
   }
 };
 
+//contrôle de token
 module.exports.requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {

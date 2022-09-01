@@ -17,7 +17,20 @@ module.exports.signInErrors = (err) => {
 
   if (err.message.includes("email")) errors.email = "Email inconnu";
 
-  if (err.message.includes("password")) errors.password = "Le mot de passe ne correspond pas";
+  if (err.message.includes("password"))
+    errors.password = "Le mot de passe ne correspond pas";
+
+  return errors;
+};
+
+module.exports.uploadErrors = (err) => {
+  let errors = { format: "", maxsize: "" };
+
+  if (err.message.includes("Invalid file"))
+    errors.format = "Format incompatible";
+
+  if (err.message.includes("Max size"))
+    errors.maxsize = "Le fichier dépasse 500Ko";
 
   return errors;
 };

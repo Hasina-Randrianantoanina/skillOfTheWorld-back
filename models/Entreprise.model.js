@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 const bcrypt = require("bcrypt");
 
+const { isEmail } = require("validator");
+
 const entrepriseSchema = mongoose.Schema(
   {
     nomEntreprise: { type: String, required: true },
@@ -13,8 +15,20 @@ const entrepriseSchema = mongoose.Schema(
     nombreSalarie: { type: Number, required: true },
     siteInternet: { type: String, required: true },
     logoUrl: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
+    email: {
+      type: String,
+      required: true,
+      validate: [isEmail],
+      lowercase: true,
+      trim: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      max: 1024,
+      minlength: 6,
+    },
   },
   {
     timestamps: true,
