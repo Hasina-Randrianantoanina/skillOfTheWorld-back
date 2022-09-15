@@ -19,12 +19,27 @@ module.exports.uploadImage = async (req, res) => {
     return res.status(201).json({ errors });
   }
 
-  const fileName = req.body.name + ".jpg";
+  const fileName = req.body.sary + ".jpg";
 
   await pipeline(
     req.file.stream,
     fs.createWriteStream(
-      `${__dirname}/../client/public/uploads/profil/${fileName}`
+      /* `${__dirname}/../client/public/uploads/profil/${fileName}` */
+      `${__dirname}/./images/${fileName}`
     )
   );
+
+  /* try {
+    await CandidatModel.findByIdAndUpdate(
+      req.body.candidatId,
+      { $set : {picture: "./uploads/profil/" + fileName}},
+      { new: true, upsert: true, setDefaultsOnInsert: true},
+      (err, docs) => {
+        if (!err) return res.send(docs);
+        else return res.status(500).send({ message: err });
+      }
+    );
+  } catch (err) {
+    return res.status(500).send({ message: err });
+  } */
 };

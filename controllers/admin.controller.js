@@ -1,4 +1,4 @@
-const Candidat = require("../models/Candidat.model");
+const Admin = require("../models/Admin.model");
 const jwt = require("jsonwebtoken");
 
 const { signUperrors, signInErrors } = require("../utils/error.utils");
@@ -12,34 +12,32 @@ const createToken = (id) => {
 };
 
 module.exports.signup = async (req, res) => {
-  const { nom, prenom, dateNaissance, localisation, email, password } =
-    req.body;
+  //console.log("manao inscription admin");
+  const { nom, prenom, email, password } = req.body;
 
   try {
-    const candidat = await Candidat.create({
+    const admin = await Admin.create({
       nom,
       prenom,
-      dateNaissance,
-      localisation,
       email,
       password,
     });
-    res.status(201).json({ candidat: candidat._id });
+    res.status(201).json({ admin: admin._id });
   } catch (err) {
     const errors = signUperrors(err);
     res.status(200).send({ errors });
   }
 };
 
-module.exports.singIn = async (req, res) => {
-  console.log("eto ****");
+module.exports.signIn = async (req, res) => {
+  console.log("admin s'authentifie ****");
   const { email, password } = req.body;
 
   try {
-    const candidat = await Candidat.login(email, password);
-    const token = createToken(candidat._id);
+    const admin = await Admin.login(email, password);
+    const token = createToken(admin._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
-    res.status(200).json({ candidat: candidat._id });
+    res.status(200).json({ admin: admin._id });
   } catch (err) {
     const errors = signInErrors(err);
     res.status(200).json({ errors });

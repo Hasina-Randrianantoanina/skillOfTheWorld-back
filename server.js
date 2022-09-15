@@ -7,6 +7,7 @@ const cors = require("cors");
 const candidatRoute = require("./routes/candidat.routes");
 const entrepriseRoute = require("./routes/entreprise.routes");
 const offreRoute = require("./routes/offre.routes");
+const adminRoute = require("./routes/admin.routes");
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -20,6 +21,11 @@ const {
   checkEntreprise,
   requireAuthEntreprise,
 } = require("./middleware/entreprise.middleware");
+
+const {
+  checkAdmin,
+  requireAuthAdmin,
+} = require("./middleware/admin.middleware");
 
 const app = express();
 
@@ -42,22 +48,30 @@ app.use(cookieParser());
 /**Candidat*/
 //jwt
 //verification de token à chaque action dans le site
-app.get("*", checkCandidat);
+app.get("/checkCandidat", checkCandidat);
 //verification de token à la première authentification
-app.get("/jwtid", requireAuth, (req, res) => {
+app.get("/jwtidCandidat", requireAuth, (req, res) => {
   res.status(200).send(res.locals.candidat._id);
 });
 
 /**Entreprise*/
 //jwt
-app.get("*", checkEntreprise);
-app.get("/jwtid", requireAuthEntreprise, (req, res) => {
+app.get("/checkEntreprise", checkEntreprise);
+app.get("/jwtidEntreprise", requireAuthEntreprise, (req, res) => {
   res.status(200).send(res.locals.entreprise._id);
+});
+
+/**Admin*/
+//jwt
+app.get("/checkAdmin", checkAdmin);
+app.get("/jwtidAdmin", requireAuthAdmin, (req, res) => {
+  res.status(200).send(res.locals.admin._id);
 });
 
 //routes
 app.use("/api/user/candidat", candidatRoute);
 app.use("/api/user/entreprise", entrepriseRoute);
+app.use("/api/user/admin", adminRoute);
 app.use("/api/offre", offreRoute);
 
 //serveur

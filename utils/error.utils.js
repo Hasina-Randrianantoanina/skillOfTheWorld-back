@@ -27,7 +27,7 @@ module.exports.uploadErrors = (err) => {
   let errors = { format: "", maxsize: "" };
 
   if (err.message.includes("Invalid file"))
-    errors.format = "Format incompatible";
+    errors.format = "Format eto incompatible";
 
   if (err.message.includes("Max size"))
     errors.maxsize = "Le fichier dépasse 500Ko";

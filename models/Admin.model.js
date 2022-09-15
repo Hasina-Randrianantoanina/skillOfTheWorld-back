@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
 const bcrypt = require("bcrypt");
 const { isEmail } = require("validator");
 
-const candidatSchema = mongoose.Schema(
+const uniqueValidator = require("mongoose-unique-validator");
+
+const adminSchema = mongoose.Schema(
   {
     nom: {
       type: String,
@@ -19,8 +20,6 @@ const candidatSchema = mongoose.Schema(
       maxLength: 120,
       trim: true,
     },
-    dateNaissance: { type: String, required: true },
-    localisation: { type: String, required: true },
     email: {
       type: String,
       required: true,
@@ -35,41 +34,29 @@ const candidatSchema = mongoose.Schema(
       max: 1024,
       minlength: 6,
     },
-
-    /* image: {
-      data: Buffer,
-      contentType: String,
-    }, */
-
-    image: {
-      type: String,
-    },
   },
   {
     timestamps: true,
   }
 );
-candidatSchema.plugin(uniqueValidator);
+adminSchema.plugin(uniqueValidator);
 
-/**test */
-// play function before save into display: 'block',
-candidatSchema.pre("save", async function (next) {
+adminSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
-/**fin test */
 
-candidatSchema.statics.login = async function (email, password) {
-  const candidat = await this.findOne({ email });
-  if (candidat) {
-    const auth = await bcrypt.compare(password, candidat.password);
+adminSchema.statics.login = async function (email, password) {
+  const admin = await this.findOne({ email });
+  if (admin) {
+    const auth = await bcrypt.compare(password, admin.password);
     if (auth) {
-      return candidat;
+      return admin;
     }
     throw Error("password incorrect");
   }
   throw Error("email incorrect");
 };
 
-module.exports = mongoose.model("Candidat", candidatSchema);
+module.exports = mongoose.model("Admin", adminSchema);

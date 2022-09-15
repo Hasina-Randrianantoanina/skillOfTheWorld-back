@@ -49,7 +49,7 @@ entrepriseSchema.statics.login = async function (email, password) {
     if (auth) {
       return entreprise;
     }
-    throw Error("mot de passe incorrect");
+    throw Error("password incorrect");
   }
   throw Error("email incorrect");
 };
