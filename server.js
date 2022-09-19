@@ -32,7 +32,7 @@ const app = express();
 //app.use(express.json());
 //app.use(cors());
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: process.env.CLIENT_URL,
   credentials: true,
   allowedHeaders: ["sessionId", "Content-Type"],
   exposedHeaders: ["sessionId"],
@@ -48,22 +48,22 @@ app.use(cookieParser());
 /**Candidat*/
 //jwt
 //verification de token à chaque action dans le site
-app.get("/checkCandidat", checkCandidat);
+app.get("*", checkCandidat);
 //verification de token à la première authentification
-app.get("/jwtidCandidat", requireAuth, (req, res) => {
+app.get("/jwtidcandidat", requireAuth, (req, res) => {
   res.status(200).send(res.locals.candidat._id);
 });
 
 /**Entreprise*/
 //jwt
-app.get("/checkEntreprise", checkEntreprise);
-app.get("/jwtidEntreprise", requireAuthEntreprise, (req, res) => {
+app.get("*", checkEntreprise);
+app.get("/jwtidentreprise", requireAuthEntreprise, (req, res) => {
   res.status(200).send(res.locals.entreprise._id);
 });
 
 /**Admin*/
 //jwt
-app.get("/checkAdmin", checkAdmin);
+app.get("*", checkAdmin);
 app.get("/jwtidAdmin", requireAuthAdmin, (req, res) => {
   res.status(200).send(res.locals.admin._id);
 });

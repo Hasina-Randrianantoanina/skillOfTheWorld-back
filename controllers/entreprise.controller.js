@@ -2,7 +2,7 @@ const Entreprise = require("../models/Entreprise.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { signUperrors, signInerrors } = require("../utils/error.utils");
+const { signUperrors, signInErrors } = require("../utils/error.utils");
 
 const maxAge = 3 * 24 * 60 * 60 * 1000; // token valide pendant 3 jours
 
@@ -14,32 +14,32 @@ const createToken = (id) => {
 
 module.exports.signup = async (req, res) => {
   const {
-    nomEntreprise,
-    lieuxActivite,
-    nom,
-    prenom,
-    fonction,
-    telephone,
-    nombreSalarie,
-    siteInternet,
-    logoUrl,
-    email,
-    password,
+          nomEntreprise, 
+          nomInterlocuteur, 
+          prenomInterlocuteur, 
+          fonction, 
+          telephone, 
+          email,
+          lieuxActivite, 
+          nombreSalaire, 
+          siteWeb , 
+          uploadLogo,
+          password 
   } = req.body;
 
   try {
     const entreprise = await Entreprise.create({
       nomEntreprise,
-      lieuxActivite,
-      nom,
-      prenom,
+      nomInterlocuteur ,
+      prenomInterlocuteur ,
       fonction,
       telephone,
-      nombreSalarie,
-      siteInternet,
-      logoUrl,
       email,
-      password,
+      lieuxActivite,
+      nombreSalaire,
+      siteWeb,
+      uploadLogo,
+      password
     });
     res.status(201).json({ entreprise: entreprise._id });
   } catch (err) {

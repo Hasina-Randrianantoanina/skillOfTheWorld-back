@@ -9,6 +9,38 @@ module.exports.readOffre = (req, res) => {
   });
 };
 
+module.exports.readOffreEntreprise = (req,res)=> {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID inconnu : " + req.params.id);
+
+  OffreModel.find({offreId:req.params.id}, (err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("Impossible d'obtenir: " + err);
+  });
+}
+
+// lecture des offre validé par admin
+
+module.exports.readOffeValide = (req,res)=> {
+  
+  OffreModel.find({isValidate:true}, (err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("Impossible d'obtenir: " + err);
+  });
+}
+
+
+
+module.exports.readOneOffre = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID inconnu : " + req.params.id);
+
+  OffreModel.findById(req.params.id, (err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("Impossible d'obtenir: " + err);
+  });
+};
+
 module.exports.createOffre = async (req, res) => {
   console.log("*****eto offre*****");
   const newOffre = new OffreModel({
@@ -21,8 +53,9 @@ module.exports.createOffre = async (req, res) => {
     typeTravail: req.body.typeTravail,
     dateDebut: req.body.dateDebut,
     delaisRecrutement: req.body.delaisRecrutement,
-    experienceSouhaite: req.body.experienceSouhaite,
-    fourchetteRemuneration: req.body.fourchetteRemuneration,
+    expSouhaite: req.body.expSouhaite,
+    salaireMin:req.body.salaireMin,
+    salaireMax:req.body.salaireMax,
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
     annonceAnonyme: req.body.annonceAnonyme,
@@ -32,6 +65,9 @@ module.exports.createOffre = async (req, res) => {
     competencesAttendues: req.body.competencesAttendues,
     descriptionOffre: req.body.descriptionOffre,
     pourquoiPostuler: req.body.pourquoiPostuler,
+    photoCouverture:req.body.photoCouverture,
+    isValidate: req.body.isValidate,
+    listCandidat:[]
   });
 
   try {
@@ -56,8 +92,9 @@ module.exports.updateOffre = (req, res) => {
     typeTravail: req.body.typeTravail,
     dateDebut: req.body.dateDebut,
     delaisRecrutement: req.body.delaisRecrutement,
-    experienceSouhaite: req.body.experienceSouhaite,
-    fourchetteRemuneration: req.body.fourchetteRemuneration,
+    expSouhaite: req.body.expSouhaite,
+    salaireMin:req.body.salaireMin,
+    salaireMax:req.body.salaireMax,
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
     annonceAnonyme: req.body.annonceAnonyme,
@@ -67,6 +104,12 @@ module.exports.updateOffre = (req, res) => {
     competencesAttendues: req.body.competencesAttendues,
     descriptionOffre: req.body.descriptionOffre,
     pourquoiPostuler: req.body.pourquoiPostuler,
+    photoCouverture:req.body.photoCouverture,
+    isValidate: req.body.isValidate,
+    listCandidat:[{
+      candidatId:req.body.candidatId,
+      resultat:req.body.resultat,
+    }]
   };
 
   OffreModel.findByIdAndUpdate(
@@ -79,6 +122,22 @@ module.exports.updateOffre = (req, res) => {
     }
   );
 };
+module.exports.addCandidat = (req,res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID inconnu : " + req.params.id);
+    
+
+    var candidat = {"candidatId": req.body.candidatId, "resultat": req.body.resultat}
+    OffreModel.findByIdAndUpdate(
+      req.params.id,
+      {$push: {listCandidat: candidat}},
+      { new: true },
+      (err, docs) => {
+        if (!err) res.send(docs);
+        else console.log("Erreur de mise à jour de l'offre : " + err);
+      }
+    );
+}
 
 module.exports.deleteOffre = (req, res) => {
   if (!ObjectID.isValid(req.params.id))

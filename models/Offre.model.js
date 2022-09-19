@@ -46,12 +46,17 @@ const OffreSchema = new mongoose.Schema(
       trim: true,
       maxlenght: 30,
     },
-    experienceSouhaite: {
+    expSouhaite: {
       type: String,
       trim: true,
       maxlenght: 30,
     },
-    fourchetteRemuneration: {
+    salaireMin: {
+      type: String,
+      trim: true,
+      maxlenght: 30,
+    },
+    salaireMax: {
       type: String,
       trim: true,
       maxlenght: 30,
@@ -101,7 +106,21 @@ const OffreSchema = new mongoose.Schema(
     photoCouverture: {
       type: String,
       require: true,
+    }, 
+    isValidate: {
+      type: Boolean,
+      require: true,
     },
+    listCandidat:[
+      {
+        candidatId:{
+          type: String,
+        },
+        resultat:{
+          type: String,
+        },
+      }
+    ]
   },
   {
     timestamps: true,
