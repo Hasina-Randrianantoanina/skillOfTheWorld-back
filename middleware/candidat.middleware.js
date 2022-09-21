@@ -6,7 +6,7 @@ module.exports.checkCandidat = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {
       if (err) {
-        res.locals.user = null;
+        res.locals.candidat = null;
         res.cookie("jwt", "", { maxAge: 1 });
         next();
       } else {
@@ -21,18 +21,20 @@ module.exports.checkCandidat = (req, res, next) => {
   }
 };
 
+//contrôle de token
 module.exports.requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {
       if (err) {
         console.log(err);
+        res.send(200).json("Pas de token!");
       } else {
         console.log(decodedToken.id);
         next();
       }
     });
   } else {
-    console.log("Pas de token");
+    console.log("Pas de token!");
   }
 };
