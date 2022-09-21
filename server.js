@@ -41,7 +41,7 @@ app.use(function (req, res, next) {
 //app.use(express.json());
 //app.use(cors());
 const corsOptions = {
-  origin: process.env.CLIENT_URL,
+  origin: "https://competencedumonde.vercel.app/",
   credentials: true,
   allowedHeaders: ["sessionId", "Content-Type"],
   exposedHeaders: ["sessionId"],
