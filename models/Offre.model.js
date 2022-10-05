@@ -113,13 +113,14 @@ const OffreSchema = new mongoose.Schema(
     },
     listCandidat:[
       {
-        candidatId:{
-          type: String,
-        },
-        resultat:{
-          type: String,
-        },
-      }
+        candidatId: {
+        type: String,
+        
+      },
+      resultat: {
+        type: String,
+        
+      },}
     ]
   },
   {

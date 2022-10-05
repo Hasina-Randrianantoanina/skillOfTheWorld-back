@@ -1,6 +1,7 @@
 const Entreprise = require("../models/Entreprise.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const ObjectID = require("mongoose").Types.ObjectId;
 
 const { signUperrors, signInErrors } = require("../utils/error.utils");
 
@@ -66,4 +67,16 @@ module.exports.singIn = async (req, res) => {
 module.exports.logout = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
+};
+
+
+// lecture d'une seul entreprise
+module.exports.readOneEntreprise = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID inconnu : " + req.params.id);
+
+    Entreprise.findById(req.params.id, (err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("Impossible d'obtenir: " + err);
+  });
 };

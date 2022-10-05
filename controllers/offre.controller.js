@@ -8,10 +8,16 @@ module.exports.readOffre = (req, res) => {
     else console.log("Erreur d'obtention de données: " + err);
   });
 };
+module.exports.readOffreValide = async (req,res)=> {
+  
+  const offre = await OffreModel.find({isValidate:true}).sort({createdAt: -1})
+  res.status(200).json(offre)
+
+}
 
 module.exports.readOffreEntreprise = (req,res)=> {
   if (!ObjectID.isValid(req.params.id))
-    return res.status(400).send("ID inconnu : " + req.params.id);
+    return res.status(400).send("ID teste : " + req.params.id);
 
   OffreModel.find({offreId:req.params.id}, (err, docs) => {
     if (!err) res.send(docs);
@@ -19,17 +25,15 @@ module.exports.readOffreEntreprise = (req,res)=> {
   });
 }
 
-// lecture des offre validé par admin
+module.exports.readCandidatStatus = (req,res)=> {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID teste : " + req.params.id);
 
-module.exports.readOffeValide = (req,res)=> {
-  
-  OffreModel.find({isValidate:true}, (err, docs) => {
-    if (!err) res.send(docs);
+  OffreModel.find({'_id':req.params.id  ,'listCandidat.resultat': req.body.resultat}, (err, docs) => {
+    if (!err) res.send(docs.listCandidat);
     else console.log("Impossible d'obtenir: " + err);
   });
 }
-
-
 
 module.exports.readOneOffre = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
@@ -106,10 +110,7 @@ module.exports.updateOffre = (req, res) => {
     pourquoiPostuler: req.body.pourquoiPostuler,
     photoCouverture:req.body.photoCouverture,
     isValidate: req.body.isValidate,
-    listCandidat:[{
-      candidatId:req.body.candidatId,
-      resultat:req.body.resultat,
-    }]
+    listCandidat:[]
   };
 
   OffreModel.findByIdAndUpdate(
@@ -122,6 +123,7 @@ module.exports.updateOffre = (req, res) => {
     }
   );
 };
+
 module.exports.addCandidat = (req,res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("ID inconnu : " + req.params.id);
@@ -138,6 +140,27 @@ module.exports.addCandidat = (req,res) => {
       }
     );
 }
+
+module.exports.repondreCandidat = (req,res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID inconnu : " + req.params.id);
+    
+    
+
+    OffreModel.findOneAndUpdate(
+      {'_id':req.params.id  ,'listCandidat.candidatId': req.body.candidatId},
+      {
+        $set: {"listCandidat.$.resultat":req.body.resultat},
+      },
+      { new: true },
+      (err, docs) => {
+        if (!err) res.send(docs);
+        else console.log("Erreur de mise à jour de l'offre : " + err);
+      }
+    );
+}
+
+
 
 module.exports.deleteOffre = (req, res) => {
   if (!ObjectID.isValid(req.params.id))

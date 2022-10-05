@@ -35,6 +35,9 @@ router.post("/signup", candidatCtlr.signup);
 router.post("/login", candidatCtlr.singIn);
 router.get("/logout", candidatCtlr.logout);
 
+// get un candidat 
+router.get("/:id", candidatCtlr.readOneCandidat);
+
 //upload image
 //router.post("/upload", upload.single("file"), uploadController.uploadImage);
 router.post("/upload", upload.single("file"), async (req, res) => {
