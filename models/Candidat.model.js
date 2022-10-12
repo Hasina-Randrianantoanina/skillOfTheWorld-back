@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
-const bcrypt = require("bcrypt");
-const { isEmail } = require("validator");
+const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
+const bcrypt = require('bcrypt');
+const { isEmail } = require('validator');
 
 const candidatSchema = mongoose.Schema(
   {
@@ -41,9 +41,29 @@ const candidatSchema = mongoose.Schema(
       contentType: String,
     }, */
 
-    image: {
+    uploadLogo: {
       type: String,
     },
+    listLM: [
+      {
+        nameLM: {
+          type: String,
+        },
+        isValide: {
+          type: Boolean,
+        },
+      },
+    ],
+    listCV: [
+      {
+        nameCV: {
+          type: String,
+        },
+        isValide: {
+          type: Boolean,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
@@ -53,7 +73,7 @@ candidatSchema.plugin(uniqueValidator);
 
 /**test */
 // play function before save into display: 'block',
-candidatSchema.pre("save", async function (next) {
+candidatSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
@@ -67,9 +87,9 @@ candidatSchema.statics.login = async function (email, password) {
     if (auth) {
       return candidat;
     }
-    throw Error("password incorrect");
+    throw Error('password incorrect');
   }
-  throw Error("email incorrect");
+  throw Error('email incorrect');
 };
 
-module.exports = mongoose.model("Candidat", candidatSchema);
+module.exports = mongoose.model('Candidat', candidatSchema);

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const OffreSchema = new mongoose.Schema(
   {
@@ -75,10 +75,7 @@ const OffreSchema = new mongoose.Schema(
       type: Boolean,
       require: true,
     },
-    preSelectionCV: {
-      type: Boolean,
-      require: true,
-    },
+
     souhaitAccompagnement: {
       type: Boolean,
       require: true,
@@ -106,26 +103,25 @@ const OffreSchema = new mongoose.Schema(
     photoCouverture: {
       type: String,
       require: true,
-    }, 
+    },
     isValidate: {
       type: Boolean,
       require: true,
     },
-    listCandidat:[
+    listCandidat: [
       {
         candidatId: {
-        type: String,
-        
+          type: String,
+        },
+        resultat: {
+          type: String,
+        },
       },
-      resultat: {
-        type: String,
-        
-      },}
-    ]
+    ],
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("Offre", OffreSchema);
+module.exports = mongoose.model('Offre', OffreSchema);
