@@ -23,7 +23,7 @@ const candidatSchema = mongoose.Schema(
     localisation: { type: String, required: true },
     email: {
       type: String,
-      required: true,
+      // required: true,
       validate: [isEmail],
       lowercase: true,
       trim: true,

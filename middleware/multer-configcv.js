@@ -1,8 +1,8 @@
 const multerCV = require('multer');
 
 const MIME_TYPES = {
-  'uploadCV/docx': 'docx',
-  'uploadCV/pdf': 'pdf',
+  'application/msword': 'doc',
+  'application/pdf': 'pdf',
 };
 
 const storage = multerCV.diskStorage({
