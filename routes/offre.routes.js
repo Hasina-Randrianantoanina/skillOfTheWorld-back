@@ -1,31 +1,56 @@
-const router = require("express").Router();
-const offreController = require("../controllers/offre.controller");
+const router = require('express').Router();
+const offreController = require('../controllers/offre.controller');
+const multer = require('multer');
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, './files');
+    },
+    filename(req, file, cb) {
+      cb(null, `${new Date().getTime()}_${file.originalname}`);
+    },
+  }),
+  limits: {
+    fileSize: 1000000, // max file size 1MB = 1000000 bytes
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpeg|jpg|png|pdf|doc|docx|xlsx|xls)$/)) {
+      return cb(
+        new Error(
+          'only upload files with jpg, jpeg, png, pdf, doc, docx, xslx, xls format.'
+        )
+      );
+    }
+    cb(undefined, true); // continue with upload
+  },
+});
 
 //read offre
-router.get("/", offreController.readOffre);
+router.get('/', offreController.readOffre);
 // read all offre where isValidate : true
-router.get("/valide/", offreController.readOffreValide)
+router.get('/valide/', offreController.readOffreValide);
 
 //read one offre ajouter par aubin
-router.get("/:id", offreController.readOneOffre);
+router.get('/:id', offreController.readOneOffre);
 
-router.get("/entreprise/:id",offreController.readOffreEntreprise)
+router.get('/entreprise/:id', offreController.readOffreEntreprise);
 
 // read status of candidat
-router.get("/status/:id",offreController.readCandidatStatus)
+router.get('/status/:id', offreController.readCandidatStatus);
 //create offre
-router.post("/", offreController.createOffre);
+router.post('/', offreController.createOffre);
 //update offre
-router.patch("/update/:id", offreController.updateOffre);
-// validation de candidat 
-router.put("/validate/:id", offreController.repondreCandidat);
+router.patch('/update/:id', offreController.updateOffre);
+// validation de candidat
+router.put('/validate/:id', offreController.repondreCandidat);
 //delete offre
-router.delete("/:id", offreController.deleteOffre);
+router.delete('/:id', offreController.deleteOffre);
 // ajout de candidat ajouter par aubin
-router.patch("/:id",offreController.addCandidat);
-
-
-
-
-
+router.patch(
+  '/:id',
+  upload.fields([{ name: 'file1' }, { name: 'file2' }]),
+  offreController.addCandidat
+);
+// router.patch('/:id', upload.single('file'), offreController.addCandidat);
 module.exports = router;

@@ -1,4 +1,5 @@
 const OffreModel = require('../models/Offre.model');
+
 const EntrepriseModel = require('../models/Entreprise.model');
 const ObjectID = require('mongoose').Types.ObjectId;
 
@@ -32,7 +33,7 @@ module.exports.readCandidatStatus = (req, res) => {
   OffreModel.find(
     { _id: req.params.id, 'listCandidat.resultat': req.body.resultat },
     (err, docs) => {
-      if (!err) res.send(docs.listCandidat);
+      if (!err) res.send(docs[0].listCandidat);
       else console.log("Impossible d'obtenir: " + err);
     }
   );
@@ -129,17 +130,23 @@ module.exports.addCandidat = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
 
-  var candidat = {
+  const candidat = {
     candidatId: req.body.candidatId,
     resultat: req.body.resultat,
+    file1_path: req.files['file1'][0].path,
+    file1_mimetype: req.files['file1'][0].mimetype,
+    file2_path: req.files['file2'][0].path,
+    file2_mimetype: req.files['file2'][0].mimetype,
   };
+
   OffreModel.findByIdAndUpdate(
-    req.params.id,
+    { _id: req.params.id },
     { $push: { listCandidat: candidat } },
     { new: true },
     (err, docs) => {
-      if (!err) res.send(docs);
-      else console.log("Erreur de mise à jour de l'offre : " + err);
+      if (!err) {
+        res.send(docs);
+      } else console.log("Erreur de mise à jour de l'offre : " + err);
     }
   );
 };

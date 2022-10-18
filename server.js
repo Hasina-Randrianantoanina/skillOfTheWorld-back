@@ -1,31 +1,31 @@
-require("dotenv").config({ path: "./config/.env" });
-require("./config/db");
+require('dotenv').config({ path: './config/.env' });
+require('./config/db');
 
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 
-const candidatRoute = require("./routes/candidat.routes");
-const entrepriseRoute = require("./routes/entreprise.routes");
-const offreRoute = require("./routes/offre.routes");
-const adminRoute = require("./routes/admin.routes");
+const candidatRoute = require('./routes/candidat.routes');
+const entrepriseRoute = require('./routes/entreprise.routes');
+const offreRoute = require('./routes/offre.routes');
+const adminRoute = require('./routes/admin.routes');
 
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const {
   checkCandidat,
   requireAuth,
-} = require("./middleware/candidat.middleware");
+} = require('./middleware/candidat.middleware');
 
 const {
   checkEntreprise,
   requireAuthEntreprise,
-} = require("./middleware/entreprise.middleware");
+} = require('./middleware/entreprise.middleware');
 
 const {
   checkAdmin,
   requireAuthAdmin,
-} = require("./middleware/admin.middleware");
+} = require('./middleware/admin.middleware');
 
 const app = express();
 
@@ -34,47 +34,48 @@ const app = express();
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
-  allowedHeaders: ["sessionId", "Content-Type"],
-  exposedHeaders: ["sessionId"],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ['sessionId', 'Content-Type'],
+  exposedHeaders: ['sessionId'],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   preflightContinue: false,
 };
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 /**Candidat*/
 //jwt
 //verification de token à chaque action dans le site
-app.get("*", checkCandidat);
+app.get('*', checkCandidat);
 //verification de token à la première authentification
-app.get("/jwtidcandidat", requireAuth, (req, res) => {
+app.get('/jwtidcandidat', requireAuth, (req, res) => {
   res.status(200).send(res.locals.candidat._id);
 });
 
 /**Entreprise*/
 //jwt
-app.get("*", checkEntreprise);
-app.get("/jwtidentreprise", requireAuthEntreprise, (req, res) => {
+app.get('*', checkEntreprise);
+app.get('/jwtidentreprise', requireAuthEntreprise, (req, res) => {
   res.status(200).send(res.locals.entreprise._id);
 });
 
 /**Admin*/
 //jwt
-app.get("*", checkAdmin);
-app.get("/jwtidAdmin", requireAuthAdmin, (req, res) => {
+app.get('*', checkAdmin);
+app.get('/jwtidAdmin', requireAuthAdmin, (req, res) => {
   res.status(200).send(res.locals.admin._id);
 });
 
 //routes
-app.use("/api/user/candidat", candidatRoute);
-app.use("/api/user/entreprise", entrepriseRoute);
-app.use("/api/user/admin", adminRoute);
-app.use("/api/offre", offreRoute);
+app.use('/api/user/candidat', candidatRoute);
+app.use('/api/user/entreprise', entrepriseRoute);
+app.use('/api/user/admin', adminRoute);
+app.use('/api/offre', offreRoute);
 
 //serveur
 app.listen(process.env.PORT, (req, res) => {
-  console.log("Le serveur demarre sur le port ", process.env.PORT);
+  console.log('Le serveur demarre sur le port ', process.env.PORT);
 });

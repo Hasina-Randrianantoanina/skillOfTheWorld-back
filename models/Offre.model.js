@@ -116,6 +116,18 @@ const OffreSchema = new mongoose.Schema(
         resultat: {
           type: String,
         },
+        file1_path: {
+          type: String,
+        },
+        file1_mimetype: {
+          type: String,
+        },
+        file2_path: {
+          type: String,
+        },
+        file2_mimetype: {
+          type: String,
+        },
       },
     ],
   },
