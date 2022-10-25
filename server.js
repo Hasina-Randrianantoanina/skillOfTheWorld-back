@@ -1,5 +1,6 @@
 require('dotenv').config({ path: './config/.env' });
 require('./config/db');
+const path = require('path');
 
 const express = require('express');
 const cors = require('cors');
@@ -70,6 +71,8 @@ app.get('/jwtidAdmin', requireAuthAdmin, (req, res) => {
 });
 
 //routes
+app.use('/files', express.static(path.join(__dirname, 'files')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/user/candidat', candidatRoute);
 app.use('/api/user/entreprise', entrepriseRoute);
 app.use('/api/user/admin', adminRoute);

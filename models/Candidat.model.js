@@ -46,21 +46,21 @@ const candidatSchema = mongoose.Schema(
     },
     listLM: [
       {
-        nameLM: {
+        file2_path: {
           type: String,
         },
-        isValide: {
-          type: Boolean,
+        file2_mimetype: {
+          type: String,
         },
       },
     ],
     listCV: [
       {
-        nameCV: {
+        file1_path: {
           type: String,
         },
-        isValide: {
-          type: Boolean,
+        file1_mimetype: {
+          type: String,
         },
       },
     ],

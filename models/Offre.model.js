@@ -128,6 +128,12 @@ const OffreSchema = new mongoose.Schema(
         file2_mimetype: {
           type: String,
         },
+        isValideCV: {
+          type: Boolean,
+        },
+        isValideLM: {
+          type: Boolean,
+        },
       },
     ],
   },

@@ -26,6 +26,15 @@ module.exports.readOffreEntreprise = (req, res) => {
   });
 };
 
+module.exports.readOffreCandidatPostule = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID teste : ' + req.params.id);
+  OffreModel.find({ 'listCandidat.candidatId': req.params.id }, (err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("Impossible d'obtenir: " + err);
+  });
+};
+
 module.exports.readCandidatStatus = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID teste : ' + req.params.id);
@@ -33,7 +42,7 @@ module.exports.readCandidatStatus = (req, res) => {
   OffreModel.find(
     { _id: req.params.id, 'listCandidat.resultat': req.body.resultat },
     (err, docs) => {
-      if (!err) res.send(docs[0].listCandidat);
+      if (!err) res.send(docs);
       else console.log("Impossible d'obtenir: " + err);
     }
   );
@@ -151,6 +160,30 @@ module.exports.addCandidat = (req, res) => {
   );
 };
 
+module.exports.addCandidatCV = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+  // console.log(req.file);
+
+  const candidat = {
+    candidatId: req.body.candidatId,
+    resultat: req.body.resultat,
+    file1_path: req.file.path,
+    file1_mimetype: req.file.mimetype,
+  };
+
+  OffreModel.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $push: { listCandidat: candidat } },
+    { new: true },
+    (err, docs) => {
+      if (!err) {
+        res.send(docs);
+      } else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
+
 module.exports.repondreCandidat = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
@@ -159,6 +192,40 @@ module.exports.repondreCandidat = (req, res) => {
     { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
     {
       $set: { 'listCandidat.$.resultat': req.body.resultat },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
+
+module.exports.valideCV = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  OffreModel.findOneAndUpdate(
+    { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
+    {
+      $set: { 'listCandidat.$.isValideCV': req.body.isValideCV },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
+
+module.exports.valideLM = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  OffreModel.findOneAndUpdate(
+    { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
+    {
+      $set: { 'listCandidat.$.isValideLM': req.body.isValideLM },
     },
     { new: true },
     (err, docs) => {

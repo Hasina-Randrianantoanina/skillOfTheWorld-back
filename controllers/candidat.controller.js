@@ -78,13 +78,16 @@ module.exports.readOneCandidat = (req, res) => {
 
 // ajout de cv au candidat
 module.exports.addCV = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
   var myCV = {
-    nameCV: `${req.protocol}://${req.get('host')}/cv/${req.file.filename}`,
-    isValide: req.body.isValide,
+    file1_path: req.file.path,
+    file1_mimetype: req.file.mimetype,
   };
 
   Candidat.findByIdAndUpdate(
-    { _id: req.body.candidatId },
+    { _id: req.params.id },
     { $push: { listCV: myCV } },
     { new: true },
     (err, docs) => {
@@ -92,4 +95,26 @@ module.exports.addCV = (req, res) => {
       else console.log("Erreur de mise à jour de l'offre : " + err);
     }
   );
+};
+
+// update a candidat
+module.exports.updateCandidat = async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  const candidat = await Candidat.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+      uploadLogo: req.file.path,
+    }
+  );
+
+  if (!candidat) {
+    return res.status(400).json({ error: "Votre id n'existe pas" });
+  }
+
+  res.status(200).send(candidat);
 };

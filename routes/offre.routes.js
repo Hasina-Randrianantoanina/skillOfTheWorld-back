@@ -31,6 +31,9 @@ router.get('/', offreController.readOffre);
 // read all offre where isValidate : true
 router.get('/valide/', offreController.readOffreValide);
 
+// read all offre when he have send his cv
+router.get('/postule/:id', offreController.readOffreCandidatPostule);
+
 //read one offre ajouter par aubin
 router.get('/:id', offreController.readOneOffre);
 
@@ -44,6 +47,12 @@ router.post('/', offreController.createOffre);
 router.patch('/update/:id', offreController.updateOffre);
 // validation de candidat
 router.put('/validate/:id', offreController.repondreCandidat);
+
+// validation de CV de candidat
+router.put('/validatecv/:id', offreController.valideCV);
+
+// validation de lm de candidat
+router.put('/validatelm/:id', offreController.valideLM);
 //delete offre
 router.delete('/:id', offreController.deleteOffre);
 // ajout de candidat ajouter par aubin
@@ -52,5 +61,7 @@ router.patch(
   upload.fields([{ name: 'file1' }, { name: 'file2' }]),
   offreController.addCandidat
 );
+
 // router.patch('/:id', upload.single('file'), offreController.addCandidat);
+router.patch('/cv/:id', upload.single('file1'), offreController.addCandidatCV);
 module.exports = router;
