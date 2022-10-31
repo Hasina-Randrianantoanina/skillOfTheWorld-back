@@ -22,6 +22,7 @@ const entrepriseSchema = mongoose.Schema(
     lieuxActivite: { type: String, required: true },
     nombreSalaire: { type: String, required: true },
     siteWeb: { type: String, required: true },
+    isVerified: { type: Boolean, default: false },
     uploadLogo: { type: String },
     password: {
       type: String,

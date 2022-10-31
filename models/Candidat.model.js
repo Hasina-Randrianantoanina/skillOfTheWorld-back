@@ -35,6 +35,7 @@ const candidatSchema = mongoose.Schema(
       max: 1024,
       minlength: 6,
     },
+    isVerified: { type: Boolean, default: false },
 
     /* image: {
       data: Buffer,
@@ -46,10 +47,10 @@ const candidatSchema = mongoose.Schema(
     },
     listLM: [
       {
-        file2_path: {
+        file1_path: {
           type: String,
         },
-        file2_mimetype: {
+        file1_mimetype: {
           type: String,
         },
       },

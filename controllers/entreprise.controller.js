@@ -1,4 +1,5 @@
 const Entreprise = require('../models/Entreprise.model');
+const sendEmail = require('../utils/sendEmail');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ObjectID = require('mongoose').Types.ObjectId;
@@ -23,6 +24,7 @@ module.exports.signup = async (req, res) => {
     email,
     lieuxActivite,
     nombreSalaire,
+    isVerified,
     siteWeb,
     uploadLogo,
     password,
@@ -39,10 +41,13 @@ module.exports.signup = async (req, res) => {
       lieuxActivite,
       nombreSalaire,
       siteWeb,
+      isVerified,
       uploadLogo,
       password,
     });
-    res.status(201).json({ entreprise: entreprise._id });
+    // res.status(201).json({ entreprise: entreprise._id });
+    const url = `${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id}`;
+    await sendEmail(entreprise.email, 'Verification email', url);
   } catch (err) {
     const errors = signUperrors(err);
     res.status(200).send({ errors });
@@ -55,6 +60,18 @@ module.exports.singIn = async (req, res) => {
 
   try {
     const entreprise = await Entreprise.login(email, password);
+
+    if (entreprise.isVerified === false) {
+      const url = `${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id}`;
+      await sendEmail(entreprise.email, 'Verification email', url);
+      res.send('Un email a été envoyé  veuiller vérifier');
+    } else {
+      // create a token
+      const token = createToken(entreprise._id);
+
+      res.status(200).send({ candidatId: candidat._id, token: token });
+    }
+
     const token = createToken(entreprise._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
     res.status(200).json({ entreprise: entreprise._id });
@@ -99,4 +116,21 @@ module.exports.updatEntreprise = async (req, res) => {
   }
 
   res.status(200).send(entreprise);
+};
+
+// verification email de candidat
+module.exports.verificationEntreprise = async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  const entreprise = await Entreprise.findById(id);
+
+  if (!entreprise) {
+    return res.status(404).json({ error: 'Votre id est invalide' });
+  }
+
+  await Entreprise.updateOne({ _id: id }, { isVerified: true });
+  res.status(200).send('Votre email est vérifié');
 };

@@ -1,4 +1,5 @@
 const Candidat = require('../models/Candidat.model');
+const sendEmail = require('../utils/sendEmail');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ObjectID = require('mongoose').Types.ObjectId;
@@ -21,6 +22,7 @@ module.exports.signup = async (req, res) => {
     localisation,
     email,
     uploadLogo,
+    isVerified,
     password,
     listLM,
     listCV,
@@ -34,11 +36,17 @@ module.exports.signup = async (req, res) => {
       localisation,
       email,
       uploadLogo,
+      isVerified,
       password,
       listLM,
       listCV,
     });
-    res.status(201).json({ candidat: candidat._id });
+    const url = `${process.env.BASE_URL}/api/user/candidat/verification/${candidat._id}`;
+    await sendEmail(candidat.email, 'Verification email', url);
+    res
+      .status(201)
+      .send('Un email a été envoyé vers votre compte veuiller vérifier');
+    // res.status(201).json({ candidat: candidat._id });
   } catch (err) {
     const errors = signUperrors(err);
     res.status(200).send({ errors });
@@ -51,9 +59,16 @@ module.exports.singIn = async (req, res) => {
 
   try {
     const candidat = await Candidat.login(email, password);
-    const token = createToken(candidat._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
-    res.status(200).json({ candidat: candidat._id });
+    if (candidat.isVerified === false) {
+      const url = `${process.env.BASE_URL}/api/user/candidat/verification/${candidat._id}`;
+      await sendEmail(candidat.email, 'Verification email', url);
+      res.send('Un email a été envoyé  veuiller vérifier');
+    } else {
+      // create a token
+      const token = createToken(candidat._id);
+      res.cookie('jwt', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
+      res.status(200).json({ candidat: candidat._id });
+    }
   } catch (err) {
     const errors = signInErrors(err);
     res.status(200).json({ errors });
@@ -85,10 +100,47 @@ module.exports.addCV = (req, res) => {
     file1_path: req.file.path,
     file1_mimetype: req.file.mimetype,
   };
-
   Candidat.findByIdAndUpdate(
     { _id: req.params.id },
     { $push: { listCV: myCV } },
+    { new: true },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
+
+// verification email de candidat
+module.exports.verificationCandidat = async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  const candidat = await Candidat.findById(id);
+
+  if (!candidat) {
+    return res.status(404).json({ error: 'Votre id est invalide' });
+  }
+
+  await Candidat.updateOne({ _id: id }, { isVerified: true });
+  res.status(200).send('Votre email est vérifié');
+};
+
+// ajout de cv au candidat
+module.exports.addLM = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  var myLM = {
+    file1_path: req.file.path,
+    file1_mimetype: req.file.mimetype,
+  };
+
+  Candidat.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $push: { listLM: myLM } },
     { new: true },
     (err, docs) => {
       if (!err) res.send(docs);
