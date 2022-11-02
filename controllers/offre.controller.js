@@ -1,5 +1,5 @@
 const OffreModel = require('../models/Offre.model');
-
+const sendEmail = require('../utils/sendEmail');
 const EntrepriseModel = require('../models/Entreprise.model');
 const ObjectID = require('mongoose').Types.ObjectId;
 
@@ -195,8 +195,16 @@ module.exports.repondreCandidat = (req, res) => {
     },
     { new: true },
     (err, docs) => {
-      if (!err) res.send(docs);
-      else console.log("Erreur de mise à jour de l'offre : " + err);
+      if (!err) {
+        sendEmail(
+          req.body.email,
+          'Resultat de candidature',
+          'Voici votre résultat'
+        );
+        res.send(docs);
+      } else {
+        console.log("Erreur de mise à jour de l'offre : " + err);
+      }
     }
   );
 };
