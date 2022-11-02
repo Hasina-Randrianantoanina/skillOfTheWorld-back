@@ -170,3 +170,34 @@ module.exports.updateCandidat = async (req, res) => {
 
   res.status(200).send(candidat);
 };
+
+module.exports.updatePassword = async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+  const { email, password, newPassword } = req.body;
+  const salt = await bcrypt.genSalt();
+  newpassword = await bcrypt.hash(newPassword, salt);
+  try {
+    const candidat = await Candidat.login(email, password);
+    const auth = await bcrypt.compare(password, candidat.password);
+    if (auth) {
+      Candidat.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: { password: newpassword },
+        },
+        { new: true },
+        (err, docs) => {
+          if (!err) res.send(docs);
+          else console.log("Erreur de mise à jour de l'offre : " + err);
+        }
+      );
+    } else {
+    }
+  } catch (err) {
+    const errors = signInErrors(err);
+    res.status(200).json({ errors });
+  }
+};

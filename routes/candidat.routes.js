@@ -18,7 +18,7 @@ const upload = multer({
     fileSize: 1000000, // max file size 1MB = 1000000 bytes
   },
   fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(pdf|doc|docx)$/)) {
+    if (!file.originalname.match(/\.(jpeg|jpg|png|pdf|doc|docx|xlsx|xls)$/)) {
       return cb(
         new Error(
           'only upload files with jpg, jpeg, png, pdf, doc, docx, xslx, xls format.'
@@ -46,5 +46,8 @@ router.get('/verification/:id', candidatCtlr.verificationCandidat);
 // get un candidat
 router.get('/:id', candidatCtlr.readOneCandidat);
 // update candidat
-router.patch('/:id', candidatCtlr.updateCandidat);
+router.patch('/:id', upload.single('uploadLogo'), candidatCtlr.updateCandidat);
+// initialize mot de passe
+router.patch('/initialise/:id', candidatCtlr.updatePassword);
+
 module.exports = router;

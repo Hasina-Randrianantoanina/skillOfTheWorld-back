@@ -61,16 +61,14 @@ module.exports.singIn = async (req, res) => {
   try {
     const entreprise = await Entreprise.login(email, password);
 
-    if (entreprise.isVerified === false) {
-      const url = `${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id}`;
-      await sendEmail(entreprise.email, 'Verification email', url);
-      res.send('Un email a été envoyé  veuiller vérifier');
-    } else {
-      // create a token
-      const token = createToken(entreprise._id);
+    // if (entreprise.isVerified === false) {
+    //   const url = `${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id}`;
+    //   await sendEmail(entreprise.email, 'Verification email', url);
+    //   res.send('Un email a été envoyé  veuiller vérifier');
+    // } else {
+    //   // create a token
 
-      res.status(200).send({ candidatId: candidat._id, token: token });
-    }
+    // }
 
     const token = createToken(entreprise._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
@@ -108,6 +106,7 @@ module.exports.updatEntreprise = async (req, res) => {
     { _id: id },
     {
       ...req.body,
+      photoCouverture: req.file.path,
     }
   );
 
@@ -133,4 +132,36 @@ module.exports.verificationEntreprise = async (req, res) => {
 
   await Entreprise.updateOne({ _id: id }, { isVerified: true });
   res.status(200).send('Votre email est vérifié');
+};
+
+module.exports.updatePassword = async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+  const { email, password, newPassword } = req.body;
+  const salt = await bcrypt.genSalt();
+  newpassword = await bcrypt.hash(newPassword, salt);
+
+  try {
+    const entreprise = await Entreprise.login(email, password);
+    const auth = await bcrypt.compare(password, entreprise.password);
+    if (auth) {
+      Entreprise.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: { password: newpassword },
+        },
+        { new: true },
+        (err, docs) => {
+          if (!err) res.send(docs);
+          else console.log("Erreur de mise à jour de l'offre : " + err);
+        }
+      );
+    } else {
+    }
+  } catch (err) {
+    const errors = signInErrors(err);
+    res.status(200).json({ errors });
+  }
 };
