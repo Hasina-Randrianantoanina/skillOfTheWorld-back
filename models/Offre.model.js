@@ -51,16 +51,6 @@ const OffreSchema = new mongoose.Schema(
       trim: true,
       maxlenght: 30,
     },
-    salaireMin: {
-      type: String,
-      trim: true,
-      maxlenght: 30,
-    },
-    salaireMax: {
-      type: String,
-      trim: true,
-      maxlenght: 30,
-    },
     siteWeb: {
       type: String,
       trim: true,
@@ -107,6 +97,9 @@ const OffreSchema = new mongoose.Schema(
     isValidate: {
       type: Boolean,
       require: true,
+    },
+    modePaiement: {
+      type: String,
     },
     listCandidat: [
       {

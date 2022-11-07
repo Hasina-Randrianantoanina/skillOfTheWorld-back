@@ -71,8 +71,7 @@ module.exports.createOffre = async (req, res) => {
     dateDebut: req.body.dateDebut,
     delaisRecrutement: req.body.delaisRecrutement,
     expSouhaite: req.body.expSouhaite,
-    salaireMin: req.body.salaireMin,
-    salaireMax: req.body.salaireMax,
+    
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
     annonceAnonyme: req.body.annonceAnonyme,
@@ -83,6 +82,7 @@ module.exports.createOffre = async (req, res) => {
     pourquoiPostuler: req.body.pourquoiPostuler,
     photoCouverture: req.body.photoCouverture,
     isValidate: req.body.isValidate,
+    modePaiement: req.body.modePaiement,
     listCandidat: [],
   });
 
@@ -109,8 +109,7 @@ module.exports.updateOffre = (req, res) => {
     dateDebut: req.body.dateDebut,
     delaisRecrutement: req.body.delaisRecrutement,
     expSouhaite: req.body.expSouhaite,
-    salaireMin: req.body.salaireMin,
-    salaireMax: req.body.salaireMax,
+  
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
     annonceAnonyme: req.body.annonceAnonyme,
@@ -121,6 +120,7 @@ module.exports.updateOffre = (req, res) => {
     pourquoiPostuler: req.body.pourquoiPostuler,
     photoCouverture: req.body.photoCouverture,
     isValidate: req.body.isValidate,
+    modePaiement: req.body.modePaiement,
     listCandidat: [],
   };
 
@@ -198,8 +198,8 @@ module.exports.repondreCandidat = (req, res) => {
       if (!err) {
         sendEmail(
           req.body.email,
-          'Resultat de candidature',
-          'Voici votre résultat'
+          'Suite à votre candidature sur la plateforme Skill Of The World',
+          req.body.texte
         );
         res.send(docs);
       } else {

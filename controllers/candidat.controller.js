@@ -41,8 +41,8 @@ module.exports.signup = async (req, res) => {
       listLM,
       listCV,
     });
-    const url = `${process.env.BASE_URL}/api/user/candidat/verification/${candidat._id}`;
-    await sendEmail(candidat.email, 'Verification email', url);
+    const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/candidat/verification/${candidat._id} et suivre les instructions.`;
+    await sendEmail(candidat.email, 'Confirmation email', url);
     res
       .status(201)
       .send('Un email a été envoyé vers votre compte veuiller vérifier');
@@ -60,8 +60,8 @@ module.exports.singIn = async (req, res) => {
   try {
     const candidat = await Candidat.login(email, password);
     if (candidat.isVerified === false) {
-      const url = `${process.env.BASE_URL}/api/user/candidat/verification/${candidat._id}`;
-      await sendEmail(candidat.email, 'Verification email', url);
+      const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/candidat/verification/${candidat._id} et suivre les instructions.`;
+      await sendEmail(candidat.email, 'Confirmation email', url);
       res.send('Un email a été envoyé  veuiller vérifier');
     } else {
       // create a token
