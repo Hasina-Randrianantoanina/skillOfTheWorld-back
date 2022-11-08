@@ -32,6 +32,8 @@ const upload = multer({
 router.post('/signup', candidatCtlr.signup);
 router.post('/login', candidatCtlr.singIn);
 
+
+
 // ROUTE POR AJOUTER CV
 router.patch('/addCV/:id', upload.single('file1'), candidatCtlr.addCV);
 // ROUTE POR AJOUTER LM

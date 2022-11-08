@@ -1,6 +1,8 @@
 require('dotenv').config({ path: './config/.env' });
 require('./config/db');
 const path = require('path');
+const receiveEmail = require('./utils/receiveEmail');
+
 
 const express = require('express');
 const cors = require('cors');
@@ -69,7 +71,10 @@ app.get('*', checkAdmin);
 app.get('/jwtidAdmin', requireAuthAdmin, (req, res) => {
   res.status(200).send(res.locals.admin._id);
 });
-
+// reception de message venant de client
+app.post('/api/message', async (req, res) => {
+  await receiveEmail(req.body.objet, req.body.message);
+  res.send("Vous vennez d'envoyez un message à l'admin" );})
 //routes
 app.use('/files', express.static(path.join(__dirname, 'files')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
