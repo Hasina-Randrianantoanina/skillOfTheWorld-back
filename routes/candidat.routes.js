@@ -32,8 +32,6 @@ const upload = multer({
 router.post('/signup', candidatCtlr.signup);
 router.post('/login', candidatCtlr.singIn);
 
-
-
 // ROUTE POR AJOUTER CV
 router.patch('/addCV/:id', upload.single('file1'), candidatCtlr.addCV);
 // ROUTE POR AJOUTER LM
@@ -44,11 +42,13 @@ router.patch('/addLM/:id', upload.single('file1'), candidatCtlr.addLM);
 router.get('/logout', candidatCtlr.logout);
 // route de verification de mail
 router.get('/verification/:id', candidatCtlr.verificationCandidat);
+router.get('/', candidatCtlr.readAllCandidat);
 
 // get un candidat
 router.get('/:id', candidatCtlr.readOneCandidat);
 // update candidat
 router.patch('/:id', upload.single('uploadLogo'), candidatCtlr.updateCandidat);
+router.patch('/action/:id', candidatCtlr.updateCandidatAction);
 // initialize mot de passe
 router.patch('/initialise/:id', candidatCtlr.updatePassword);
 

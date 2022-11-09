@@ -35,6 +35,21 @@ module.exports.readOffreCandidatPostule = (req, res) => {
   });
 };
 
+module.exports.checkCandidat = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID teste : ' + req.params.id);
+
+  OffreModel.find(
+    {
+      _id: req.params.id,
+      'listCandidat.candidatId': { $in: req.params.idCandidat },
+    },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Impossible d'obtenir: " + err);
+    }
+  );
+};
 module.exports.readCandidatStatus = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID teste : ' + req.params.id);
@@ -71,7 +86,7 @@ module.exports.createOffre = async (req, res) => {
     dateDebut: req.body.dateDebut,
     delaisRecrutement: req.body.delaisRecrutement,
     expSouhaite: req.body.expSouhaite,
-    
+
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
     annonceAnonyme: req.body.annonceAnonyme,
@@ -109,7 +124,7 @@ module.exports.updateOffre = (req, res) => {
     dateDebut: req.body.dateDebut,
     delaisRecrutement: req.body.delaisRecrutement,
     expSouhaite: req.body.expSouhaite,
-  
+
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
     annonceAnonyme: req.body.annonceAnonyme,

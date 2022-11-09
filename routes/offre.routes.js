@@ -33,6 +33,8 @@ router.get('/valide/', offreController.readOffreValide);
 
 // read all offre when he have send his cv
 router.get('/postule/:id', offreController.readOffreCandidatPostule);
+// verification de candidat
+router.get('/:id/candidat/:idCandidat', offreController.checkCandidat);
 
 //read one offre ajouter par aubin
 router.get('/:id', offreController.readOneOffre);

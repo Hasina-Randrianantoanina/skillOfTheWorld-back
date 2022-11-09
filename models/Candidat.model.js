@@ -65,6 +65,10 @@ const candidatSchema = mongoose.Schema(
         },
       },
     ],
+    nombreAction: {
+      type: Number,
+      default:0
+    },
   },
   {
     timestamps: true,

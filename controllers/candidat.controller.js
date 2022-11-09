@@ -75,7 +75,6 @@ module.exports.singIn = async (req, res) => {
   }
 };
 
-
 module.exports.logout = (req, res) => {
   res.cookie('jwt', '', { maxAge: 1 });
   res.redirect('/');
@@ -171,6 +170,25 @@ module.exports.updateCandidat = async (req, res) => {
 
   res.status(200).send(candidat);
 };
+module.exports.updateCandidatAction = async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  const candidat = await Candidat.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+    }
+  );
+
+  if (!candidat) {
+    return res.status(400).json({ error: "Votre id n'existe pas" });
+  }
+
+  res.status(200).send(candidat);
+};
 
 module.exports.updatePassword = async (req, res) => {
   const { id } = req.params;
@@ -201,4 +219,10 @@ module.exports.updatePassword = async (req, res) => {
     const errors = signInErrors(err);
     res.status(200).json({ errors });
   }
+};
+module.exports.readAllCandidat = (req, res) => {
+  Candidat.find((err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("Erreur d'obtention de données: " + err);
+  });
 };
