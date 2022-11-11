@@ -61,18 +61,16 @@ module.exports.singIn = async (req, res) => {
   try {
     const entreprise = await Entreprise.login(email, password);
 
-    // if (entreprise.isVerified === false) {
-    //   const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions.`;
-    //   await sendEmail(entreprise.email, 'Verification email', url);
-    //   res.send('Un email a été envoyé  veuiller vérifier');
-    // } else {
-    //   // create a token
-
-    // }
-
-    const token = createToken(entreprise._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
-    res.status(200).json({ entreprise: entreprise._id });
+    if (entreprise.isVerified === false) {
+      const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions.`;
+      await sendEmail(entreprise.email, 'Verification email', url);
+      res.send('Un email a été envoyé  veuiller vérifier');
+    } else {
+      // create a token
+      const token = createToken(entreprise._id);
+      res.cookie('jwt', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
+      res.status(200).json({ entreprise: entreprise._id });
+    }
   } catch (err) {
     const errors = signInErrors(err);
     res.status(200).json({ errors });
