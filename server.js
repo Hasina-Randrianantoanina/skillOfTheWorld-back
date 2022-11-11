@@ -3,7 +3,6 @@ require('./config/db');
 const path = require('path');
 const receiveEmail = require('./utils/receiveEmail');
 
-
 const express = require('express');
 const cors = require('cors');
 
@@ -45,7 +44,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -71,7 +69,7 @@ app.get('*', checkAdmin);
 app.get('/jwtidAdmin', requireAuthAdmin, (req, res) => {
   res.status(200).send(res.locals.admin._id);
 });
-// reception de message venant de client
+// recevoir des mails venant de client
 app.post('/api/message', async (req, res) => {
   await receiveEmail(req.body.objet, req.body.message);
   res.send("Vous vennez d'envoyez un message à l'admin" );})

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 
 const { isEmail } = require('validator');
@@ -35,7 +34,6 @@ const entrepriseSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-entrepriseSchema.plugin(uniqueValidator);
 
 entrepriseSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt();

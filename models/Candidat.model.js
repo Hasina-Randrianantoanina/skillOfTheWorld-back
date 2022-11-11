@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 const { isEmail } = require('validator');
 
@@ -67,14 +66,13 @@ const candidatSchema = mongoose.Schema(
     ],
     nombreAction: {
       type: Number,
-      default:0
+      default: 0,
     },
   },
   {
     timestamps: true,
   }
 );
-candidatSchema.plugin(uniqueValidator);
 
 /**test */
 // play function before save into display: 'block',

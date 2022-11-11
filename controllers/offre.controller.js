@@ -109,7 +109,6 @@ module.exports.createOffre = async (req, res) => {
   }
 };
 
-//serait-il possible de modifier un offre sans contacter l'admin? Réponse: seul l'admin peut modifier cet offre
 module.exports.updateOffre = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
@@ -178,7 +177,6 @@ module.exports.addCandidat = (req, res) => {
 module.exports.addCandidatCV = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
-  // console.log(req.file);
 
   const candidat = {
     candidatId: req.body.candidatId,

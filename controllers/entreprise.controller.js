@@ -46,7 +46,7 @@ module.exports.signup = async (req, res) => {
       password,
     });
     // res.status(201).json({ entreprise: entreprise._id });
-    const url = `${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id}`;
+    const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id}et suivre les instructions. `;
     await sendEmail(entreprise.email, 'Verification email', url);
   } catch (err) {
     const errors = signUperrors(err);
@@ -62,7 +62,7 @@ module.exports.singIn = async (req, res) => {
     const entreprise = await Entreprise.login(email, password);
 
     // if (entreprise.isVerified === false) {
-    //   const url = `${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id}`;
+    //   const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions.`;
     //   await sendEmail(entreprise.email, 'Verification email', url);
     //   res.send('Un email a été envoyé  veuiller vérifier');
     // } else {
@@ -84,7 +84,7 @@ module.exports.logout = (req, res) => {
   res.redirect('/');
 };
 
-// lecture d'une seul entreprise
+// get one entreprise
 module.exports.readOneEntreprise = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
@@ -95,7 +95,7 @@ module.exports.readOneEntreprise = (req, res) => {
   });
 };
 
-// update a candidat
+// update entreprise
 module.exports.updatEntreprise = async (req, res) => {
   const { id } = req.params;
 
@@ -117,7 +117,7 @@ module.exports.updatEntreprise = async (req, res) => {
   res.status(200).send(entreprise);
 };
 
-// verification email de candidat
+// verification email d'entreprise
 module.exports.verificationEntreprise = async (req, res) => {
   const { id } = req.params;
 

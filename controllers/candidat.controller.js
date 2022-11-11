@@ -80,7 +80,7 @@ module.exports.logout = (req, res) => {
   res.redirect('/');
 };
 
-// lecture d'une seul candidat
+// get one candidat
 module.exports.readOneCandidat = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
@@ -91,7 +91,7 @@ module.exports.readOneCandidat = (req, res) => {
   });
 };
 
-// ajout de cv au candidat
+// candidat add CV
 module.exports.addCV = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
@@ -149,7 +149,7 @@ module.exports.addLM = (req, res) => {
   );
 };
 
-// update a candidat
+// update a candidat with file
 module.exports.updateCandidat = async (req, res) => {
   const { id } = req.params;
 
@@ -170,6 +170,8 @@ module.exports.updateCandidat = async (req, res) => {
 
   res.status(200).send(candidat);
 };
+
+// update candidat without file
 module.exports.updateCandidatAction = async (req, res) => {
   const { id } = req.params;
 
@@ -189,7 +191,7 @@ module.exports.updateCandidatAction = async (req, res) => {
 
   res.status(200).send(candidat);
 };
-
+//update a password
 module.exports.updatePassword = async (req, res) => {
   const { id } = req.params;
 
@@ -220,6 +222,8 @@ module.exports.updatePassword = async (req, res) => {
     res.status(200).json({ errors });
   }
 };
+
+// read all candidat
 module.exports.readAllCandidat = (req, res) => {
   Candidat.find((err, docs) => {
     if (!err) res.send(docs);

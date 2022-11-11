@@ -1,8 +1,6 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const { isEmail } = require("validator");
-
-const uniqueValidator = require("mongoose-unique-validator");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const { isEmail } = require('validator');
 
 const adminSchema = mongoose.Schema(
   {
@@ -39,9 +37,7 @@ const adminSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-adminSchema.plugin(uniqueValidator);
-
-adminSchema.pre("save", async function (next) {
+adminSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
@@ -54,9 +50,9 @@ adminSchema.statics.login = async function (email, password) {
     if (auth) {
       return admin;
     }
-    throw Error("password incorrect");
+    throw Error('password incorrect');
   }
-  throw Error("email incorrect");
+  throw Error('email incorrect');
 };
 
-module.exports = mongoose.model("Admin", adminSchema);
+module.exports = mongoose.model('Admin', adminSchema);
