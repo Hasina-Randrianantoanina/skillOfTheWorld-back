@@ -19,10 +19,14 @@ router.get('/verification/:id', candidatCtlr.verificationCandidat);
 router.get('/', candidatCtlr.readAllCandidat);
 // get one candidat
 router.get('/:id', candidatCtlr.readOneCandidat);
+
+router.get('/email/:email', candidatCtlr.checkMailCandidat);
 // update candidat
 router.patch('/:id', upload.single('uploadLogo'), candidatCtlr.updateCandidat);
 router.patch('/action/:id', candidatCtlr.updateCandidatAction);
 // initialize mot de passe
 router.patch('/initialise/:id', candidatCtlr.updatePassword);
+// reset password by email
+router.patch('/reset/:id', candidatCtlr.updatePasswordEmail);
 
 module.exports = router;

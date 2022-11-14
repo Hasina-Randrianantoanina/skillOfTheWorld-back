@@ -46,7 +46,7 @@ module.exports.signup = async (req, res) => {
       password,
     });
     // res.status(201).json({ entreprise: entreprise._id });
-    const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id}et suivre les instructions. `;
+    const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions. `;
     await sendEmail(entreprise.email, 'Verification email', url);
   } catch (err) {
     const errors = signUperrors(err);
@@ -162,4 +162,49 @@ module.exports.updatePassword = async (req, res) => {
     const errors = signInErrors(err);
     res.status(200).json({ errors });
   }
+};
+// read all entreprise
+module.exports.readAllEntreprise = (req, res) => {
+  Entreprise.find((err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("Erreur d'obtention de données: " + err);
+  });
+};
+
+//update a password
+module.exports.updatePasswordEmail = async (req, res) => {
+  const { id } = req.params;
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+  const { password } = req.body;
+
+  const salt = await bcrypt.genSalt();
+  newpassword = await bcrypt.hash(password, salt);
+  // console.log(newpassword);
+  try {
+    Entreprise.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: { password: newpassword },
+      },
+      { new: true },
+      (err, docs) => {
+        if (!err) res.send(docs);
+        else console.log("Erreur de mise à jour de l'offre : " + err);
+      }
+    );
+  } catch (err) {
+    const errors = signInErrors(err);
+    res.status(200).json({ errors });
+  }
+};
+
+module.exports.checkMailEntreprise = (req, res) => {
+  Entreprise.find({ email: { $in: [req.params.email] } }, async (err, docs) => {
+    if (!err) {
+      const url = `Pour changer votre mot de passe , veuillez cliquez sur ce lien ${process.env.CLIENT_URL}/resetPasswordEntreprise/${docs[0]._id}/ et suivre les instructions.`;
+      await sendEmail(req.params.email, 'Changement de mot de passe', url);
+      res.send(docs);
+    } else console.log("Impossible d'obtenir: " + err);
+  });
 };

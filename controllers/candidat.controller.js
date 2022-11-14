@@ -41,7 +41,7 @@ module.exports.signup = async (req, res) => {
       listLM,
       listCV,
     });
-    const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/candidat/verification/${candidat._id} et suivre les instructions.`;
+    const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/candidat/verification/${candidat._id}`;
     await sendEmail(candidat.email, 'Confirmation email', url);
     res
       .status(201)
@@ -222,11 +222,48 @@ module.exports.updatePassword = async (req, res) => {
     res.status(200).json({ errors });
   }
 };
+//update a password by email
+module.exports.updatePasswordEmail = async (req, res) => {
+  const { id } = req.params;
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+  const { password } = req.body;
+
+  const salt = await bcrypt.genSalt();
+  newpassword = await bcrypt.hash(password, salt);
+  // console.log(newpassword);
+  try {
+    Candidat.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: { password: newpassword },
+      },
+      { new: true },
+      (err, docs) => {
+        if (!err) res.send(docs);
+        else console.log("Erreur de mise à jour de l'offre : " + err);
+      }
+    );
+  } catch (err) {
+    const errors = signInErrors(err);
+    res.status(200).json({ errors });
+  }
+};
 
 // read all candidat
 module.exports.readAllCandidat = (req, res) => {
   Candidat.find((err, docs) => {
     if (!err) res.send(docs);
     else console.log("Erreur d'obtention de données: " + err);
+  });
+};
+
+module.exports.checkMailCandidat = (req, res) => {
+  Candidat.find({ email: { $in: [req.params.email] } }, async (err, docs) => {
+    if (!err) {
+      const url = `Pour changer votre mot de passe , veuillez cliquez sur ce lien ${process.env.CLIENT_URL}/resetPasswordCandidat/${docs[0]._id}/ et suivre les instructions.`;
+      await sendEmail(req.params.email, 'Changement de mot de passe', url);
+      res.send(docs);
+    } else console.log("Impossible d'obtenir: " + err);
   });
 };
