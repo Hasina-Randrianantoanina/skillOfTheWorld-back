@@ -103,6 +103,7 @@ const OffreSchema = new mongoose.Schema(
     },
     listCandidat: [
       {
+        date: { type: Date, default: Date.now },
         candidatId: {
           type: String,
         },

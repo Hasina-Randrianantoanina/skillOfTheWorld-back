@@ -10,9 +10,7 @@ module.exports.readOffre = (req, res) => {
   });
 };
 module.exports.readOffreValide = async (req, res) => {
-  const offre = await OffreModel.find({ isValidate: true }).sort({
-    createdAt: -1,
-  });
+  const offre = await OffreModel.find({ isValidate: true });
   res.status(200).json(offre);
 };
 
@@ -152,7 +150,6 @@ module.exports.updateOffre = (req, res) => {
 module.exports.addCandidat = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
-
   const candidat = {
     candidatId: req.body.candidatId,
     resultat: req.body.resultat,
@@ -160,6 +157,28 @@ module.exports.addCandidat = (req, res) => {
     file1_mimetype: req.files['file1'][0].mimetype,
     file2_path: req.files['file2'][0].path,
     file2_mimetype: req.files['file2'][0].mimetype,
+  };
+
+  OffreModel.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $push: { listCandidat: candidat } },
+    { new: true },
+    (err, docs) => {
+      if (!err) {
+        res.send(docs);
+      } else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
+
+module.exports.addCandidatTheque = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+  const candidat = {
+    candidatId: req.body.candidatId,
+    resultat: req.body.resultat,
+    file1_path: req.body.cvtheque,
+    file2_path: req.body.lmtheque,
   };
 
   OffreModel.findByIdAndUpdate(
@@ -197,6 +216,27 @@ module.exports.addCandidatCV = (req, res) => {
   );
 };
 
+module.exports.addCandidatCVTheque = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  const candidat = {
+    candidatId: req.body.candidatId,
+    resultat: req.body.resultat,
+    file1_path: req.body.cvtheque,
+  };
+
+  OffreModel.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $push: { listCandidat: candidat } },
+    { new: true },
+    (err, docs) => {
+      if (!err) {
+        res.send(docs);
+      } else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
 module.exports.repondreCandidat = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);

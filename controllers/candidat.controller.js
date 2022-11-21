@@ -110,6 +110,27 @@ module.exports.addCV = (req, res) => {
     }
   );
 };
+// suppression de cv  au candidat
+module.exports.deleteCV = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  Candidat.findByIdAndUpdate(
+    { _id: req.params.id },
+    {
+      $pull: {
+        listCV: {
+          _id: req.params.idcv,
+        },
+      },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
 
 // verification email de candidat
 module.exports.verificationCandidat = async (req, res) => {
@@ -128,7 +149,7 @@ module.exports.verificationCandidat = async (req, res) => {
   res.status(200).send('Votre email est vérifié');
 };
 
-// ajout de cv au candidat
+// ajout de lm au candidat
 module.exports.addLM = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
@@ -141,6 +162,27 @@ module.exports.addLM = (req, res) => {
   Candidat.findByIdAndUpdate(
     { _id: req.params.id },
     { $push: { listLM: myLM } },
+    { new: true },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
+// suppression de lm  au candidat
+module.exports.deleteLM = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  Candidat.findByIdAndUpdate(
+    { _id: req.params.id },
+    {
+      $pull: {
+        listLM: {
+          _id: req.params.idlm,
+        },
+      },
+    },
     { new: true },
     (err, docs) => {
       if (!err) res.send(docs);

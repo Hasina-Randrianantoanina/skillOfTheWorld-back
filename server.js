@@ -10,6 +10,7 @@ const candidatRoute = require('./routes/candidat.routes');
 const entrepriseRoute = require('./routes/entreprise.routes');
 const offreRoute = require('./routes/offre.routes');
 const adminRoute = require('./routes/admin.routes');
+const evenementRoute = require('./routes/evenement.route');
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -72,7 +73,8 @@ app.get('/jwtidAdmin', requireAuthAdmin, (req, res) => {
 // recevoir des mails venant de client
 app.post('/api/message', async (req, res) => {
   await receiveEmail(req.body.objet, req.body.message);
-  res.send("Vous vennez d'envoyez un message à l'admin" );})
+  res.send("Vous vennez d'envoyez un message à l'admin");
+});
 //routes
 app.use('/files', express.static(path.join(__dirname, 'files')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -80,6 +82,7 @@ app.use('/api/user/candidat', candidatRoute);
 app.use('/api/user/entreprise', entrepriseRoute);
 app.use('/api/user/admin', adminRoute);
 app.use('/api/offre', offreRoute);
+app.use('/api/evenement', evenementRoute);
 
 //serveur
 app.listen(process.env.PORT, (req, res) => {

@@ -1,0 +1,105 @@
+const Evenement = require('../models/evenement.model');
+const mongoose = require('mongoose');
+
+// get all evenement
+module.exports.getEvenements = async (req, res) => {
+  const evenement = await Evenement.find({}).sort({ createdAt: -1 });
+
+  res.status(200).send(evenement);
+};
+
+// get all evenement for entreprise
+module.exports.getEvenementsEntreprise = async (req, res) => {
+  const evenement = await Evenement.find({ idEntreprise: req.params.id }).sort({
+    createdAt: -1,
+  });
+
+  res.status(200).send(evenement);
+};
+
+// get a single evenement
+module.exports.getEvenement = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "L'evenement n'existe pas" });
+  }
+
+  const evenement = await Evenement.findById(id);
+
+  if (!evenement) {
+    return res.status(404).json({ error: "L'evenement n'existe pas" });
+  }
+
+  res.status(200).send(evenement);
+};
+
+// create a new evenement
+module.exports.createEvenement = async (req, res) => {
+  const {
+    idEntreprise,
+    nomEntreprise,
+    theme,
+    personneContacter,
+    dateEvenement,
+    horaireSouhaite,
+    photoCouverture,
+    lienEvenement,
+  } = req.body;
+
+  // add to the database
+  try {
+    const evenement = await Evenement.create({
+      idEntreprise,
+      nomEntreprise,
+      theme,
+      personneContacter,
+      dateEvenement,
+      horaireSouhaite,
+      photoCouverture,
+      lienEvenement,
+    });
+    res.status(200).send(evenement);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// delete a evenement
+module.exports.deleteEvenement = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "L'evenement n'existe pas" });
+  }
+
+  const evenement = await Evenement.findOneAndDelete({ _id: id });
+
+  if (!evenement) {
+    return res.status(400).json({ error: "L'evenement n'existe pas" });
+  }
+
+  res.status(200).json(evenement);
+};
+
+// update a evenement
+module.exports.updateEvenement = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "L'evenement n'existe pas" });
+  }
+
+  const evenement = await Evenement.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+    }
+  );
+
+  if (!evenement) {
+    return res.status(400).json({ error: "L'evenement n'existe pas" });
+  }
+
+  res.status(200).send(evenement);
+};

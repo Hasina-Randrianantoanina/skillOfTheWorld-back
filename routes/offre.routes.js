@@ -40,6 +40,8 @@ router.patch(
   upload.fields([{ name: 'file1' }, { name: 'file2' }]),
   offreController.addCandidat
 );
+router.patch('/theque/:id', offreController.addCandidatTheque);
 // ajout de candidat avec cv
 router.patch('/cv/:id', upload.single('file1'), offreController.addCandidatCV);
+router.patch('/cvtheque/:id', offreController.addCandidatCVTheque);
 module.exports = router;

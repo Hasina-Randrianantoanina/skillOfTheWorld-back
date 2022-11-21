@@ -8,12 +8,12 @@ module.exports = async (email, subject, text) => {
       secure: true,
       service: 'gmail',
       auth: {
-        user: 'mahaubin@gmail.com',
-        pass: 'raezzeusdvtftoui',
+        user: 'contact@skilloftheworld.com',
+        pass: 'dcuxedsixrffcrla',
       },
     });
     const mailOption = {
-      from: 'mahaubin@gmail.com',
+      from: 'contact@skilloftheworld.com',
       to: email,
       subject: subject,
       text: text,
@@ -25,3 +25,6 @@ module.exports = async (email, subject, text) => {
     console.log(error);
   }
 };
+
+// user: 'mahaubin@gmail.com',
+// pass: 'raezzeusdvtftoui',

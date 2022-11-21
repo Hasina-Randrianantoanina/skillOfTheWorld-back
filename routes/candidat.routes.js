@@ -9,8 +9,12 @@ router.post('/login', candidatCtlr.singIn);
 
 // ajout de cv
 router.patch('/addCV/:id', uploadFile.single('file1'), candidatCtlr.addCV);
+// suppression de cv
+router.patch('/removeCV/:id/idcv/:idcv', candidatCtlr.deleteCV);
 // ajout lm
 router.patch('/addLM/:id', uploadFile.single('file1'), candidatCtlr.addLM);
+// suppression de lm
+router.patch('/removeLM/:id/idlm/:idlm', candidatCtlr.deleteLM);
 //route pour deconnexion
 router.get('/logout', candidatCtlr.logout);
 // route de verification de mail
