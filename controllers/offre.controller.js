@@ -2,6 +2,7 @@ const OffreModel = require('../models/Offre.model');
 const sendEmail = require('../utils/sendEmail');
 const EntrepriseModel = require('../models/Entreprise.model');
 const ObjectID = require('mongoose').Types.ObjectId;
+const receiveEmail = require('../utils/receiveEmail');
 
 module.exports.readOffre = (req, res) => {
   OffreModel.find((err, docs) => {
@@ -72,7 +73,6 @@ module.exports.readOneOffre = (req, res) => {
 };
 
 module.exports.createOffre = async (req, res) => {
-  console.log('*****eto offre*****');
   const newOffre = new OffreModel({
     offreId: req.body.offreId,
     intitulePoste: req.body.intitulePoste,
@@ -84,7 +84,6 @@ module.exports.createOffre = async (req, res) => {
     dateDebut: req.body.dateDebut,
     delaisRecrutement: req.body.delaisRecrutement,
     expSouhaite: req.body.expSouhaite,
-
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
     annonceAnonyme: req.body.annonceAnonyme,
@@ -93,14 +92,60 @@ module.exports.createOffre = async (req, res) => {
     competencesAttendues: req.body.competencesAttendues,
     descriptionOffre: req.body.descriptionOffre,
     pourquoiPostuler: req.body.pourquoiPostuler,
-    photoCouverture: req.body.photoCouverture,
-    isValidate: req.body.isValidate,
+    uploadCouverture: req.file.path,
     modePaiement: req.body.modePaiement,
     listCandidat: [],
   });
 
   try {
     const offre = await newOffre.save();
+    if (req.body.souhaitAccompagnement === true) {
+      const message = `${req.body.nomEntreprise} ,${req.body.email} demande accompagnement total de recrutement`;
+      await receiveEmail(
+        "Demande d'accompagnement total de recrutement",
+        message
+      );
+    }
+
+    return res.status(201).json(offre);
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+module.exports.createOffreWithutfile = async (req, res) => {
+  const newOffre = new OffreModel({
+    offreId: req.body.offreId,
+    intitulePoste: req.body.intitulePoste,
+    localisation: req.body.localisation,
+    fonction: req.body.fonction,
+    niveauEtude: req.body.niveauEtude,
+    typeContrat: req.body.typeContrat,
+    typeTravail: req.body.typeTravail,
+    dateDebut: req.body.dateDebut,
+    delaisRecrutement: req.body.delaisRecrutement,
+    expSouhaite: req.body.expSouhaite,
+    siteWeb: req.body.siteWeb,
+    destinataire: req.body.destinataire,
+    annonceAnonyme: req.body.annonceAnonyme,
+    souhaitAccompagnement: req.body.souhaitAccompagnement,
+    savoirIdeal: req.body.savoirIdeal,
+    competencesAttendues: req.body.competencesAttendues,
+    descriptionOffre: req.body.descriptionOffre,
+    pourquoiPostuler: req.body.pourquoiPostuler,
+    modePaiement: req.body.modePaiement,
+    listCandidat: [],
+  });
+
+  try {
+    const offre = await newOffre.save();
+    if (req.body.souhaitAccompagnement === true) {
+      const message = `${req.body.nomEntreprise} ,${req.body.email} demande accompagnement total de recrutement`;
+      await receiveEmail(
+        "Demande d'accompagnement total de recrutement",
+        message
+      );
+    }
+
     return res.status(201).json(offre);
   } catch (err) {
     return res.status(400).send(err);
@@ -130,7 +175,7 @@ module.exports.updateOffre = (req, res) => {
     competencesAttendues: req.body.competencesAttendues,
     descriptionOffre: req.body.descriptionOffre,
     pourquoiPostuler: req.body.pourquoiPostuler,
-    photoCouverture: req.body.photoCouverture,
+    uploadCouverture: req.body.uploadCouverture,
     isValidate: req.body.isValidate,
     modePaiement: req.body.modePaiement,
     listCandidat: [],

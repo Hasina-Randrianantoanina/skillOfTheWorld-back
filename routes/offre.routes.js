@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const offreController = require('../controllers/offre.controller');
-const upload = require('../middleware/upload.file');
+const upload = require('../middleware/upload.image');
 
 //read offre
 router.get('/', offreController.readOffre);
@@ -20,7 +20,13 @@ router.get('/entreprise/:id', offreController.readOffreEntreprise);
 // read status of candidat
 router.get('/status/:id', offreController.readCandidatStatus);
 //create offre
-router.post('/', offreController.createOffre);
+router.post(
+  '/',
+  upload.single('uploadCouverture'),
+  offreController.createOffre
+);
+//create offre
+router.post('/withoutfile/', offreController.createOffreWithutfile);
 //update offre
 router.patch('/update/:id', offreController.updateOffre);
 // validation de candidat

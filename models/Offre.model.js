@@ -90,13 +90,13 @@ const OffreSchema = new mongoose.Schema(
       trim: true,
       maxlenght: 800,
     },
-    photoCouverture: {
+    uploadCouverture: {
       type: String,
       require: true,
     },
     isValidate: {
       type: Boolean,
-      require: true,
+      default: false,
     },
     modePaiement: {
       type: String,
