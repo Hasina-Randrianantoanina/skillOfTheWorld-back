@@ -45,6 +45,25 @@ module.exports.searchOffre = (req, res) => {
     }
   );
 };
+module.exports.searchOffreAvance = (req, res) => {
+  OffreModel.find(
+    {
+      $or: [
+        { localisation: { $regex: req.params.key } },
+        { fonction: { $regex: req.params.key } },
+        { delaisRecrutement: { $regex: req.params.key } },
+        { typeTravail: { $regex: req.params.key } },
+        { niveauEtude: { $regex: req.params.key } },
+        { typeContrat: { $regex: req.params.key } },
+        { expSouhaite: { $regex: req.params.key } },
+      ],
+    },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Impossible d'obtenir: " + err);
+    }
+  );
+};
 
 module.exports.checkCandidat = (req, res) => {
   if (!ObjectID.isValid(req.params.id))

@@ -16,6 +16,8 @@ router.get('/:id/candidat/:idCandidat', offreController.checkCandidat);
 router.get('/:id', offreController.readOneOffre);
 // rehcerche de l'offre
 router.get('/search/:key', offreController.searchOffre);
+// recherche avance
+router.get('/searchAvance/:key', offreController.searchOffre);
 
 router.get('/entreprise/:id', offreController.readOffreEntreprise);
 
@@ -42,7 +44,6 @@ router.put('/validatelm/:id', offreController.valideLM);
 //delete offre
 router.delete('/:id', offreController.deleteOffre);
 // ajout de candidat avec cv et lm
-
 router.patch(
   '/:id',
   upload.fields([{ name: 'file1' }, { name: 'file2' }]),
