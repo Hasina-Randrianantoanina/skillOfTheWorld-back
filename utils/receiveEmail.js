@@ -8,13 +8,13 @@ module.exports = async (subject, text) => {
       secure: true,
       service: 'gmail',
       auth: {
-        user: 'mahaubin@gmail.com',
-        pass: 'raezzeusdvtftoui',
+        user: 'skilloftheworldok@gmail.com',
+        pass: 'andpyitaiwugryyv',
       },
     });
     const mailOption = {
-      from: 'mahaubin@gmail.com',
-      to: 'mahaubin.rakotovahiny@gmail.com',
+      from: 'skilloftheworldok@gmail.com',
+      to: 'contact@skilloftheworld.com',
       subject: subject,
       text: text,
     };

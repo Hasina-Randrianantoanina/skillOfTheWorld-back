@@ -4,8 +4,11 @@ const upload = require('../middleware/upload.image');
 
 const router = express.Router();
 
-// GET all evenement
-router.get('/', evenementRoute.getEvenements);
+// GET all evenement publie
+router.get('/publie', evenementRoute.getEvenementValide);
+
+// GET all evenement publie
+router.get('/notpublie', evenementRoute.getEvenementNonValide);
 
 // GET all evenement from entreprise
 router.get('/entreprise/:id', evenementRoute.getEvenementsEntreprise);

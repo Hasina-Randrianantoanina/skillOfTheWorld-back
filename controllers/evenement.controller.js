@@ -1,9 +1,20 @@
 const Evenement = require('../models/evenement.model');
 const mongoose = require('mongoose');
 
-// get all evenement
-module.exports.getEvenements = async (req, res) => {
-  const evenement = await Evenement.find({}).sort({ createdAt: -1 });
+// get all evenement publie
+module.exports.getEvenementValide = async (req, res) => {
+  const evenement = await Evenement.find({ isPublie: true }).sort({
+    createdAt: -1,
+  });
+
+  res.status(200).send(evenement);
+};
+
+// get all evenement not publie
+module.exports.getEvenementNonValide = async (req, res) => {
+  const evenement = await Evenement.find({ isPublie: false }).sort({
+    createdAt: -1,
+  });
 
   res.status(200).send(evenement);
 };
@@ -46,6 +57,7 @@ module.exports.createEvenement = async (req, res) => {
       dateEvenement,
       horaireSouhaite,
       lienEvenement,
+      isPublie,
     } = req.body;
     try {
       const evenement = await Evenement.create({
@@ -57,6 +69,7 @@ module.exports.createEvenement = async (req, res) => {
         horaireSouhaite,
         photoCouverture,
         lienEvenement,
+        isPublie,
       });
       res.status(200).send(evenement);
     } catch (error) {
@@ -71,6 +84,7 @@ module.exports.createEvenement = async (req, res) => {
       dateEvenement,
       horaireSouhaite,
       lienEvenement,
+      isPublie,
     } = req.body;
     try {
       const evenement = await Evenement.create({
@@ -81,6 +95,7 @@ module.exports.createEvenement = async (req, res) => {
         dateEvenement,
         horaireSouhaite,
         lienEvenement,
+        isPublie,
       });
       res.status(200).send(evenement);
     } catch (error) {
