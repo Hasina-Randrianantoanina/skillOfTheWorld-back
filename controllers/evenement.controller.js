@@ -36,33 +36,59 @@ module.exports.getEvenement = async (req, res) => {
 
 // create a new evenement
 module.exports.createEvenement = async (req, res) => {
-  const {
-    idEntreprise,
-    nomEntreprise,
-    theme,
-    personneContacter,
-    dateEvenement,
-    horaireSouhaite,
-    photoCouverture,
-    lienEvenement,
-  } = req.body;
-
-  // add to the database
-  try {
-    const evenement = await Evenement.create({
+  if (req.file) {
+    const photoCouverture = req.file.path;
+    const {
       idEntreprise,
       nomEntreprise,
       theme,
       personneContacter,
       dateEvenement,
       horaireSouhaite,
-      photoCouverture,
       lienEvenement,
-    });
-    res.status(200).send(evenement);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+    } = req.body;
+    try {
+      const evenement = await Evenement.create({
+        idEntreprise,
+        nomEntreprise,
+        theme,
+        personneContacter,
+        dateEvenement,
+        horaireSouhaite,
+        photoCouverture,
+        lienEvenement,
+      });
+      res.status(200).send(evenement);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    const {
+      idEntreprise,
+      nomEntreprise,
+      theme,
+      personneContacter,
+      dateEvenement,
+      horaireSouhaite,
+      lienEvenement,
+    } = req.body;
+    try {
+      const evenement = await Evenement.create({
+        idEntreprise,
+        nomEntreprise,
+        theme,
+        personneContacter,
+        dateEvenement,
+        horaireSouhaite,
+        lienEvenement,
+      });
+      res.status(200).send(evenement);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
+
+  // add to the database
 };
 
 // delete a evenement

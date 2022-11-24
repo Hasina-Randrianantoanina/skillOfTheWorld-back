@@ -1,5 +1,6 @@
 const express = require('express');
 const evenementRoute = require('../controllers/evenement.controller');
+const upload = require('../middleware/upload.image');
 
 const router = express.Router();
 
@@ -13,7 +14,11 @@ router.get('/entreprise/:id', evenementRoute.getEvenementsEntreprise);
 router.get('/:id', evenementRoute.getEvenement);
 
 // POST a new evenement
-router.post('/', evenementRoute.createEvenement);
+router.post(
+  '/',
+  upload.single('photoCouverture'),
+  evenementRoute.createEvenement
+);
 
 // DELETE a evenement
 router.delete('/:id', evenementRoute.deleteEvenement);
