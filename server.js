@@ -84,6 +84,17 @@ app.use('/api/user/admin', adminRoute);
 app.use('/api/offre', offreRoute);
 app.use('/api/evenement', evenementRoute);
 
+app.get('/*', function (req, res) {
+  res.sendFile(
+    path.join(__dirname, '../skillOfTheWorld/public/index.html'),
+    function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});
+
 //serveur
 app.listen(process.env.PORT, (req, res) => {
   console.log('Le serveur demarre sur le port ', process.env.PORT);
