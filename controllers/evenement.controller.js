@@ -102,8 +102,6 @@ module.exports.createEvenement = async (req, res) => {
       res.status(400).json({ error: error.message });
     }
   }
-
-  // add to the database
 };
 
 // delete a evenement

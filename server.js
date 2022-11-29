@@ -11,6 +11,7 @@ const entrepriseRoute = require('./routes/entreprise.routes');
 const offreRoute = require('./routes/offre.routes');
 const adminRoute = require('./routes/admin.routes');
 const evenementRoute = require('./routes/evenement.route');
+const jobDAtingRoute = require('./routes/jobDating.route');
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -83,6 +84,7 @@ app.use('/api/user/entreprise', entrepriseRoute);
 app.use('/api/user/admin', adminRoute);
 app.use('/api/offre', offreRoute);
 app.use('/api/evenement', evenementRoute);
+app.use('/api/jobdating', jobDAtingRoute);
 
 app.get('/*', function (req, res) {
   res.sendFile(
