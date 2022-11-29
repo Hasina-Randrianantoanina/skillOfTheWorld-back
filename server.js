@@ -12,6 +12,7 @@ const offreRoute = require('./routes/offre.routes');
 const adminRoute = require('./routes/admin.routes');
 const evenementRoute = require('./routes/evenement.route');
 const jobDAtingRoute = require('./routes/jobDating.route');
+const articleRoute = require('./routes/article.route');
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -85,6 +86,7 @@ app.use('/api/user/admin', adminRoute);
 app.use('/api/offre', offreRoute);
 app.use('/api/evenement', evenementRoute);
 app.use('/api/jobdating', jobDAtingRoute);
+app.use('/api/article', articleRoute);
 
 app.get('/*', function (req, res) {
   res.sendFile(

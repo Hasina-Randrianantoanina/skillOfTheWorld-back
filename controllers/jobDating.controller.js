@@ -80,6 +80,7 @@ module.exports.createJobDating = async (req, res) => {
         description,
         competencesAttendues,
         savoirIdeal,
+        photoCouverture,
         pourquoiPostuler,
         lienJobDating,
         isPublie,
