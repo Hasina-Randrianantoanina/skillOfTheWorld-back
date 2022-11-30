@@ -1,5 +1,6 @@
 const JobDating = require('../models/JobDating.model');
 const ObjectID = require('mongoose').Types.ObjectId;
+const mongoose = require('mongoose');
 
 // get all job dating publie
 module.exports.getJobDatingValide = async (req, res) => {

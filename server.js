@@ -87,8 +87,7 @@ app.use('/api/offre', offreRoute);
 app.use('/api/evenement', evenementRoute);
 app.use('/api/jobdating', jobDAtingRoute);
 app.use('/api/article', articleRoute);
-
-app.get('/*', function (req, res) {
+app.use('/*', function (req, res) {
   res.sendFile(
     path.join(__dirname, '../skillOfTheWorld/public/index.html'),
     function (err) {
