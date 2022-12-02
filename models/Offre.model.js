@@ -61,6 +61,11 @@ const OffreSchema = new mongoose.Schema(
       trim: true,
       maxlenght: 100,
     },
+    groupe: {
+      type: String,
+      trim: true,
+      maxlenght: 100,
+    },
     annonceAnonyme: {
       type: Boolean,
       require: true,

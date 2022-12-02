@@ -46,6 +46,7 @@ module.exports.signup = async (req, res) => {
       password,
     });
     // res.status(201).json({ entreprise: entreprise._id });
+    res.status(201).send(entreprise);
     const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions. `;
     await sendEmail(entreprise.email, 'Verification email', url);
   } catch (err) {
@@ -69,11 +70,11 @@ module.exports.singIn = async (req, res) => {
       // create a token
       const token = createToken(entreprise._id);
       res.cookie('jwt', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
-      res.status(200).json({ entreprise: entreprise._id });
+      res.status(200).send({ entreprise: entreprise._id });
     }
   } catch (err) {
     const errors = signInErrors(err);
-    res.status(200).json({ errors });
+    res.status(400).send({ errors });
   }
 };
 

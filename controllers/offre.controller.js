@@ -117,6 +117,7 @@ module.exports.createOffre = async (req, res) => {
     expSouhaite: req.body.expSouhaite,
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
+    groupe: req.body.groupe,
     annonceAnonyme: req.body.annonceAnonyme,
     souhaitAccompagnement: req.body.souhaitAccompagnement,
     savoirIdeal: req.body.savoirIdeal,
@@ -137,8 +138,7 @@ module.exports.createOffre = async (req, res) => {
         message
       );
     }
-
-    return res.status(201).json(offre);
+    return res.status(201).send(offre);
   } catch (err) {
     return res.status(400).send(err);
   }
@@ -157,6 +157,7 @@ module.exports.createOffreWithutfile = async (req, res) => {
     expSouhaite: req.body.expSouhaite,
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
+    groupe: req.body.groupe,
     annonceAnonyme: req.body.annonceAnonyme,
     souhaitAccompagnement: req.body.souhaitAccompagnement,
     savoirIdeal: req.body.savoirIdeal,
@@ -176,8 +177,7 @@ module.exports.createOffreWithutfile = async (req, res) => {
         message
       );
     }
-
-    return res.status(201).json(offre);
+    return res.status(201).send(offre);
   } catch (err) {
     return res.status(400).send(err);
   }
@@ -197,9 +197,9 @@ module.exports.updateOffre = (req, res) => {
     dateDebut: req.body.dateDebut,
     delaisRecrutement: req.body.delaisRecrutement,
     expSouhaite: req.body.expSouhaite,
-
     siteWeb: req.body.siteWeb,
     destinataire: req.body.destinataire,
+    groupe: req.body.groupe,
     annonceAnonyme: req.body.annonceAnonyme,
     souhaitAccompagnement: req.body.souhaitAccompagnement,
     savoirIdeal: req.body.savoirIdeal,

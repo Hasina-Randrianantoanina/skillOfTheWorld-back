@@ -41,12 +41,9 @@ module.exports.signup = async (req, res) => {
       listLM,
       listCV,
     });
+    res.status(201).send(candidat);
     const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/candidat/verification/${candidat._id}`;
     await sendEmail(candidat.email, 'Confirmation email', url);
-    res
-      .status(201)
-      .send('Un email a été envoyé vers votre compte veuiller vérifier');
-    // res.status(201).json({ candidat: candidat._id });
   } catch (err) {
     const errors = signUperrors(err);
     res.status(200).send({ errors });
