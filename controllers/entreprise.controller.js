@@ -47,7 +47,7 @@ module.exports.signup = async (req, res) => {
     });
     // res.status(201).json({ entreprise: entreprise._id });
     res.status(201).send(entreprise);
-    const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions. `;
+    const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.CLIENT_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions. `;
     await sendEmail(entreprise.email, 'Verification email', url);
   } catch (err) {
     const errors = signUperrors(err);
@@ -63,7 +63,7 @@ module.exports.singIn = async (req, res) => {
     const entreprise = await Entreprise.login(email, password);
 
     if (entreprise.isVerified === false) {
-      const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.BASE_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions.`;
+      const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.CLIENT_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions.`;
       await sendEmail(entreprise.email, 'Verification email', url);
       res.send('Un email a été envoyé  veuiller vérifier');
     } else {
