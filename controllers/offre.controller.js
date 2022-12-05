@@ -1,8 +1,7 @@
 const OffreModel = require('../models/Offre.model');
 const sendEmail = require('../utils/sendEmail');
-const EntrepriseModel = require('../models/Entreprise.model');
-const ObjectID = require('mongoose').Types.ObjectId;
 const receiveEmail = require('../utils/receiveEmail');
+const ObjectID = require('mongoose').Types.ObjectId;
 
 module.exports.readOffre = (req, res) => {
   OffreModel.find((err, docs) => {
@@ -10,6 +9,7 @@ module.exports.readOffre = (req, res) => {
     else console.log("Erreur d'obtention de données: " + err);
   });
 };
+
 module.exports.readOffreValide = async (req, res) => {
   const offre = await OffreModel.find({ isValidate: true });
   res.status(200).json(offre);

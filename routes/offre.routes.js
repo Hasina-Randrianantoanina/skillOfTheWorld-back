@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const offreController = require('../controllers/offre.controller');
-const upload = require('../middleware/upload.image');
+const upload = require('../middleware/upload.file');
 
 //read offre
 router.get('/', offreController.readOffre);
