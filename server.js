@@ -2,7 +2,6 @@ require('dotenv').config({ path: './config/.env' });
 require('./config/db');
 const path = require('path');
 const receiveEmail = require('./utils/receiveEmail');
-
 const express = require('express');
 const cors = require('cors');
 

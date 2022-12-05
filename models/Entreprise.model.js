@@ -18,9 +18,9 @@ const entrepriseSchema = mongoose.Schema(
       trim: true,
       unique: true,
     },
-    lieuxActivite: { type: String, required: true },
-    nombreSalaire: { type: String, required: true },
-    siteWeb: { type: String, required: true },
+    lieuxActivite: { type: String },
+    nombreSalaire: { type: String },
+    siteWeb: { type: String },
     isVerified: { type: Boolean, default: false },
     uploadLogo: { type: String },
     password: {
