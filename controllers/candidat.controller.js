@@ -191,23 +191,36 @@ module.exports.deleteLM = (req, res) => {
 // update a candidat with file
 module.exports.updateCandidat = async (req, res) => {
   const { id } = req.params;
-
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
+  if (req.file) {
+    const candidat = await Candidat.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+        uploadLogo: req.file.path,
+      }
+    );
 
-  const candidat = await Candidat.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
-      uploadLogo: req.file.path,
+    if (!candidat) {
+      return res.status(400).json({ error: "Votre id n'existe pas" });
     }
-  );
 
-  if (!candidat) {
-    return res.status(400).json({ error: "Votre id n'existe pas" });
+    res.status(200).send(candidat);
+  } else {
+    const candidat = await Candidat.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
+
+    if (!candidat) {
+      return res.status(400).json({ error: "Votre id n'existe pas" });
+    }
+
+    res.status(200).send(candidat);
   }
-
-  res.status(200).send(candidat);
 };
 
 // update candidat without file

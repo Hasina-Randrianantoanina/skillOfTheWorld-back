@@ -199,3 +199,15 @@ module.exports.deleteJobDating = async (req, res) => {
 
   res.status(200).json(jobDating);
 };
+
+module.exports.searchJobDating = async (req, res) => {
+  await JobDating.find(
+    {
+      $or: [{ intitulePoste: { $regex: req.params.key } }],
+    },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Impossible d'obtenir: " + err);
+    }
+  );
+};

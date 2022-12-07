@@ -16,6 +16,9 @@ router.get('/entreprise/:id', jobDatingRoute.getJobDAtingEntreprise);
 // GET a single job dating
 router.get('/:id', jobDatingRoute.getOneJobDating);
 
+// rehcerche de job dating
+router.get('/search/:key', jobDatingRoute.searchJobDating);
+
 // POST a new job dating
 router.post(
   '/',
