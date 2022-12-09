@@ -1,8 +1,6 @@
 const express = require('express');
-
 const entrepriseCtlr = require('../controllers/entreprise.controller');
 const router = express.Router();
-
 const upload = require('../middleware/upload.image');
 
 router.post('/signup', entrepriseCtlr.signup);
