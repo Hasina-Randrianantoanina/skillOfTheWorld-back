@@ -1,6 +1,7 @@
 const express = require('express');
 const jobDatingRoute = require('../controllers/jobDating.controller');
 const upload = require('../middleware/upload.image');
+const uploadFile = require('../middleware/upload.file');
 
 const router = express.Router();
 
@@ -37,6 +38,12 @@ router.patch(
   '/image/:id',
   upload.single('photoCouverture'),
   jobDatingRoute.updateJobDatingImage
+);
+
+router.patch(
+  '/postule/:id',
+  uploadFile.single('cv'),
+  jobDatingRoute.ajoutCandidat
 );
 
 module.exports = router;

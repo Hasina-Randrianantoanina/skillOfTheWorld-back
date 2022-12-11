@@ -1,6 +1,7 @@
 const JobDating = require('../models/JobDating.model');
 const ObjectID = require('mongoose').Types.ObjectId;
 const mongoose = require('mongoose');
+const receiveMailFile = require('../utils/receiveMailFile');
 
 // get all job dating publie
 module.exports.getJobDatingValide = async (req, res) => {
@@ -210,4 +211,21 @@ module.exports.searchJobDating = async (req, res) => {
       else console.log("Impossible d'obtenir: " + err);
     }
   );
+};
+
+module.exports.ajoutCandidat = async (req, res) => {
+  if (req.file) {
+    const objet = 'Demande participation candidat à un job dating';
+    const message = req.body.prenom
+      ? `${req.body.nom} ${req.body.prenom} a demandé à participer au job dating`
+      : `${req.body.nom} a demandé à participer au job dating`;
+
+    await receiveMailFile(objet, message, req.file.path)
+      .then((res) => {
+        console.log('Email envoyé avec succès');
+      })
+      .catch((err) => {
+        console.log('Il y une erreur');
+      });
+  }
 };

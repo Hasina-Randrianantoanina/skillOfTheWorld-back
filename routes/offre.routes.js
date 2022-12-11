@@ -34,7 +34,7 @@ router.post('/withoutfile/', offreController.createOffreWithutfile);
 //update offre
 router.patch('/update/:id', offreController.updateOffre);
 // validation de candidat
-router.put('/validate/:id', offreController.repondreCandidat);
+router.patch('/validate/:id', offreController.repondreCandidat);
 
 // validation de CV de candidat
 router.put('/validatecv/:id', offreController.valideCV);
