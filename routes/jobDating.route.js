@@ -26,6 +26,8 @@ router.post(
   upload.single('photoCouverture'),
   jobDatingRoute.createJobDating
 );
+// demande de participation à job dating
+router.patch('/participation/:id', jobDatingRoute.ajoutCandidat);
 
 // DELETE a job dating
 router.delete('/:id', jobDatingRoute.deleteJobDating);

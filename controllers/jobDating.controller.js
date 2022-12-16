@@ -2,6 +2,7 @@ const JobDating = require('../models/JobDating.model');
 const ObjectID = require('mongoose').Types.ObjectId;
 const mongoose = require('mongoose');
 const receiveMailFile = require('../utils/receiveMailFile');
+const sendMail = require('../utils/sendEmail');
 
 // get all job dating publie
 module.exports.getJobDatingValide = async (req, res) => {
@@ -214,18 +215,27 @@ module.exports.searchJobDating = async (req, res) => {
 };
 
 module.exports.ajoutCandidat = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Le job dating n'existe pas" });
+  }
+
   if (req.file) {
     const objet = 'Demande participation candidat à un job dating';
     const message = req.body.prenom
       ? `${req.body.nom} ${req.body.prenom} a demandé à participer au job dating`
       : `${req.body.nom} a demandé à participer au job dating`;
 
-    await receiveMailFile(objet, message, req.file.path)
-      .then((res) => {
-        console.log('Email envoyé avec succès');
-      })
-      .catch((err) => {
-        console.log('Il y une erreur');
-      });
+    try {
+      await receiveMailFile(objet, message, req.file.path);
+      const object = `Votre demande à participer au job dating ${req.body.intitulePoste}`;
+      const texte = `Bonjour, Nous avons bien pris en compte votre demande de participation pour le job dating ${req.body.intitulePoste}. Si votre candidature est retenue, vous serez contacter et nous vous donnerons toutes les informations de connexion.`;
+      await sendMail(req.body.email, object, texte);
+
+      res.status(200).send('Postulation avec succès');
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
