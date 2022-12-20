@@ -342,6 +342,10 @@ module.exports.valideCV = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
 
+  // if(req.body.isValideCV === false){
+
+  // }
+
   OffreModel.findOneAndUpdate(
     { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
     {

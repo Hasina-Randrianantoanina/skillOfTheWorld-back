@@ -160,7 +160,7 @@ module.exports.ajoutCandidat = async (req, res) => {
   const message = req.body.prenom
     ? `${req.body.nom} ${req.body.prenom} a demandé à participer à l'évènement en ligne privé`
     : `${req.body.nom} a demandé à participer à l'évènement en ligne privé`;
-  const object = `Votre demande de participation au job dating ${req.body.theme}`;
+  const object = `Votre demande de participation à l'évènement ${req.body.theme}`;
   const texte = `Bonjour, Nous avons bien pris en compte votre demande de participation pour l'évènement ${req.body.theme}. Si votre demande est acceptée, vous serez contactez.`;
 
   const candidat = {
@@ -184,13 +184,14 @@ module.exports.checkCandidat = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID teste : ' + req.params.id);
 
-  const verification = await Evenement.find({
-    _id: req.params.id,
-    'listCandidat.candidatId': { $in: [req.params.idCandidat] },
-  });
-  if (verification.length > 0) {
-    res.status(201).send('Vous avez déjà fait votre demande de participation');
-  } else {
-    res.status(200).send("Vous n'êtes pas encore inscrit");
-  }
+  Evenement.find(
+    {
+      _id: req.params.id,
+      'listCandidat.candidatId': { $in: req.params.idCandidat },
+    },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Impossible d'obtenir: " + err);
+    }
+  );
 };

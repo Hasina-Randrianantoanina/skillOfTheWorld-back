@@ -20,6 +20,12 @@ router.get('/:id', jobDatingRoute.getOneJobDating);
 // rehcerche de job dating
 router.get('/search/:key', jobDatingRoute.searchJobDating);
 
+//verification si le candidat a déjà fait sa demande de participation
+router.get(
+  '/verification/:id/candidat/:idCandidat',
+  jobDatingRoute.checkCandidat
+);
+
 // POST a new job dating
 router.post(
   '/',
@@ -46,6 +52,12 @@ router.patch(
   '/postule/:id',
   uploadFile.single('cv'),
   jobDatingRoute.ajoutCandidat
+);
+// postule avec cv et lm
+router.patch(
+  '/postulecvlm/:id',
+  uploadFile.fields([{ name: 'cv' }, { name: 'lm' }]),
+  jobDatingRoute.ajoutCandidaCVLM
 );
 
 module.exports = router;
