@@ -16,6 +16,12 @@ router.get('/entreprise/:id', evenementRoute.getEvenementsEntreprise);
 // GET a single evenement
 router.get('/:id', evenementRoute.getEvenement);
 
+//verification si le candidat a déjà fait sa demande de participation
+router.get(
+  '/verification/:id/candidat/:idCandidat',
+  evenementRoute.checkCandidat
+);
+
 // POST a new evenement
 router.post(
   '/',
@@ -28,5 +34,7 @@ router.delete('/:id', evenementRoute.deleteEvenement);
 
 // UPDATE a evenement
 router.patch('/:id', evenementRoute.updateEvenement);
+// participation des candidats
+router.patch('/postule/:id', evenementRoute.ajoutCandidat);
 
 module.exports = router;

@@ -229,8 +229,8 @@ module.exports.ajoutCandidat = async (req, res) => {
 
     try {
       await receiveMailFile(objet, message, req.file.path);
-      const object = `Votre demande à participer au job dating ${req.body.intitulePoste}`;
-      const texte = `Bonjour, Nous avons bien pris en compte votre demande de participation pour le job dating ${req.body.intitulePoste}. Si votre candidature est retenue, vous serez contacter et nous vous donnerons toutes les informations de connexion.`;
+      const object = `Votre demande de participation au job dating ${req.body.intitulePoste}`;
+      const texte = `Bonjour, Nous avons bien pris en compte votre demande de participation pour le job dating ${req.body.intitulePoste}. Si votre candidature est retenue, vous serez contacté et nous vous donnerons toutes les informations de connexion.`;
       await sendMail(req.body.email, object, texte);
 
       res.status(200).send('Postulation avec succès');

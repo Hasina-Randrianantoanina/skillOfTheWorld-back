@@ -91,6 +91,13 @@ const JobDatingSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    listCandidat: [
+      {
+        candidatId: {
+          type: String,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
