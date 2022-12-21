@@ -184,14 +184,13 @@ module.exports.checkCandidat = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID teste : ' + req.params.id);
 
-  Evenement.find(
-    {
-      _id: req.params.id,
-      'listCandidat.candidatId': { $in: req.params.idCandidat },
-    },
-    (err, docs) => {
-      if (!err) res.send(docs);
-      else console.log("Impossible d'obtenir: " + err);
-    }
-  );
+  const verification = await Evenement.find({
+    _id: req.params.id,
+    'listCandidat.candidatId': { $in: [req.params.idCandidat] },
+  });
+  if (verification.length > 0) {
+    res.status(201).send('Vous avez déjà fait votre demande de participation');
+  } else {
+    res.status(200).send("Vous n'êtes pas encore inscrit");
+  }
 };

@@ -243,6 +243,7 @@ module.exports.ajoutCandidat = async (req, res) => {
       res.status(200).send('Postulation avec succès');
     } catch (error) {
       console.log(error);
+      lo;
     }
   }
 };
@@ -282,6 +283,21 @@ module.exports.ajoutCandidaCVLM = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
+  }
+};
+
+module.exports.checkCandidat = async (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID teste : ' + req.params.id);
+
+  const verification = await JobDating.find({
+    _id: req.params.id,
+    'listCandidat.candidatId': { $in: [req.params.idCandidat] },
+  });
+  if (verification.length > 0) {
+    res.status(201).send('Vous avez déjà fait votre demande de participation');
+  } else {
+    res.status(200).send("Vous n'êtes pas encore inscrit");
   }
 };
 
