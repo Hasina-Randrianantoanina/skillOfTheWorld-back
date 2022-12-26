@@ -65,7 +65,7 @@ module.exports.singIn = async (req, res) => {
     if (entreprise.isVerified === false) {
       const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.CLIENT_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions.`;
       await sendEmail(entreprise.email, 'Verification email', url);
-      res.send('Un email a été envoyé  veuiller vérifier');
+      res.status(201).send('Un email a été envoyé  veuiller vérifier');
     } else {
       // create a token
       const token = createToken(entreprise._id);
