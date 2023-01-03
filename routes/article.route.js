@@ -17,6 +17,10 @@ router.post('/', upload.single('photoCouverture'), articleRoute.createArticle);
 router.delete('/:id', articleRoute.deleteArticle);
 
 // UPDATE a article
-router.patch('/:id', articleRoute.updateArticle);
+router.patch(
+  '/:id',
+  upload.single('photoCouverture'),
+  articleRoute.updateArticle
+);
 
 module.exports = router;

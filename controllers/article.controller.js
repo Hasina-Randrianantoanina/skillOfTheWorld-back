@@ -35,7 +35,7 @@ module.exports.createArticle = async (req, res) => {
         description,
         photoCouverture,
       });
-      res.status(200).send(article);
+      res.status(201).send(article);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -46,7 +46,7 @@ module.exports.createArticle = async (req, res) => {
         titre,
         description,
       });
-      res.status(200).send(article);
+      res.status(201).send(article);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -59,16 +59,31 @@ module.exports.updateArticle = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "L'article n'existe pas" });
   }
-  const article = await Article.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
+  if (req.file) {
+    const photoCouverture = req.file.path;
+    const article = await Article.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+        photoCouverture,
+      }
+    );
+    if (!article) {
+      return res.status(400).json({ error: "L'article n'existe pas" });
     }
-  );
-  if (!article) {
-    return res.status(400).json({ error: "L'article n'existe pas" });
+    res.status(200).send(article);
+  } else {
+    const article = await Article.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
+    if (!article) {
+      return res.status(400).json({ error: "L'article n'existe pas" });
+    }
+    res.status(200).send(article);
   }
-  res.status(200).send(article);
 };
 
 // delete article
