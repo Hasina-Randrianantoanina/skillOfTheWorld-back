@@ -101,34 +101,30 @@ module.exports.updatEntreprise = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
   if (req.file) {
-    console.log(req.file);
-    console.log(req.body);
-    // const entreprise = await Entreprise.findOneAndUpdate(
-    //   { _id: id },
-    //   {
-    //     ...req.body,
-    //     photoCouverture: req.file.path,
-    //   }
-    // );
-    // if (!entreprise) {
-    //   return res.status(400).json({ error: "Votre id n'existe pas" });
-    // }
-
-    // res.status(200).send(entreprise);
+    const uploadLogo = req.file.path;
+    const entreprise = await Entreprise.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+        uploadLogo,
+      }
+    );
+    if (!entreprise) {
+      return res.status(400).json({ error: "Votre id n'existe pas" });
+    }
+    res.status(200).send(entreprise);
   } else {
-    console.log(req.body);
-    // const entreprise = await Entreprise.findOneAndUpdate(
-    //   { _id: id },
-    //   {
-    //     ...req.body,
-    //   }
-    // );
+    const entreprise = await Entreprise.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
+    if (!entreprise) {
+      return res.status(400).json({ error: "Votre id n'existe pas" });
+    }
 
-    // if (!entreprise) {
-    //   return res.status(400).json({ error: "Votre id n'existe pas" });
-    // }
-
-    // res.status(200).send(entreprise);
+    res.status(200).send(entreprise);
   }
 };
 
