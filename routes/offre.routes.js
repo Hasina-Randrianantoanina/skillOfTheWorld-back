@@ -32,7 +32,11 @@ router.post(
 //create offre
 router.post('/withoutfile/', offreController.createOffreWithutfile);
 //update offre
-router.patch('/update/:id', offreController.updateOffre);
+router.patch(
+  '/update/:id',
+  upload.single('uploadCouverture'),
+  offreController.updateOffre
+);
 // validation de candidat
 router.put('/validate/:id', offreController.repondreCandidat);
 

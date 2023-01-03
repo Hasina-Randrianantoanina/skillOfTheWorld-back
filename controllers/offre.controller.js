@@ -183,44 +183,34 @@ module.exports.createOffreWithutfile = async (req, res) => {
   }
 };
 
-module.exports.updateOffre = (req, res) => {
+module.exports.updateOffre = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
-
-  const updatedOffre = {
-    intitulePoste: req.body.intitulePoste,
-    localisation: req.body.localisation,
-    fonction: req.body.fonction,
-    niveauEtude: req.body.niveauEtude,
-    typeContrat: req.body.typeContrat,
-    typeTravail: req.body.typeTravail,
-    dateDebut: req.body.dateDebut,
-    delaisRecrutement: req.body.delaisRecrutement,
-    expSouhaite: req.body.expSouhaite,
-    siteWeb: req.body.siteWeb,
-    destinataire: req.body.destinataire,
-    groupe: req.body.groupe,
-    annonceAnonyme: req.body.annonceAnonyme,
-    souhaitAccompagnement: req.body.souhaitAccompagnement,
-    savoirIdeal: req.body.savoirIdeal,
-    competencesAttendues: req.body.competencesAttendues,
-    descriptionOffre: req.body.descriptionOffre,
-    pourquoiPostuler: req.body.pourquoiPostuler,
-    uploadCouverture: req.body.uploadCouverture,
-    isValidate: req.body.isValidate,
-    modePaiement: req.body.modePaiement,
-    listCandidat: [],
-  };
-
-  OffreModel.findByIdAndUpdate(
-    req.params.id,
-    { $set: updatedOffre },
-    { new: true },
-    (err, docs) => {
-      if (!err) res.send(docs);
-      else console.log("Erreur de mise à jour de l'offre : " + err);
+  if (req.file) {
+    const uploadCouverture = req.file;
+    const offre = await OffreModel.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+        uploadCouverture,
+      }
+    );
+    if (!offre) {
+      return res.status(400).json({ error: "L'offre n'existe pas" });
     }
-  );
+    res.status(200).send(offre);
+  } else {
+    const offre = await OffreModel.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        ...req.body,
+      }
+    );
+    if (!offre) {
+      return res.status(400).json({ error: "L'offre n'existe pas" });
+    }
+    res.status(200).send(offre);
+  }
 };
 
 module.exports.addCandidat = (req, res) => {
