@@ -14,11 +14,6 @@ router.get('/:id/candidat/:idCandidat', offreController.checkCandidat);
 
 //read one offre
 router.get('/:id', offreController.readOneOffre);
-// rehcerche de l'offre
-router.get('/search/:key', offreController.searchOffre);
-// recherche avance
-router.get('/searchAvance/:key', offreController.searchOffre);
-
 router.get('/entreprise/:id', offreController.readOffreEntreprise);
 
 // read status of candidat

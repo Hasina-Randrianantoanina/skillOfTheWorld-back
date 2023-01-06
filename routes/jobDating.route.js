@@ -17,9 +17,6 @@ router.get('/entreprise/:id', jobDatingRoute.getJobDAtingEntreprise);
 // GET a single job dating
 router.get('/:id', jobDatingRoute.getOneJobDating);
 
-// rehcerche de job dating
-router.get('/search/:key', jobDatingRoute.searchJobDating);
-
 //verification si le candidat a déjà fait sa demande de participation
 router.get(
   '/verification/:id/candidat/:idCandidat',
