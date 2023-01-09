@@ -231,7 +231,19 @@ module.exports.ajoutCandidat = async (req, res) => {
       res.status(200).send('Postulation avec succès');
     } catch (error) {
       console.log(error);
-      lo;
+    }
+  } else {
+    try {
+      await JobDating.findByIdAndUpdate(
+        { _id: id },
+        { $push: { listCandidat: candidat } },
+        { new: true }
+      );
+      await receiveMailFile(objet, message, req.body.cv);
+      await sendMail(req.body.email, object, texte);
+      res.status(200).send('Postulation avec succès');
+    } catch (error) {
+      console.log(error);
     }
   }
 };
@@ -253,13 +265,28 @@ module.exports.ajoutCandidaCVLM = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Le job dating n'existe pas" });
   }
-  if (req.files['lm'][0].path) {
+  if (req.body.lm) {
     try {
       await JobDating.findByIdAndUpdate(
         { _id: id },
         { $push: { listCandidat: candidat } },
         { new: true }
       );
+      await receiveCVLM(objet, message, req.body.cv, req.body.lm);
+      await sendMail(req.body.email, object, texte);
+      res.status(200).send('Postulation avec succès');
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (req.files) {
+    try {
+      await JobDating.findByIdAndUpdate(
+        { _id: id },
+        { $push: { listCandidat: candidat } },
+        { new: true }
+      );
+      if (req.files) {
+      }
       await receiveCVLM(
         objet,
         message,

@@ -99,6 +99,10 @@ const OffreSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    depublie: {
+      type: Boolean,
+      default: false,
+    },
     isValidate: {
       type: Boolean,
       default: false,
