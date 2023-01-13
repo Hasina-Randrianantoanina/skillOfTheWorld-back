@@ -69,7 +69,7 @@ module.exports.singIn = async (req, res) => {
     } else {
       // create a token
       const token = createToken(entreprise._id);
-      res.cookie('jwt', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
+      res.cookie('entreprise', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
       res.status(200).send({ entreprise: entreprise._id });
     }
   } catch (err) {
@@ -79,7 +79,7 @@ module.exports.singIn = async (req, res) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.cookie('jwt', '', { maxAge: 1 });
+  res.cookie('entreprise', '', { maxAge: 1 });
   res.redirect('/');
 };
 
@@ -220,4 +220,15 @@ module.exports.checkMailEntreprise = (req, res) => {
       res.send(docs);
     } else console.log("Impossible d'obtenir: " + err);
   });
+};
+
+module.exports.loggedInEntreprise = async (req, res) => {
+  try {
+    const token = req.cookies.entreprise;
+    if (!token) return res.json(false);
+    const checkEntreprise = await jwt.verify(token, process.env.TOKEN_SECRET);
+    res.send(checkEntreprise);
+  } catch (err) {
+    res.json(false);
+  }
 };

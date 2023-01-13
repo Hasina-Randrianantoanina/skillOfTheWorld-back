@@ -1,7 +1,7 @@
-const Admin = require("../models/Admin.model");
-const jwt = require("jsonwebtoken");
+const Admin = require('../models/Admin.model');
+const jwt = require('jsonwebtoken');
 
-const { signUperrors, signInErrors } = require("../utils/error.utils");
+const { signUperrors, signInErrors } = require('../utils/error.utils');
 
 const maxAge = 3 * 24 * 60 * 60 * 1000; // token valide pendant 3 jours
 
@@ -36,7 +36,7 @@ module.exports.signIn = async (req, res) => {
   try {
     const admin = await Admin.login(email, password);
     const token = createToken(admin._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
+    res.cookie('admin', token, { httpOnly: true, maxAge }); //token consultable uniquement par le serveur
     res.status(200).json({ admin: admin._id });
   } catch (err) {
     const errors = signInErrors(err);
@@ -45,6 +45,15 @@ module.exports.signIn = async (req, res) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
+  res.cookie('admin', '', { maxAge: 1 });
+  res.redirect('/');
+};
+module.exports.loggedInAdmin = async (req, res) => {
+  try {
+    const token = req.cookies.admin;
+    if (!token) return res.json(false);
+    res.send(jwt.verify(token, process.env.TOKEN_SECRET));
+  } catch (err) {
+    res.json(false);
+  }
 };

@@ -16,20 +16,20 @@ const articleRoute = require('./routes/article.route');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-const {
-  checkCandidat,
-  requireAuth,
-} = require('./middleware/candidat.middleware');
+// const {
+//   checkCandidat,
+//   requireAuth,
+// } = require('./middleware/candidat.middleware');
 
-const {
-  checkEntreprise,
-  requireAuthEntreprise,
-} = require('./middleware/entreprise.middleware');
+// const {
+//   checkEntreprise,
+//   requireAuthEntreprise,
+// } = require('./middleware/entreprise.middleware');
 
-const {
-  checkAdmin,
-  requireAuthAdmin,
-} = require('./middleware/admin.middleware');
+// const {
+//   checkAdmin,
+//   requireAuthAdmin,
+// } = require('./middleware/admin.middleware');
 
 const app = express();
 
@@ -51,26 +51,27 @@ app.use(cookieParser());
 
 /**Candidat*/
 //jwt
-//verification de token à chaque action dans le site
-app.get('*', checkCandidat);
-//verification de token à la première authentification
-app.get('/jwtidcandidat', requireAuth, (req, res) => {
-  res.status(200).send(res.locals.candidat._id);
-});
+// //verification de token à chaque action dans le site
+// app.get('*', checkCandidat);
+// //verification de token à la première authentification
+// app.get('/jwtidcandidat', requireAuth, (req, res) => {
+//   res.status(200).send(res.locals.candidat._id);
+// });
 
-/**Entreprise*/
-//jwt
-app.get('*', checkEntreprise);
-app.get('/jwtidentreprise', requireAuthEntreprise, (req, res) => {
-  res.status(200).send(res.locals.entreprise._id);
-});
+// /**Entreprise*/
+// //jwt
+// app.get('*', checkEntreprise);
+// app.get('/jwtidentreprise', requireAuthEntreprise, (req, res) => {
+//   res.status(200).send(res.locals.entreprise._id);
+// });
 
-/**Admin*/
-//jwt
-app.get('*', checkAdmin);
-app.get('/jwtidAdmin', requireAuthAdmin, (req, res) => {
-  res.status(200).send(res.locals.admin._id);
-});
+// /**Admin*/
+// //jwt
+// app.get('*', checkAdmin);
+// app.get('/jwtidAdmin', requireAuthAdmin, (req, res) => {
+//   res.status(200).send(res.locals.admin._id);
+// });
+
 // recevoir des mails venant de client
 app.post('/api/message', async (req, res) => {
   await receiveEmail(req.body.objet, req.body.message);

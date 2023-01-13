@@ -7,6 +7,9 @@ const uploadFile = require('../middleware/upload.file');
 router.post('/signup', candidatCtlr.signup);
 router.post('/login', candidatCtlr.singIn);
 
+//verification si le candidat est connecté
+router.get('/loggedInCandidat', candidatCtlr.loggedInCandidat);
+
 // ajout de cv
 router.patch('/addCV/:id', uploadFile.single('file1'), candidatCtlr.addCV);
 // suppression de cv

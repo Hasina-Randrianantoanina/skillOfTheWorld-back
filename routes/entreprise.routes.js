@@ -6,6 +6,7 @@ const upload = require('../middleware/upload.image');
 router.post('/signup', entrepriseCtlr.signup);
 router.post('/login', entrepriseCtlr.singIn);
 router.get('/logout', entrepriseCtlr.logout);
+router.get('/loggedInEntreprise', entrepriseCtlr.loggedInEntreprise);
 
 // get all  entreprise
 router.get('/', entrepriseCtlr.readAllEntreprise);
