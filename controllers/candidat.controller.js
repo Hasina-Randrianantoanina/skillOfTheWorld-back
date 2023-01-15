@@ -3,6 +3,8 @@ const sendEmail = require('../utils/sendEmail');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ObjectID = require('mongoose').Types.ObjectId;
+const mongoose = require('mongoose');
+const fs = require('fs');
 
 const { signUperrors, signInErrors } = require('../utils/error.utils');
 
@@ -193,7 +195,24 @@ module.exports.updateCandidat = async (req, res) => {
   const { id } = req.params;
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
+  if (req.body) {
+    const candidat = await Candidat.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
+    res.status(200).send(candidat);
+  }
   if (req.file) {
+    const candidat = await Candidat.findOneAndUpdate(
+      { _id: id },
+      {
+        uploadLogo: req.file.path,
+      }
+    );
+    res.status(200).send(candidat);
+  } else if (req.file && req.body.email !== '') {
     const candidat = await Candidat.findOneAndUpdate(
       { _id: id },
       {
@@ -201,24 +220,6 @@ module.exports.updateCandidat = async (req, res) => {
         uploadLogo: req.file.path,
       }
     );
-
-    if (!candidat) {
-      return res.status(400).json({ error: "Votre id n'existe pas" });
-    }
-
-    res.status(200).send(candidat);
-  } else {
-    const candidat = await Candidat.findOneAndUpdate(
-      { _id: id },
-      {
-        ...req.body,
-      }
-    );
-
-    if (!candidat) {
-      return res.status(400).json({ error: "Votre id n'existe pas" });
-    }
-
     res.status(200).send(candidat);
   }
 };
@@ -328,4 +329,21 @@ module.exports.loggedInCandidat = async (req, res) => {
   } catch (err) {
     res.json(false);
   }
+};
+
+// delete a candidat
+module.exports.deleteCandidat = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Le candidat n'existe pas" });
+  }
+
+  const candidat = await Candidat.findOneAndDelete({ _id: id });
+
+  if (!candidat) {
+    return res.status(400).json({ error: "Le candidat n'existe pas" });
+  }
+
+  res.status(200).json(candidat);
 };

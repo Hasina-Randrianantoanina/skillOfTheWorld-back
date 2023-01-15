@@ -35,5 +35,7 @@ router.patch('/action/:id', candidatCtlr.updateCandidatAction);
 router.patch('/initialise/:id', candidatCtlr.updatePassword);
 // reset password by email
 router.patch('/reset/:id', candidatCtlr.updatePasswordEmail);
+//delete a candidat
+router.delete('/delete/:id', candidatCtlr.deleteCandidat);
 
 module.exports = router;
