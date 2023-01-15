@@ -56,9 +56,7 @@ module.exports.signup = async (req, res) => {
 };
 
 module.exports.singIn = async (req, res) => {
-  console.log('par ici ****');
   const { email, password } = req.body;
-
   try {
     const entreprise = await Entreprise.login(email, password);
 

@@ -53,7 +53,6 @@ module.exports.signup = async (req, res) => {
 };
 
 module.exports.singIn = async (req, res) => {
-  console.log('eto ****');
   const { email, password } = req.body;
 
   try {
