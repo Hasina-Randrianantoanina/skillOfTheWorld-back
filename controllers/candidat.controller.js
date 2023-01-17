@@ -54,7 +54,6 @@ module.exports.signup = async (req, res) => {
 
 module.exports.singIn = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const candidat = await Candidat.login(email, password);
     if (candidat.isVerified === false) {

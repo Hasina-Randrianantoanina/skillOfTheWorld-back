@@ -65,6 +65,7 @@ module.exports.createJobDating = async (req, res) => {
       savoirIdeal,
       pourquoiPostuler,
       lienJobDating,
+      modePaiement,
       isPublie,
     } = req.body;
     try {
@@ -85,6 +86,7 @@ module.exports.createJobDating = async (req, res) => {
         competencesAttendues,
         savoirIdeal,
         photoCouverture,
+        modePaiement,
         pourquoiPostuler,
         lienJobDating,
         isPublie,
@@ -108,6 +110,7 @@ module.exports.createJobDating = async (req, res) => {
       siteWeb,
       lienConnexion,
       description,
+      modePaiement,
       competencesAttendues,
       savoirIdeal,
       pourquoiPostuler,
@@ -127,6 +130,7 @@ module.exports.createJobDating = async (req, res) => {
         delaisRecrutement,
         expSouhaite,
         siteWeb,
+        modePaiement,
         lienConnexion,
         description,
         competencesAttendues,

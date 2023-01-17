@@ -91,6 +91,9 @@ const JobDatingSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    modePaiement: {
+      type: String,
+    },
     listCandidat: [
       {
         candidatId: {
