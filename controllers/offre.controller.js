@@ -15,6 +15,15 @@ module.exports.readOffreValide = async (req, res) => {
   res.status(200).json(offre);
 };
 
+module.exports.readOffreNonValide = async (req, res) => {
+  const offre = await OffreModel.find({ isValidate: false });
+  res.status(200).json(offre);
+};
+module.exports.readOffreDepublie = async (req, res) => {
+  const offre = await OffreModel.find({ depublie: true });
+  res.status(200).json(offre);
+};
+
 module.exports.readOffreEntreprise = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID teste : ' + req.params.id);
@@ -99,14 +108,19 @@ module.exports.createOffre = async (req, res) => {
   });
 
   try {
-    const offre = await newOffre.save();
     if (req.body.souhaitAccompagnement === true) {
-      const message = `${req.body.nomEntreprise} ,${req.body.email} demande accompagnement total de recrutement`;
       await receiveEmail(
         "Demande d'accompagnement total de recrutement",
-        message
+        `${req.body.nomEntreprise} ,${req.body.email} demande accompagnement total de recrutement`
       );
     }
+    await receiveEmail(
+      `Nouvelle offre d'emploi en attente`,
+      `Bonjour,
+    Une nouvelle offre ${req.body.intitulePoste} est en attente de validation. 
+    Cliquez sur ce lien pour consulter les offres en attente ${process.env.CLIENT_URL}/validationOffre `
+    );
+    const offre = await newOffre.save();
     return res.status(201).send(offre);
   } catch (err) {
     return res.status(400).send(err);
@@ -146,6 +160,12 @@ module.exports.createOffreWithutfile = async (req, res) => {
         message
       );
     }
+    await receiveEmail(
+      `Nouvelle offre d'emploi en attente`,
+      `Bonjour,
+    Une nouvelle offre ${req.body.intitulePoste} est en attente de validation. 
+    Cliquez sur ce lien pour consulter les offres en attente ${process.env.CLIENT_URL}/validationOffre `
+    );
     return res.status(201).send(offre);
   } catch (err) {
     return res.status(400).send(err);
@@ -156,7 +176,7 @@ module.exports.updateOffre = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
   if (req.file) {
-    const uploadCouverture = req.file;
+    const uploadCouverture = req.file.path;
     const offre = await OffreModel.findOneAndUpdate(
       { _id: id },
       {

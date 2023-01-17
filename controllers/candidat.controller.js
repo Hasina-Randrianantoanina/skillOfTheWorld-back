@@ -201,8 +201,7 @@ module.exports.updateCandidat = async (req, res) => {
       }
     );
     res.status(200).send(candidat);
-  }
-  if (req.file) {
+  } else if (req.file) {
     const candidat = await Candidat.findOneAndUpdate(
       { _id: id },
       {

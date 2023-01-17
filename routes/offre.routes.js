@@ -6,6 +6,10 @@ const upload = require('../middleware/upload.file');
 router.get('/', offreController.readOffre);
 // read all offre where isValidate : true
 router.get('/valide/', offreController.readOffreValide);
+// read all offre where isValidate : false
+router.get('/nonvalide/', offreController.readOffreNonValide);
+// read all offre where depublie
+router.get('/depublie/', offreController.readOffreDepublie);
 
 // afficher les offres que candidat a envoyer son CV
 router.get('/postule/:id', offreController.readOffreCandidatPostule);
