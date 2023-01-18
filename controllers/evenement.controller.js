@@ -135,11 +135,12 @@ module.exports.deleteEvenement = async (req, res) => {
 // update a evenement
 module.exports.updateEvenement = async (req, res) => {
   const { id } = req.params;
-  const photoCouverture = req.file.path;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "L'evenement n'existe pas" });
   }
   if (req.file) {
+    const photoCouverture = req.file.path;
     const evenement = await Evenement.findOneAndUpdate(
       { _id: id },
       {

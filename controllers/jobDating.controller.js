@@ -149,12 +149,12 @@ module.exports.createJobDating = async (req, res) => {
 // update job Dating
 module.exports.updateJobDating = async (req, res) => {
   const { id } = req.params;
-  const photoCouverture = req.file.path;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Le job dating n'existe pas" });
   }
-
   if (req.file) {
+    const photoCouverture = req.file.path;
     const jobDating = await JobDating.findOneAndUpdate(
       { _id: id },
       {
