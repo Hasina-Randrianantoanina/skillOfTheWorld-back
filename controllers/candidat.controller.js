@@ -197,7 +197,7 @@ module.exports.updateCandidat = async (req, res) => {
     const candidat = await Candidat.findOneAndUpdate(
       { _id: id },
       {
-        ...req.body,
+        email: req.body.email,
       }
     );
     res.status(200).send(candidat);
@@ -205,15 +205,7 @@ module.exports.updateCandidat = async (req, res) => {
     const candidat = await Candidat.findOneAndUpdate(
       { _id: id },
       {
-        uploadLogo: req.file.path,
-      }
-    );
-    res.status(200).send(candidat);
-  } else if (req.file && req.body.email !== '') {
-    const candidat = await Candidat.findOneAndUpdate(
-      { _id: id },
-      {
-        ...req.body,
+        email: req.body.email,
         uploadLogo: req.file.path,
       }
     );
