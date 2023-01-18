@@ -149,45 +149,39 @@ module.exports.createJobDating = async (req, res) => {
 // update job Dating
 module.exports.updateJobDating = async (req, res) => {
   const { id } = req.params;
-
+  const photoCouverture = req.file.path;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Le job dating n'existe pas" });
   }
 
-  const jobDating = await JobDating.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
+  if (req.file) {
+    const jobDating = await JobDating.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+        photoCouverture,
+      }
+    );
+
+    if (!jobDating) {
+      return res.status(400).json({ error: "Le job dating n'existe pas" });
     }
-  );
 
-  if (!jobDating) {
-    return res.status(400).json({ error: "Le job dating n'existe pas" });
-  }
+    res.status(200).send(jobDating);
+  } else {
+    const jobDating = await JobDating.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
 
-  res.status(200).send(jobDating);
-};
-// update job Dating with image
-module.exports.updateJobDatingImage = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "Le job dating n'existe pas" });
-  }
-
-  const jobDating = await JobDating.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
-      photoCouverture: req.file.path,
+    if (!jobDating) {
+      return res.status(400).json({ error: "Le job dating n'existe pas" });
     }
-  );
 
-  if (!jobDating) {
-    return res.status(400).json({ error: "Le job dating n'existe pas" });
+    res.status(200).send(jobDating);
   }
-
-  res.status(200).send(jobDating);
 };
 
 // delete a job dating

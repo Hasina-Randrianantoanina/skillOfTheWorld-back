@@ -135,19 +135,34 @@ module.exports.deleteEvenement = async (req, res) => {
 // update a evenement
 module.exports.updateEvenement = async (req, res) => {
   const { id } = req.params;
+  const photoCouverture = req.file.path;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "L'evenement n'existe pas" });
   }
-  const evenement = await Evenement.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
+  if (req.file) {
+    const evenement = await Evenement.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+        photoCouverture,
+      }
+    );
+    if (!evenement) {
+      return res.status(400).json({ error: "L'evenement n'existe pas" });
     }
-  );
-  if (!evenement) {
-    return res.status(400).json({ error: "L'evenement n'existe pas" });
+    res.status(200).send(evenement);
+  } else {
+    const evenement = await Evenement.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
+    if (!evenement) {
+      return res.status(400).json({ error: "L'evenement n'existe pas" });
+    }
+    res.status(200).send(evenement);
   }
-  res.status(200).send(evenement);
 };
 
 module.exports.ajoutCandidat = async (req, res) => {

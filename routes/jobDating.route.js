@@ -36,13 +36,10 @@ router.patch('/participation/:id', jobDatingRoute.ajoutCandidat);
 router.delete('/:id', jobDatingRoute.deleteJobDating);
 
 // UPDATE a job dating
-router.patch('/:id', jobDatingRoute.updateJobDating);
-
-// UPDATE a job dating with image
 router.patch(
-  '/image/:id',
+  '/:id',
   upload.single('photoCouverture'),
-  jobDatingRoute.updateJobDatingImage
+  jobDatingRoute.updateJobDating
 );
 
 router.patch(

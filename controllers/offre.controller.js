@@ -178,7 +178,7 @@ module.exports.updateOffre = async (req, res) => {
   if (req.file) {
     const uploadCouverture = req.file.path;
     const offre = await OffreModel.findOneAndUpdate(
-      { _id: id },
+      { _id: req.params.id },
       {
         ...req.body,
         uploadCouverture,

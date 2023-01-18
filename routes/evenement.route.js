@@ -33,7 +33,11 @@ router.post(
 router.delete('/:id', evenementRoute.deleteEvenement);
 
 // UPDATE a evenement
-router.patch('/:id', evenementRoute.updateEvenement);
+router.patch(
+  '/:id',
+  upload.single('photoCouverture'),
+  evenementRoute.updateEvenement
+);
 // participation des candidats
 router.patch('/postule/:id', evenementRoute.ajoutCandidat);
 
