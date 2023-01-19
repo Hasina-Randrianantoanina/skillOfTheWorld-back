@@ -8,7 +8,7 @@ const sendMail = require('../utils/sendEmail');
 // get all job dating publie
 module.exports.getJobDatingValide = async (req, res) => {
   const jobDating = await JobDating.find({ isPublie: true }).sort({
-    createdAt: -1,
+    updatedAt: -1,
   });
   res.status(200).send(jobDating);
 };
@@ -16,7 +16,7 @@ module.exports.getJobDatingValide = async (req, res) => {
 // get all job dating not publie
 module.exports.getJobDatingNonValide = async (req, res) => {
   const jobDating = await JobDating.find({ isPublie: false }).sort({
-    createdAt: -1,
+    updatedAt: -1,
   });
 
   res.status(200).send(jobDating);
@@ -25,7 +25,7 @@ module.exports.getJobDatingNonValide = async (req, res) => {
 //get all job dating for entreprise
 module.exports.getJobDAtingEntreprise = async (req, res) => {
   const jobDating = await JobDating.find({ entrepriseId: req.params.id }).sort({
-    createdAt: -1,
+    updatedAt: -1,
   });
   res.status(200).send(jobDating);
 };

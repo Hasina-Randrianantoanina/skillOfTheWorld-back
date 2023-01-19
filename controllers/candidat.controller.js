@@ -193,20 +193,21 @@ module.exports.updateCandidat = async (req, res) => {
   const { id } = req.params;
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
-  if (req.body) {
+  if (req.file) {
+    const uploadLogo = req.file.path;
     const candidat = await Candidat.findOneAndUpdate(
       { _id: id },
       {
-        email: req.body.email,
+        ...req.body,
+        uploadLogo,
       }
     );
     res.status(200).send(candidat);
-  } else if (req.file) {
+  } else {
     const candidat = await Candidat.findOneAndUpdate(
       { _id: id },
       {
-        email: req.body.email,
-        uploadLogo: req.file.path,
+        ...req.body,
       }
     );
     res.status(200).send(candidat);

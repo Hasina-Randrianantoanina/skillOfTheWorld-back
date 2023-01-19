@@ -72,7 +72,8 @@ module.exports.singIn = async (req, res) => {
     }
   } catch (err) {
     const errors = signInErrors(err);
-    res.status(400).send({ errors });
+    res.status(202).send({ errors });
+    // res.status(202).send('erreur mot de passe ou email');
   }
 };
 
