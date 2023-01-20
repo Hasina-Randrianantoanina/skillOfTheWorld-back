@@ -7,7 +7,7 @@ const ObjectID = require('mongoose').Types.ObjectId;
 // get all evenement publie
 module.exports.getEvenementValide = async (req, res) => {
   const evenement = await Evenement.find({ isPublie: true }).sort({
-    updatedAt: -1,
+    createdAt: -1,
   });
 
   res.status(200).send(evenement);
@@ -16,7 +16,7 @@ module.exports.getEvenementValide = async (req, res) => {
 // get all evenement not publie
 module.exports.getEvenementNonValide = async (req, res) => {
   const evenement = await Evenement.find({ isPublie: false }).sort({
-    updatedAt: -1,
+    createdAt: -1,
   });
 
   res.status(200).send(evenement);
@@ -25,7 +25,7 @@ module.exports.getEvenementNonValide = async (req, res) => {
 // get all evenement for entreprise
 module.exports.getEvenementsEntreprise = async (req, res) => {
   const evenement = await Evenement.find({ idEntreprise: req.params.id }).sort({
-    updatedAt: -1,
+    createdAt: -1,
   });
 
   res.status(200).send(evenement);
