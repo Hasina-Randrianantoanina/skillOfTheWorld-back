@@ -7,22 +7,17 @@ const router = express.Router();
 
 // GET all job dating publie
 router.get('/publie', jobDatingRoute.getJobDatingValide);
-
 // GET all job dating not publie
 router.get('/notpublie', jobDatingRoute.getJobDatingNonValide);
-
 // GET all job dating from entreprise
 router.get('/entreprise/:id', jobDatingRoute.getJobDAtingEntreprise);
-
 // GET a single job dating
 router.get('/:id', jobDatingRoute.getOneJobDating);
-
 //verification si le candidat a déjà fait sa demande de participation
 router.get(
   '/verification/:id/candidat/:idCandidat',
   jobDatingRoute.checkCandidat
 );
-
 // POST a new job dating
 router.post(
   '/',
@@ -41,7 +36,6 @@ router.patch(
   upload.single('photoCouverture'),
   jobDatingRoute.updateJobDating
 );
-
 router.patch(
   '/postule/:id',
   uploadFile.single('cv'),

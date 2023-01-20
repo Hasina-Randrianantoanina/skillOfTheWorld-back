@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const OffreSchema = new mongoose.Schema(
   {
     offreId: {

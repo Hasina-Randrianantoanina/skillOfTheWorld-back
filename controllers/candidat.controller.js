@@ -213,7 +213,6 @@ module.exports.updateCandidat = async (req, res) => {
     res.status(200).send(candidat);
   }
 };
-
 // update candidat without file
 module.exports.updateCandidatAction = async (req, res) => {
   const { id } = req.params;
@@ -227,11 +226,9 @@ module.exports.updateCandidatAction = async (req, res) => {
       ...req.body,
     }
   );
-
   if (!candidat) {
     return res.status(400).json({ error: "Votre id n'existe pas" });
   }
-
   res.status(200).send(candidat);
 };
 //update a password

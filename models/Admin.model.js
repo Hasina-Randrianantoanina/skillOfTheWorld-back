@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { isEmail } = require('validator');
-
 const adminSchema = mongoose.Schema(
   {
     nom: {
@@ -54,5 +53,4 @@ adminSchema.statics.login = async function (email, password) {
   }
   throw Error('email incorrect');
 };
-
 module.exports = mongoose.model('Admin', adminSchema);

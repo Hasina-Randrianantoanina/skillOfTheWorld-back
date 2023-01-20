@@ -5,15 +5,12 @@ const jwt = require('jsonwebtoken');
 const ObjectID = require('mongoose').Types.ObjectId;
 
 const { signUperrors, signInErrors } = require('../utils/error.utils');
-
 const maxAge = 3 * 24 * 60 * 60 * 1000; // token valide pendant 3 jours
-
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.TOKEN_SECRET, {
     expiresIn: maxAge,
   });
 };
-
 module.exports.signup = async (req, res) => {
   const {
     nomEntreprise,

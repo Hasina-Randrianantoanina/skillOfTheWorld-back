@@ -1,10 +1,7 @@
 const Admin = require('../models/Admin.model');
 const jwt = require('jsonwebtoken');
-
 const { signUperrors, signInErrors } = require('../utils/error.utils');
-
-const maxAge = 3 * 24 * 60 * 60 * 1000; // token valide pendant 3 jours
-
+const maxAge = 3 * 24 * 60 * 60 * 1000; // durer de vie de token est 3 jours
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.TOKEN_SECRET, {
     expiresIn: maxAge,

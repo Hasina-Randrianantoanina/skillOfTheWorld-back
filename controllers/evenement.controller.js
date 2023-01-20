@@ -21,7 +21,6 @@ module.exports.getEvenementNonValide = async (req, res) => {
 
   res.status(200).send(evenement);
 };
-
 // get all evenement for entreprise
 module.exports.getEvenementsEntreprise = async (req, res) => {
   const evenement = await Evenement.find({ idEntreprise: req.params.id }).sort({
