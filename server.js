@@ -4,6 +4,7 @@ const path = require('path');
 const receiveEmail = require('./utils/receiveEmail');
 const express = require('express');
 const cors = require('cors');
+
 const candidatRoute = require('./routes/candidat.routes');
 const entrepriseRoute = require('./routes/entreprise.routes');
 const offreRoute = require('./routes/offre.routes');
@@ -11,21 +12,27 @@ const adminRoute = require('./routes/admin.routes');
 const evenementRoute = require('./routes/evenement.route');
 const jobDAtingRoute = require('./routes/jobDating.route');
 const articleRoute = require('./routes/article.route');
+
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+
 // const {
 //   checkCandidat,
 //   requireAuth,
 // } = require('./middleware/candidat.middleware');
+
 // const {
 //   checkEntreprise,
 //   requireAuthEntreprise,
 // } = require('./middleware/entreprise.middleware');
+
 // const {
 //   checkAdmin,
 //   requireAuthAdmin,
 // } = require('./middleware/admin.middleware');
+
 const app = express();
+
 //app.use(express.json());
 //app.use(cors());
 const corsOptions = {
