@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const receiveMailFile = require('../utils/receiveMailFile');
 const receiveCVLM = require('../utils/receiveCVLM');
 const sendMail = require('../utils/sendEmail');
+const { s3Uploadv2 } = require('../s3service');
 
 // get all job dating publie
 module.exports.getJobDatingValide = async (req, res) => {
@@ -46,7 +47,9 @@ module.exports.getOneJobDating = async (req, res) => {
 // create a new job dating
 module.exports.createJobDating = async (req, res) => {
   if (req.file) {
-    const photoCouverture = req.file.path;
+    const file = req.file;
+    const result = await s3Uploadv2(req.body.entrepriseId, file);
+    const photoCouverture = `uploads/${req.body.entrepriseId}-${req.file.originalname}`;
     const {
       entrepriseId,
       intitulePoste,
@@ -154,7 +157,10 @@ module.exports.updateJobDating = async (req, res) => {
     return res.status(400).json({ error: "Le job dating n'existe pas" });
   }
   if (req.file) {
-    const photoCouverture = req.file.path;
+    const file = req.file;
+    const result = await s3Uploadv2(id, file);
+    const photoCouverture = `uploads/${id}-${req.file.originalname}`;
+
     const jobDating = await JobDating.findOneAndUpdate(
       { _id: id },
       {

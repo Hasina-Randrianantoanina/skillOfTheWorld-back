@@ -4,7 +4,6 @@ const path = require('path');
 const receiveEmail = require('./utils/receiveEmail');
 const express = require('express');
 const cors = require('cors');
-
 const candidatRoute = require('./routes/candidat.routes');
 const entrepriseRoute = require('./routes/entreprise.routes');
 const offreRoute = require('./routes/offre.routes');
@@ -12,6 +11,7 @@ const adminRoute = require('./routes/admin.routes');
 const evenementRoute = require('./routes/evenement.route');
 const jobDAtingRoute = require('./routes/jobDating.route');
 const articleRoute = require('./routes/article.route');
+const { generateUploadURL } = require('./s3');
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -71,6 +71,10 @@ app.use(cookieParser());
 // app.get('/jwtidAdmin', requireAuthAdmin, (req, res) => {
 //   res.status(200).send(res.locals.admin._id);
 // });
+app.get('/getURL', async (req, res) => {
+  const url = await generateUploadURL();
+  res.send(url);
+});
 
 // recevoir des mails venant de client
 app.post('/api/message', async (req, res) => {

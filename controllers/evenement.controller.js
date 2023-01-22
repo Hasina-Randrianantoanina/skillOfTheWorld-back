@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const sendMail = require('../utils/sendEmail');
 const receiveMail = require('../utils/receiveEmail');
 const ObjectID = require('mongoose').Types.ObjectId;
+const { s3Uploadv2 } = require('../s3service');
 
 // get all evenement publie
 module.exports.getEvenementValide = async (req, res) => {
@@ -50,7 +51,10 @@ module.exports.getEvenement = async (req, res) => {
 // create a new evenement
 module.exports.createEvenement = async (req, res) => {
   if (req.file) {
-    const photoCouverture = req.file.path;
+    const file = req.file;
+    const result = await s3Uploadv2(req.body.idEntreprise, file);
+    const photoCouverture = `uploads/${req.body.idEntreprise}-${req.file.originalname}`;
+
     const {
       idEntreprise,
       nomEntreprise,
@@ -139,7 +143,10 @@ module.exports.updateEvenement = async (req, res) => {
     return res.status(400).json({ error: "L'evenement n'existe pas" });
   }
   if (req.file) {
-    const photoCouverture = req.file.path;
+    const file = req.file;
+    const result = await s3Uploadv2(id, file);
+    const photoCouverture = `uploads/${id}-${req.file.originalname}`;
+
     const evenement = await Evenement.findOneAndUpdate(
       { _id: id },
       {

@@ -3,6 +3,7 @@ const sendEmail = require('../utils/sendEmail');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ObjectID = require('mongoose').Types.ObjectId;
+const { s3Uploadv2 } = require('../s3service');
 
 const { signUperrors, signInErrors } = require('../utils/error.utils');
 const maxAge = 3 * 24 * 60 * 60 * 1000; // token valide pendant 3 jours
@@ -23,9 +24,11 @@ module.exports.signup = async (req, res) => {
     nombreSalaire,
     isVerified,
     siteWeb,
-    uploadLogo,
     password,
   } = req.body;
+  const file = req.file;
+  const result = await s3Uploadv2(telephone, file);
+  const uploadLogo = `uploads/${telephone}-${req.file.originalname}`;
 
   try {
     const entreprise = await Entreprise.create({
@@ -43,6 +46,7 @@ module.exports.signup = async (req, res) => {
       password,
     });
     // res.status(201).json({ entreprise: entreprise._id });
+
     res.status(201).send(entreprise);
     const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.CLIENT_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions. `;
     await sendEmail(entreprise.email, 'Verification email', url);
@@ -97,7 +101,9 @@ module.exports.updatEntreprise = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
   if (req.file) {
-    const uploadLogo = req.file.path;
+    const file = req.file;
+    const result = await s3Uploadv2(id, file);
+    const uploadLogo = `uploads/${id}-${req.file.originalname}`;
     const entreprise = await Entreprise.findOneAndUpdate(
       { _id: id },
       {

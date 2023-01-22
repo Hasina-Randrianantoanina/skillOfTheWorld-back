@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ObjectID = require('mongoose').Types.ObjectId;
 const mongoose = require('mongoose');
+const { s3Uploadv2 } = require('../s3service');
 const fs = require('fs');
 
 const { signUperrors, signInErrors } = require('../utils/error.utils');
@@ -89,12 +90,16 @@ module.exports.readOneCandidat = (req, res) => {
 };
 
 // candidat add CV
-module.exports.addCV = (req, res) => {
+module.exports.addCV = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
 
+  const file = req.file;
+  const result = await s3Uploadv2(req.params.id, file);
+  const uploadLogo = `uploads/${req.params.id}-${req.file.originalname}`;
+
   var myCV = {
-    file1_path: req.file.path,
+    file1_path: uploadLogo,
     file1_mimetype: req.file.mimetype,
   };
   Candidat.findByIdAndUpdate(
@@ -147,12 +152,16 @@ module.exports.verificationCandidat = async (req, res) => {
 };
 
 // ajout de lm au candidat
-module.exports.addLM = (req, res) => {
+module.exports.addLM = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
 
+  const file = req.file;
+  const result = await s3Uploadv2(req.params.id, file);
+  const uploadLogo = `uploads/${req.params.id}-${req.file.originalname}`;
+
   var myLM = {
-    file1_path: req.file.path,
+    file1_path: uploadLogo,
     file1_mimetype: req.file.mimetype,
   };
 
@@ -194,7 +203,10 @@ module.exports.updateCandidat = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
   if (req.file) {
-    const uploadLogo = req.file.path;
+    // save to Bucket AWS S3
+    const file = req.file;
+    const result = await s3Uploadv2(req.params.id, file);
+    const uploadLogo = `uploads/${req.params.id}-${req.file.originalname}`;
     const candidat = await Candidat.findOneAndUpdate(
       { _id: id },
       {

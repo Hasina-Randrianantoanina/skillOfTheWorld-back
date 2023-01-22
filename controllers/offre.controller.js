@@ -1,6 +1,7 @@
 const OffreModel = require('../models/Offre.model');
 const sendEmail = require('../utils/sendEmail');
 const receiveEmail = require('../utils/receiveEmail');
+const { s3Uploadv2 } = require('../s3service');
 const ObjectID = require('mongoose').Types.ObjectId;
 
 module.exports.readOffre = (req, res) => {
@@ -84,6 +85,10 @@ module.exports.readOneOffre = (req, res) => {
 };
 
 module.exports.createOffre = async (req, res) => {
+  // save to Bucket AWS S3
+  const file = req.file;
+  const result = await s3Uploadv2(req.body.offreId, file);
+  const uploadCouverture = `uploads/${req.body.offreId}-${req.file.originalname}`;
   const newOffre = new OffreModel({
     offreId: req.body.offreId,
     intitulePoste: req.body.intitulePoste,
@@ -104,7 +109,7 @@ module.exports.createOffre = async (req, res) => {
     competencesAttendues: req.body.competencesAttendues,
     descriptionOffre: req.body.descriptionOffre,
     pourquoiPostuler: req.body.pourquoiPostuler,
-    uploadCouverture: req.file.path,
+    uploadCouverture: uploadCouverture,
     modePaiement: req.body.modePaiement,
     listCandidat: [],
   });
@@ -178,7 +183,13 @@ module.exports.updateOffre = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
   if (req.file) {
-    const uploadCouverture = req.file.path;
+    // save to Bucket AWS S3
+    const file = req.file;
+    const result = await s3Uploadv2(req.params.id, file);
+
+    // save to mongodb cloud
+    // const uploadCouverture = req.file.path;
+    const uploadCouverture = `uploads/${req.params.id}-${req.file.originalname}`;
     const offre = await OffreModel.findOneAndUpdate(
       { _id: req.params.id },
       {
@@ -187,7 +198,9 @@ module.exports.updateOffre = async (req, res) => {
       }
     );
     if (!offre) {
-      return res.status(400).json({ error: "L'offre n'existe pas" });
+      return res
+        .status(400)
+        .json({ error: "L'offre n'existe pas", resultat: result });
     }
     res.status(200).send(offre);
   } else {

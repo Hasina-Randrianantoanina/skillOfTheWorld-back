@@ -1,13 +1,6 @@
 const multer = require('multer');
 module.exports = multer({
-  storage: multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, './files');
-    },
-    filename(req, file, cb) {
-      cb(null, `${new Date().getTime()}_${file.originalname}`);
-    },
-  }),
+  storage: multer.memoryStorage({}),
   limits: {
     fileSize: 1000000, // max file size 1MB = 1000000 bytes
   },
