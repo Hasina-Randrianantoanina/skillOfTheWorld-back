@@ -217,16 +217,25 @@ module.exports.updateOffre = async (req, res) => {
   }
 };
 
-module.exports.addCandidat = (req, res) => {
+module.exports.addCandidat = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  const cv = req.files['file1'][0];
+  const lm = req.files['file2'][0];
+  const sendcv = await s3Uploadv2(req.params.id, cv);
+  const sendlm = await s3Uploadv2(req.params.id, lm);
+
+  const cvfile = `uploads/${req.params.id}-${cv.originalname}`;
+  const lmfile = `uploads/${req.params.id}-${lm.originalname}`;
+
   const candidat = {
     candidatId: req.body.candidatId,
     resultat: req.body.resultat,
-    file1_path: req.files['file1'][0].path,
-    file1_mimetype: req.files['file1'][0].mimetype,
-    file2_path: req.files['file2'][0].path,
-    file2_mimetype: req.files['file2'][0].mimetype,
+    file1_path: cvfile,
+    file1_mimetype: cv.mimetype,
+    file2_path: lmfile,
+    file2_mimetype: lm.mimetype,
   };
 
   OffreModel.findByIdAndUpdate(
@@ -263,15 +272,19 @@ module.exports.addCandidatTheque = (req, res) => {
   );
 };
 
-module.exports.addCandidatCV = (req, res) => {
+module.exports.addCandidatCV = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  const file = req.file;
+  const result = await s3Uploadv2(req.params.id, file);
+  const cvfile = `uploads/${req.params.id}-${req.file.originalname}`;
 
   const candidat = {
     candidatId: req.body.candidatId,
     resultat: req.body.resultat,
-    file1_path: req.file.path,
-    file1_mimetype: req.file.mimetype,
+    file1_path: cvfile,
+    file1_mimetype: file.mimetype,
   };
 
   OffreModel.findByIdAndUpdate(
