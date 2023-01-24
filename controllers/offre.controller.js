@@ -12,7 +12,10 @@ module.exports.readOffre = (req, res) => {
 };
 
 module.exports.readOffreValide = async (req, res) => {
-  const offre = await OffreModel.find({ isValidate: true }).sort({
+  const offre = await OffreModel.find({
+    isValidate: true,
+    depublie: false,
+  }).sort({
     createdAt: -1,
   });
   res.status(200).json(offre);
