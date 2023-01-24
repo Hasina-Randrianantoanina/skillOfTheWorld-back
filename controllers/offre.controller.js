@@ -242,9 +242,14 @@ module.exports.addCandidat = async (req, res) => {
     { _id: req.params.id },
     { $push: { listCandidat: candidat } },
     { new: true },
-    (err, docs) => {
+    async (err, docs) => {
       if (!err) {
         res.send(docs);
+        await receiveEmail(
+          `Nouvelle candidature d'emploi en attente`,
+          `Bonjour,
+        Une nouvelle candidature  est en attente de validation.`
+        );
       } else console.log("Erreur de mise à jour de l'offre : " + err);
     }
   );
@@ -264,9 +269,14 @@ module.exports.addCandidatTheque = (req, res) => {
     { _id: req.params.id },
     { $push: { listCandidat: candidat } },
     { new: true },
-    (err, docs) => {
+    async (err, docs) => {
       if (!err) {
         res.send(docs);
+        await receiveEmail(
+          `Nouvelle candidature d'emploi en attente`,
+          `Bonjour,
+        Une nouvelle candidature  est en attente de validation.`
+        );
       } else console.log("Erreur de mise à jour de l'offre : " + err);
     }
   );
@@ -291,9 +301,14 @@ module.exports.addCandidatCV = async (req, res) => {
     { _id: req.params.id },
     { $push: { listCandidat: candidat } },
     { new: true },
-    (err, docs) => {
+    async (err, docs) => {
       if (!err) {
         res.send(docs);
+        await receiveEmail(
+          `Nouvelle candidature d'emploi en attente`,
+          `Bonjour,
+        Une nouvelle candidature  est en attente de validation.`
+        );
       } else console.log("Erreur de mise à jour de l'offre : " + err);
     }
   );
@@ -302,7 +317,6 @@ module.exports.addCandidatCV = async (req, res) => {
 module.exports.addCandidatCVTheque = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
-
   const candidat = {
     candidatId: req.body.candidatId,
     resultat: req.body.resultat,

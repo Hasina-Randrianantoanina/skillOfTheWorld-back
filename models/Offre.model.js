@@ -67,12 +67,10 @@ const OffreSchema = new mongoose.Schema(
     },
     annonceAnonyme: {
       type: Boolean,
-      require: true,
     },
 
     souhaitAccompagnement: {
       type: Boolean,
-      require: true,
     },
     savoirIdeal: {
       type: String,

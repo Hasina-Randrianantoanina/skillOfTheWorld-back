@@ -58,7 +58,6 @@ module.exports.createArticle = async (req, res) => {
 
 // update article
 module.exports.updateArticle = async (req, res) => {
-  console.log(req.file);
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "L'article n'existe pas" });

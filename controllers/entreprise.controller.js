@@ -26,9 +26,6 @@ module.exports.signup = async (req, res) => {
     siteWeb,
     password,
   } = req.body;
-  const file = req.file;
-  const result = await s3Uploadv2(telephone, file);
-  const uploadLogo = `uploads/${telephone}-${req.file.originalname}`;
 
   try {
     const entreprise = await Entreprise.create({
@@ -42,7 +39,6 @@ module.exports.signup = async (req, res) => {
       nombreSalaire,
       siteWeb,
       isVerified,
-      uploadLogo,
       password,
     });
     // res.status(201).json({ entreprise: entreprise._id });
