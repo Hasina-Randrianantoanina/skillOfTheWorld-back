@@ -1,5 +1,6 @@
 const Entreprise = require('../models/Entreprise.model');
 const sendEmail = require('../utils/sendEmail');
+const receiveEmail = require('../utils/receiveEmail');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ObjectID = require('mongoose').Types.ObjectId;
@@ -41,11 +42,13 @@ module.exports.signup = async (req, res) => {
       isVerified,
       password,
     });
-    // res.status(201).json({ entreprise: entreprise._id });
-
-    res.status(201).send(entreprise);
     const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.CLIENT_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions. `;
+    await receiveEmail(
+      "Inscription d'une nouvelle entreprise",
+      `${req.body.nomEntreprise} viens de faire une inscription sur la plateforme.`
+    );
     await sendEmail(entreprise.email, 'Verification email', url);
+    res.status(201).send(entreprise);
   } catch (err) {
     const errors = signUperrors(err);
     res.status(200).send({ errors });
