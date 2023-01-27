@@ -44,6 +44,10 @@ const candidatSchema = mongoose.Schema(
     uploadLogo: {
       type: String,
     },
+    secteurActivite: {
+      type: String,
+    },
+
     listLM: [
       {
         file1_path: {
