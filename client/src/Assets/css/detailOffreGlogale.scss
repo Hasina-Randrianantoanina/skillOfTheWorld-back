@@ -1,0 +1,413 @@
+@import "../css/index.scss";
+
+.outerDivDetail {
+  position: relative;
+  width: min(375px, 100%);
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerDivDetail {
+    position: relative;
+    top: 110px;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+
+    .linkRetour {
+      @include Link;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    h2 {
+      font-size: 40px;
+      font-family: poppinsLight;
+      color: $heading_color;
+    }
+
+    button {
+      width: max-content;
+      margin-top: 10px;
+      background: #112443;
+      padding: 10px 30px;
+      color: white;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      transition: 0.5s;
+
+      &:hover {
+        cursor: pointer;
+        transform: translateY(-5px);
+      }
+    }
+
+    // TOP CARD
+    .topCard {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 100%;
+      top: 20px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0px 0px 6px #00000063;
+
+      &.forPreview {
+        margin-bottom: 5px;
+        padding: 0 !important;
+        height: 250px;
+        border-radius: 10px 10px 0 0;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 10px 10px 0 0;
+        }
+      }
+
+      .topLeft {
+        margin: 0 auto;
+        width: 100%;
+
+        img {
+          width: 120px;
+          height: 120px;
+          border-radius: 5px;
+          border: 1px solid #1e1e1e36;
+          object-fit: cover;
+        }
+      }
+
+      .topRight {
+        .titre {
+          position: relative;
+          top: 10px;
+
+          h5 {
+            color: #343a40;
+            &.ville {
+              color: #00000058;
+              font-family: "PoppinsLight";
+              font-weight: lighter;
+            }
+          }
+        }
+
+        h5 {
+          color: #00000058;
+          margin-top: 10px;
+        }
+      }
+    }
+
+    // BOTTOM CARD
+    .bottomCard {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 100%;
+      top: 50px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 6px #00000063;
+
+      .bottomLeft {
+        text-align: left;
+
+        h4 {
+          white-space: normal;
+          margin-bottom: 5px;
+        }
+
+        h5 {
+          color: rgb(0 0 0 / 85%);
+          font-family: "PoppinsLight";
+          font-weight: lighter;
+          margin-bottom: 20px;
+        }
+      }
+
+      .bottomRight {
+        text-align: left;
+
+        h4 {
+          margin-bottom: 5px;
+        }
+
+        p {
+          color: rgb(0 0 0 / 85%);
+          font-family: "PoppinsLight";
+          font-weight: lighter;
+          margin-bottom: 20px;
+        }
+      }
+
+      .forBtn {
+        margin: 100px auto 0px;
+
+        form {
+          input {
+            width: 93%;
+            padding: 0.5rem 10px;
+            font-size: 0.8rem;
+            letter-spacing: 0.062rem;
+            margin: 10px;
+            border: 1px solid #00000033;
+            color: #757575;
+            background: #ffffff;
+            border-radius: 4px;
+
+            &:focus {
+              outline: none;
+              border: 1px solid #589d9d;
+            }
+          }
+
+          input[type="submit"] {
+            width: max-content !important;
+            margin-top: 10px;
+            background: #112443;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+            transition: 0.5s;
+
+            &:hover {
+              cursor: pointer;
+              transform: translateY(-5px);
+            }
+          }
+        }
+
+        a {
+          color: #112443a6;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .upload {
+      position: relative;
+      width: 100%;
+      top: 70px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0px 0px 6px #00000063;
+
+      form {
+        display: flex;
+        flex-direction: column;
+
+        p {
+          margin-top: 10px;
+        }
+
+        .cv {
+          margin-top: 25px;
+        }
+
+        .cv,
+        .lm {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      div {
+        label {
+          font-weight: bold;
+          margin-right: 10px;
+        }
+
+        input[type="file"] {
+          width: 85%;
+          padding: 1rem 10px;
+          font-size: 1rem;
+          letter-spacing: 0.062rem;
+          margin: 10px auto;
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          color: #757575;
+          background: #ffffff;
+          border-radius: 4px;
+        }
+        &.CV {
+          margin-bottom: 20px;
+        }
+      }
+
+      h3 {
+        font-family: poppinsBold;
+        align-self: center;
+        cursor: pointer;
+        border: 2px solid black;
+        border-radius: 5px;
+        padding: 5px 10px;
+        transition: 0.5s;
+
+        &:hover {
+          letter-spacing: 2px;
+        }
+      }
+
+      .selectFiles {
+        margin: 15px 0;
+        padding: 5px;
+        border-radius: 5px;
+
+        &:focus {
+          outline: none;
+          border: 1px solid #112443b3;
+          box-shadow: 0px 0px 0px 3px #1e283052;
+          background: #1124430a;
+        }
+      }
+
+      .forDash {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          width: 95%;
+          margin: 5px auto;
+          border: 1px solid #112443;
+          border-radius: 5px;
+          text-align: left;
+          padding: 10px;
+          cursor: pointer;
+          user-select: none;
+          transition: 0.3s;
+
+          &:hover {
+            border: 1px solid #112443b3;
+            box-shadow: 0px 0px 0px 3px #1e283052;
+            background: #1124430a;
+          }
+        }
+
+        input[type="radio"] {
+          visibility: hidden;
+
+          &:checked + label {
+            border: 1px solid #112443b3;
+            box-shadow: 0px 0px 0px 3px #1e283052;
+            background: #1124430a;
+          }
+        }
+      }
+
+      input[type="submit"] {
+        width: max-content;
+        border: 2px solid #112442;
+        outline: none;
+        color: #112442;
+        font-weight: bold;
+        background-color: transparent;
+        cursor: pointer;
+        border-radius: 30px;
+        font-size: 1rem;
+        margin: 0 auto;
+        margin-top: 15px;
+        transition: 0.5s;
+        padding: 10px 20px;
+
+        &:hover {
+          transform: scaleX(1.1);
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 767px) {
+  .outerDivDetail {
+    width: min(768px, 100%);
+
+    .innerDivDetail {
+      top: 100px;
+    }
+
+    .topCard {
+      flex-direction: row !important;
+      padding: 40px !important;
+
+      .topLeft {
+        margin: 0 !important;
+        width: 22% !important;
+        text-align: left;
+      }
+
+      .topRight {
+        width: 75%;
+        text-align: left;
+        margin-top: -10px;
+
+        .titre {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+
+    .bottomCard {
+      flex-direction: row !important;
+      flex-wrap: wrap;
+      padding: 40px !important;
+
+      .bottomLeft {
+        width: 25% !important;
+      }
+
+      .bottomRight {
+        width: 75% !important;
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .outerDivDetail {
+    width: min(1150px, 100%);
+    padding-bottom: 250px;
+
+    .innerDivDetail {
+      display: flex;
+      flex-direction: column;
+      top: 120px;
+      width: 85%;
+
+      .upload {
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
+
+      .linkRetour {
+        left: 0px;
+        top: 50px;
+      }
+
+      .topCard {
+        top: 40px !important;
+      }
+
+      .bottomCard {
+        top: 70px !important;
+        margin-bottom: 20px;
+        .bottomLeft {
+          width: 22% !important;
+          padding-right: 35px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+@import "../css/index.scss";
+
+.divPartenaire {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  top: 2px;
+  width: 100%;
+  background: $first_color;
+  color: $fourth_color;
+
+  h1 {
+    font-family: "Lora";
+    font-size: 3vh;
+    color: $fourth_color;
+    margin-top: 20px;
+  }
+
+  .imageLogo::-webkit-scrollbar {
+    display: none;
+  }
+
+  .imageLogo {
+    width: 90%;
+    white-space: nowrap;
+    overflow-x: scroll;
+    margin-top: 20px;
+    text-align: center;
+
+    img {
+      width: 75px;
+      height: 75px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: white;
+      margin: 5px;
+      transition: 0.5s;
+
+      &:hover {
+        transform: scale(1.1) !important;
+      }
+    }
+  }
+}

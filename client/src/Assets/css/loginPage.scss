@@ -1,0 +1,242 @@
+@import '../css/index.scss';
+
+.divLogin {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerLogin {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+
+    .linkRetour {
+      @include Link;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    .left {
+      position: relative;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .right {
+      position: relative;
+      text-align: center;
+      color: $heading_color;
+      h2 {
+        font-family: poppinsLight;
+
+        b {
+          font-family: poppinsBold;
+        }
+      }
+
+      .box {
+        select {
+          width: 93%;
+          padding: 1.3rem 10px;
+          font-size: 1rem;
+          letter-spacing: 0.062rem;
+          margin-bottom: 20px;
+          border: 1px solid #00000033;
+          color: #757575;
+          background: #ffffff;
+          border-radius: 4px;
+
+          &:focus {
+            outline: none;
+            border: 1px solid #589d9d;
+          }
+        }
+        position: relative;
+        top: 20px;
+
+        .inputBox {
+          position: relative;
+
+          span.passHint {
+            width: max-content;
+            position: absolute;
+            right: 30px;
+            top: 19px;
+            background: white;
+            padding: 0 0 0 5px;
+            cursor: pointer;
+          }
+  
+          input.fontSizeInput {
+            font-size: 0.9rem;
+          }
+
+          input {
+            width: 93%;
+            padding: 1.3rem 10px;
+            font-size: 1rem;
+            letter-spacing: 0.062rem;
+            margin-bottom: 20px;
+            border: 1px solid #00000033;
+            background: #ffffff;
+            border-radius: 4px;
+
+            &:focus {
+              ~ {
+                label {
+                  top: -1.125rem;
+                  left: 20px;
+                  color: #589d9d;
+                  font-size: 0.75rem;
+                  background-color: #f2f2f2f2;
+                  height: 10px;
+                  padding-left: 5px;
+                  padding-right: 5px;
+                }
+              }
+              outline: none;
+              border: 1px solid #589d9d;
+            }
+
+            &:valid {
+              ~ {
+                label {
+                  top: -1.125rem;
+                  left: 20px;
+                  color: #589d9d;
+                  font-size: 0.75rem;
+                  background-color: #f2f2f2f2;
+                  height: 10px;
+                  padding-left: 5px;
+                  padding-right: 5px;
+                }
+              }
+            }
+
+            &:not([value='']) {
+              ~ {
+                label {
+                  top: -1.125rem;
+                  left: 20px;
+                  color: #589d9d;
+                  font-size: 0.75rem;
+                  background-color: #f2f2f2f2;
+                  height: 10px;
+                  padding-left: 5px;
+                  padding-right: 5px;
+                }
+              }
+            }
+          }
+
+          label {
+            position: absolute;
+            top: 8px;
+            left: 25px;
+            padding: 0.625rem 0;
+            font-size: 1rem;
+            color: gray;
+            pointer-events: none;
+            transition: 0.5s;
+          }
+        }
+
+        p {
+          color: rgba(0, 0, 0, 0.441);
+          a {
+            position: relative !important;
+            color: #112442;
+            font-size: 16px;
+            transition: 0.5s;
+
+            &:hover {
+              letter-spacing: 2px;
+            }
+          }
+        }
+
+        input[type='submit'] {
+          width: max-content;
+          @include roundedBtn;
+
+          &:hover {
+            transform: scaleX(1.1);
+          }
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divLogin {
+    width: min(768px, 100%);
+
+    .innerLogin {
+      top: 100px;
+
+      .left {
+        width: 75%;
+        margin: 15px auto;
+      }
+
+      .right {
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .divLogin {
+    width: min(1366px, 100%);
+
+    .innerLogin {
+      display: flex;
+      top: 120px;
+      width: 85%;
+
+      .left {
+        top: 40px;
+      }
+
+      .right {
+        top: 40px;
+        h2 {
+          font-family: 'PoppinsExtraLight';
+          font-size: 40px;
+
+          b {
+            font-family: poppinsBold;
+          }
+        }
+        .box {
+          select {
+            width: 66%;
+            min-width: 303px;
+          }
+          .inputBox {
+            width: 326px;
+            margin: 0 auto;
+          }
+
+          p {
+            font-size: 11px;
+
+            a {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,330 @@
+@import "../css/index.scss";
+
+.outerDivOffre {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerDivOffre {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+
+    .linkRetour {
+      @include Link;
+      top: 35px;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    h2 {
+      font-family: poppinsLight;
+      color: $heading_color;
+    }
+
+    .divJd {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .divTop {
+      @include divTop;
+      align-self: center;
+
+      &.divTop_2,
+      &.divTop_3 {
+        margin-top: 15px;
+      }
+
+      .cardObjectif {
+        &.cardJdObjectif {
+          flex-direction: column;
+          text-align: center;
+
+          p {
+            width: 100%;
+          }
+        }
+        .value {
+          ul {
+            li {
+              text-align: left;
+              font-size: 14px;
+              font-weight: lighter;
+
+              &::before {
+                content: "•";
+                position: relative;
+                top: 2px;
+                color: $sec_color;
+                font-weight: bold;
+                display: inline-block;
+                font-size: 20px;
+                width: 0.8em;
+                margin-left: -15px;
+                line-height: 0;
+              }
+            }
+          }
+        }
+        .imgValue {
+          display: none;
+          &.imgJdValue {
+            width: 60%;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+
+    .searchBtn,
+    .searchBtnAdv {
+      width: max-content;
+      padding: 20px 30px;
+      background: #112443;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .searchBtnAdv {
+      margin: 0 auto;
+    }
+
+    .searchAdvanced {
+      padding: 15px 30px;
+      border-radius: 50px;
+      background: $sec_color;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 17px 10px;
+      font-size: 1rem;
+      letter-spacing: 0.062rem;
+      margin-bottom: 10px;
+      border: 1px solid #00000033;
+      color: #757575;
+      background: #ffffff;
+      border-radius: 4px;
+
+      &:focus {
+        outline: none;
+        border: 1px solid #589d9d;
+      }
+    }
+
+    .divRecherche {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      margin: 50px auto 0;
+      padding: 5px 5px 15px;
+    }
+
+    .champ {
+      margin-top: 40px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      row-gap: 10px;
+      align-items: center;
+    }
+
+    .forCardOffre {
+      width: 100%;
+      margin-top: 50px;
+
+      .card {
+        position: relative;
+        width: 356px;
+        height: 115px;
+        margin-top: 15px;
+        padding-top: 5px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 6px #0000006a;
+
+        .titre {
+          display: flex;
+          justify-content: space-between;
+          margin: 5px 12px 0;
+
+          h5 {
+            max-width: 330px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-family: "PoppinsBold";
+            font-size: 16px;
+          }
+
+          .ville {
+            font-family: "Poppinslight";
+            color: #00000058;
+          }
+        }
+
+        h5 {
+          max-width: 330px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          position: inherit;
+          font-family: "PoppinsLight";
+          font-weight: normal;
+          font-size: 16px;
+          text-align: left;
+          left: 11px;
+        }
+
+        .forBtn {
+          display: flex;
+          justify-content: space-between;
+          margin: 15px 12px 0;
+
+          .calendar {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+
+            h5 {
+              font-weight: lighter;
+              font-size: 10px;
+              margin-top: 2px;
+              margin-left: -3px;
+              color: #00000058;
+            }
+          }
+
+          button {
+            width: max-content;
+            background: #112443;
+            padding: 10px 20px;
+            font-size: 11px;
+            color: white;
+            border-radius: 5px;
+            transition: 0.5s;
+
+            &:hover {
+              cursor: pointer;
+              transform: translateY(-5px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 767px) {
+  .outerDivOffre {
+    width: min(768px, 100%);
+
+    .innerDivOffre {
+      top: 100px;
+
+      .divJd {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .divTop {
+        width: 100%;
+
+        &.divTop_2,
+        &.divTop_3 {
+          margin-top: 40px;
+        }
+
+        .cardObjectif {
+          flex-direction: row;
+          align-items: center;
+
+          &.cardJdObjectif {
+            height: 300px;
+          }
+
+          .value {
+            width: 100%;
+          }
+
+          .imgValue {
+            display: block;
+            width: 25%;
+            height: 200px;
+            margin-bottom: 0px;
+          }
+        }
+      }
+
+      .searchAdvanced {
+        margin: 0 50%;
+      }
+
+      .divRecherche {
+        .searchBtn {
+          margin-left: 10px;
+        }
+      }
+
+      input {
+        width: 77%;
+        margin-bottom: 0;
+        margin-right: 10px;
+      }
+
+      .champ {
+        flex-wrap: wrap;
+        flex-direction: row;
+        column-gap: 15px;
+
+        input,
+        select {
+          width: 30%;
+        }
+      }
+
+      .forCardOffre {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .outerDivOffre {
+    width: min(1366px, 100%);
+
+    .innerDivOffre {
+      display: flex;
+      flex-direction: column;
+      top: 120px;
+      width: 65%;
+
+      h2 {
+        margin-top: -10px;
+      }
+
+      .linkRetour {
+        top: 10px;
+      }
+
+      .forCardOffre {
+        width: min(725px, 100%);
+        margin: 30px auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,143 @@
+@import "../css/index.scss";
+
+.divJeCherche {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px; 
+  margin: 0 auto;
+
+  .innerJeCherche {
+    position: relative;
+    top: 150px;
+    width: 95%;
+    margin: 0 auto;
+
+    .linkRetour {
+      @include Link;
+      top: -50px;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    h2,
+    h3, p {
+      font-family: poppinsLight;
+    }
+
+    .left {
+      position: relative;
+      width: 100%;
+      margin-top: 15px;
+      text-align: center;
+
+      h2 {
+        margin: 15px auto 15px;
+        width: 85%;
+      }
+
+      .imgJob {
+        width: 55%;
+        height: 100%;
+        margin: 0 auto;
+
+        img {
+          width: 100%;
+          border-radius: 5px;
+        }
+      }
+    }
+
+    .right {
+      position: relative;
+      text-align: center;
+      color: $heading_color;
+
+      h3, p {
+        margin: 15px auto 15px;
+        font-weight: lighter;
+      }
+
+      .forSommeBtn {
+        display: flex;
+        flex-direction: column;
+        .btnSommeBtn {
+          @include roundedBtn;
+
+          &:hover {
+            transform: scaleX(1.1);
+          }
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divJeCherche {
+    width: min(768px, 100%);
+
+    .innerJeCherche {
+
+      .left {
+        width: 75%;
+        margin: 15px auto;
+      }
+
+      .right {
+        width: 85%;
+        margin: 0 auto;
+
+        h3 {
+          width: 100%;
+          margin: 15px auto 15px;
+        }
+
+        .forSommeBtn {
+          flex-direction: row;
+          column-gap: 10px;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 900px) {
+  .divJeCherche {
+    width: min(1366px, 100%);
+
+    .innerJeCherche {
+      .linkRetour {
+        left: 210px;
+      }
+
+      .left {
+        width: 494px;
+        margin: 0 auto;
+      }
+
+      .right {
+        width: 45%;
+
+        @media screen and (min-width: 1024px) {
+          h2 {
+            font-size: 40px !important;
+          }
+        }
+        h2 {
+          font-family: "PoppinsExtraLight";
+          font-size: 30px;
+        }
+
+        h3 {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

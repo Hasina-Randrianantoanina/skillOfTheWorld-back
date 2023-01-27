@@ -1,0 +1,180 @@
+@import "../css/index.scss";
+
+.divContact {
+  position: relative;
+  width: min(375px, 100%);
+  padding-bottom: 85px;
+  margin: 0 auto 50%;
+
+  .innerContact {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    color: $heading_color;
+
+    h2 {
+      font-family: poppinsLight;
+      position: absolute;
+      top: 20px;
+      font-size: 21px;
+      left: 50%;
+      width: max-content;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .linkRetour {
+      @include Link;
+
+      &:hover {
+        cursor: pointer;
+        color: #112443;
+      }
+    }
+
+    .right {
+      position: relative;
+      width: 100%;
+      margin-top: 35px;
+    }
+
+    .left {
+      position: relative;
+      text-align: center;
+
+      .inputContact {
+        position: relative;
+        top: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: center;
+
+        form {
+          .topBox {
+            margin-bottom: 10px;
+          }
+          input,
+          select,
+          textarea {
+            width: 93%;
+            padding: 1.3rem 10px;
+            font-size: 1rem;
+            letter-spacing: 0.062rem;
+            margin-bottom: 10px;
+            border: 1px solid #00000033;
+            color: #757575;
+            background: #ffffff;
+            border-radius: 4px;
+
+            &:focus {
+              outline: none;
+              border: 1px solid #589d9d;
+            }
+          }
+
+          textarea {
+            margin-top: 10px;
+          }
+          input[type="submit"] {
+            width: max-content;
+            @include roundedBtn;
+
+            &:hover {
+              transform: scaleX(1.1);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divContact {
+    width: min(768px, 100%);
+    margin: 0 auto 30%;
+
+    .innerContact {
+      top: 100px;
+      h2 {
+        top: 0px;
+      }
+      .right {
+        width: 75%;
+        margin: 15px auto;
+      }
+
+      .left {
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 900px) {
+  .divContact {
+    width: min(1366px, 100%);
+    margin: 0 auto 15%;
+
+    .innerContact {
+      display: flex;
+      flex-direction: row;
+      top: 120px;
+      width: 70%;
+
+      @media screen and (min-width: 1024px) {
+        h2 {
+          font-family: "PoppinsExtraLight";
+          top: -20px;
+          font-size: 40px !important;
+        }
+      }
+      h2 {
+        top: -20px;
+        font-size: 30px;
+      }
+
+      .right {
+        width: 494px;
+        margin: 0 auto;
+        margin-top: 80px;
+
+        a {
+          img {
+            position: relative;
+            top: -45px;
+          }
+        }
+      }
+
+      .left {
+        display: flex;
+        justify-content: center;
+        width: 65%;
+        margin-top: 80px;
+
+        .inputContact {
+          top: 0;
+          row-gap: 0;
+
+          form {
+            input,
+            select {
+              width: 45%;
+              margin: 5px 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

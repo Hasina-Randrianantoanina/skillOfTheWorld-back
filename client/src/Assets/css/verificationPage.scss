@@ -1,0 +1,30 @@
+@import '../css/index.scss';
+
+.outerDivMailVerif {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerDivMailVerif {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+
+    button.se_connecter {
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      background: #0c2143;
+      color: whitesmoke;
+      margin-top: 10px;
+      padding: 9px 15px;
+      cursor: pointer;
+    }
+  }
+}

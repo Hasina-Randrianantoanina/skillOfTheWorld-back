@@ -1,0 +1,205 @@
+@import "../css/index.scss";
+
+.divInscriptionEts {
+  position: relative;
+  width: min(375px, 100%);
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerInscriptionEts {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    color: $heading_color;
+    text-align: center;
+
+    .linkRetour {
+      @include Link;
+      top: -20px;
+      left: 20px;
+
+      &:hover {
+        cursor: pointer;
+        color: #112443;
+      }
+    }
+
+    h2 {
+      font-family: poppinsLight;
+      width: max-content;
+      margin: 0 auto 15px;
+    }
+
+    h4 {
+      font-family: poppinsLight;
+    }
+
+    .divTop {
+      @include divTop;
+
+      .cardObjectif {
+        .value {
+          ul {
+            li {
+              text-align: left;
+              font-size: 14px;
+              font-weight: lighter;
+
+              &::before {
+                content: "•";
+                position: relative;
+                top: 2px;
+                color: $sec_color;
+                font-weight: bold;
+                display: inline-block;
+                font-size: 20px;
+                width: 0.8em;
+                margin-left: -15px;
+                line-height: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .divBottom {
+      position: relative;
+      text-align: center;
+
+      .forInput {
+        position: relative;
+        top: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: center;
+
+        label {
+          width: 100%;
+          text-align: left;
+          padding: 0 0 5px 15px;
+        }
+
+        .containtTel {
+          width: 93%;
+          height: 56.59px;
+          top: -5px;
+
+          .nbrTel {
+            width: 100%;
+            height: 100%;
+            padding-left: 45px;
+          }
+        }
+
+        span.passHint {
+          width: max-content;
+          position: absolute;
+          right: 30px;
+          top: 19px;
+          background: white;
+          padding: 0 0 0 5px;
+          cursor: pointer;
+        }
+
+        input.fontSizeInput {
+          font-size: 0.9rem;
+        }
+
+        input,
+        select, .nbrTel {
+          width: 93%;
+          padding: 1.3rem 10px;
+          font-size: 0.8rem;
+          letter-spacing: 0.062rem;
+          margin-bottom: 10px;
+          border: 1px solid #00000033;
+          color: #757575;
+          background: #ffffff;
+          border-radius: 4px;
+
+          &:focus {
+            outline: none;
+            border: 1px solid #589d9d;
+          }
+        }
+
+        .btnSubmit {
+          input[type="submit"] {
+            width: max-content;
+            @include roundedBtn;
+
+            &:hover {
+              transform: scaleX(1.1);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divInscriptionEts {
+    width: min(945px, 100%);
+
+    .innerInscriptionEts {
+      .divTop {
+        .cardObjectif {
+          // flex-direction: row;
+          align-items: center;
+
+          .value {
+            width: 95%;
+          }
+
+          .imgValue {
+            width: 45%;
+            height: 200px;
+          }
+        }
+      }
+
+      .divBottom {
+        .forInput {
+          flex-direction: row;
+          flex-wrap: wrap;
+          column-gap: 15px;
+
+          .containtTel {
+            width: 30%;
+          }
+
+          .divHint {
+            position: relative;
+            width: 218.88px;
+          }
+
+          span.passHint {
+            right: 13px;
+            top: 18px;
+          }
+  
+          input.fontSizeInput {
+            font-size: 0.8rem;
+            width: 100%;
+          }
+
+          input,
+          select, .nbrTel {
+            width: 30%;
+          }
+
+          .btnSubmit {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+[
+    {
+        "nom": "Commercial"
+    },
+    {
+        "nom": "Marketing"
+    },
+    {
+        "nom": "Communication- Création"
+    },
+    {
+        "nom": "Direction"
+    },
+    {
+        "nom": "Etude, R&D"
+    },
+    {
+        "nom": "Finance"
+    },
+    {
+        "nom": "Informatique"
+    },
+    {
+        "nom": "Production & Technique"
+    },
+    {
+        "nom": "Ressources Humaines"
+    },
+    {
+        "nom": "Santé, Social & Sanitaire "
+    },
+    {
+        "nom": "Autre"
+    }
+]

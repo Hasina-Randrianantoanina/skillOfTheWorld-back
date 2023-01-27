@@ -1,0 +1,145 @@
+@import "../css/index.scss";
+
+.divBlog {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 100vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerDivBlog {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+
+    .linkRetour {
+      top: 50px !important;
+      @include Link;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    h2 {
+      font-family: poppinsLight;
+      color: $heading_color;
+    }
+
+    .cardBlog {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      margin-top: 30px;
+      cursor: pointer;
+
+      .innerCard {
+        position: relative;
+        width: 325px;
+        height: 250px;
+        margin-top: 30px;
+        border-radius: 5px;
+        box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.244);
+        overflow: hidden;
+
+        &::before {
+          position: absolute;
+          content: " ";
+          bottom: 0;
+          width: 100%;
+          height: 45%;
+          background: linear-gradient(
+            0deg,
+            rgb(0 0 0) 0%,
+            rgb(0 0 0 / 78%) 5%,
+            rgb(0 0 0 / 0%) 100%
+          );
+          z-index: 1;
+        }
+
+        img {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          border-radius: 5px;
+          object-fit: cover;
+          transition: 0.5s;
+        }
+
+        h4 {
+            position: absolute;
+            opacity: 0;
+            bottom: -50px;
+            left: 13px;
+            font-family: PoppinsLight;
+            font-size: 15px;
+            color: $fourth_color;
+            text-align: left;
+            z-index: 2;
+            animation: showTitle 1.1s ease-in forwards;
+          }
+
+          &:hover > img {
+            transform: scale(1.1);
+          }
+
+          @keyframes showTitle {
+              to {
+                  opacity: 1;
+                  bottom: 20px;
+              }
+          }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 767px) {
+  .divBlog {
+    width: min(768px, 100%);
+
+    .innerDivBlog {
+      top: 100px;
+
+      .cardBlog {
+          column-gap: 20px;
+
+          .innerCard {
+              margin-top: 20px;
+          }
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .divBlog {
+    width: min(1371px, 100%);
+
+    .innerDivBlog {
+      display: flex;
+      flex-direction: column;
+      top: 120px;
+      width: 60%;
+
+      .linkRetour {
+        top: 50px;
+        left: 30px;
+      }
+
+      .cardBlog {
+        column-gap: 20px;
+
+        .innerCard {
+            width: 375px;
+            height: 300px;
+        }
+    }
+    }
+  }
+}

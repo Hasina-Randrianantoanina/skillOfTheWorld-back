@@ -1,0 +1,372 @@
+@import "../css/index.scss";
+
+.divJeRecrute {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerJeRecrute {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+
+    .linkRetour {
+      @include Link;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    .left {
+      position: relative;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .right {
+      position: relative;
+      text-align: center;
+      color: $heading_color;
+
+      h2,
+      h3,
+      h4 {
+        font-family: poppinsLight;
+
+        b {
+          font-family: poppinsBold;
+        }
+      }
+
+      span {
+        color: $sec_color;
+      }
+
+      h3 {
+        margin-bottom: 15px;
+      }
+      .btnRecruit {
+        display: flex;
+        column-gap: 10px;
+        justify-content: center;
+
+        a {
+          button {
+            outline: none;
+            border: none;
+            border-radius: 4px;
+            background: #00c4cd;
+            transition: 0.5s;
+            font-size: 15px;
+            font-family: "Poppins";
+            padding: 6px 15px;
+
+            &:hover {
+              cursor: pointer;
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+      // .divForH4 {
+      //   li {
+      //     text-align: center;
+      //     padding-left: 30px;
+      //     font-weight: lighter;
+
+      //     &::before {
+      //       content: "\2022";
+      //       color: $sec_color;
+      //       font-weight: bold;
+      //       display: inline-block;
+      //       font-size: 20px;
+      //       width: 1em;
+      //       margin-left: -1em;
+      //     }
+
+      //     a {
+      //       button {
+      //         outline: none;
+      //         border: none;
+      //         border-radius: 4px;
+      //         background: #00c4cd;
+      //         transition: 0.5s;
+      //         font-size: 15px;
+      //         font-family: "Poppins";
+      //         padding: 6px 15px;
+
+      //         &:hover {
+      //           cursor: pointer;
+      //           transform: scale(1.1);
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
+    }
+
+    .divBottom {
+      position: relative;
+      text-align: center;
+      color: $heading_color;
+      margin-top: 60px;
+      width: 100%;
+
+      h2,
+      h3,
+      h4 {
+        font-family: poppinsLight;
+
+        b {
+          font-family: poppinsBold;
+        }
+      }
+
+      .divCardRecruit {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .divTopRecruit {
+        @include divTop;
+        align-self: center;
+
+        &.divTop_2,
+        &.divTop_3 {
+          margin-top: 15px;
+        }
+
+        .cardObjectif {
+          &.cardJdObjectif {
+            flex-direction: column;
+            text-align: center;
+
+            p {
+              width: 100%;
+            }
+          }
+
+          .value {
+            ul {
+              li {
+                text-align: left;
+                font-size: 14px;
+                font-weight: lighter;
+
+                &::before {
+                  content: "•";
+                  position: relative;
+                  top: 2px;
+                  color: $sec_color;
+                  font-weight: bold;
+                  display: inline-block;
+                  font-size: 20px;
+                  width: 0.8em;
+                  margin-left: -15px;
+                  line-height: 0;
+                }
+              }
+            }
+          }
+
+          .imgValue {
+            display: none;
+
+            &.imgJdValue {
+              width: 60%;
+              margin: 0 auto;
+            }
+          }
+        }
+      }
+
+      .divBottomList {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin: 40px auto 0;
+
+        .left_2 {
+          position: relative;
+          width: 100%;
+          margin-top: 15px;
+          align-self: center;
+        }
+
+        .right_2 {
+          position: relative;
+          display: flex;
+          text-align: center;
+          color: #343a40;
+          flex-direction: column;
+          justify-content: center;
+
+          h2,
+          h3,
+          h4 {
+            font-family: poppinsLight;
+
+            b {
+              font-family: poppinsBold;
+            }
+          }
+
+          span {
+            color: $sec_color;
+          }
+
+          h3 {
+            margin-bottom: 15px;
+          }
+          .bottomRight {
+            li {
+              display: flex;
+            }
+            h3 {
+              text-align: left;
+            }
+            .puce {
+              background-color: $sec_color;
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              margin-top: 8px;
+              margin-right: 10px;
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divJeRecrute {
+    width: min(768px, 100%);
+
+    .innerJeRecrute {
+      top: 100px;
+
+      .left {
+        width: 75%;
+        margin: 15px auto;
+      }
+
+      .right {
+        width: 50%;
+        margin: 0 auto;
+
+        h3 {
+          width: 90%;
+          margin: 0 auto 15px;
+        }
+      }
+
+      .divBottom {
+        .divTopRecruit {
+          width: 50%;
+
+          &.divTop_2,
+          &.divTop_3 {
+            margin-top: 40px;
+          }
+
+          .cardObjectif {
+            flex-direction: row;
+            align-items: center;
+
+            &.cardJdObjectif {
+              height: 300px;
+            }
+
+            .value {
+              width: 100%;
+            }
+
+            .imgValue {
+              display: block;
+              width: 25%;
+              height: 200px;
+              margin-bottom: 0px;
+            }
+          }
+        }
+        .divBottomList {
+          display: flex;
+        }
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 900px) {
+  .divJeRecrute {
+    width: min(1366px, 100%);
+
+    .innerJeRecrute {
+      display: flex;
+      flex-direction: row-reverse;
+      flex-wrap: wrap;
+      top: 120px;
+      width: 85%;
+
+      .left {
+        width: 40%;
+        margin: 0 auto;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 544px;
+
+        @media screen and (min-width: 1024px) {
+          h2 {
+            font-size: 40px !important;
+          }
+        }
+
+        h2 {
+          font-family: "PoppinsExtraLight";
+          font-size: 30px;
+        }
+
+        h3 {
+          width: 75%;
+        }
+
+        .divForH4 {
+          width: 80%;
+        }
+      }
+
+      .divBottom {
+        .divCardRecruit {
+          display: flex;
+          flex-direction: row;
+        }
+
+        .divTopRecruit {
+          width: 100%;
+        }
+
+        .divBottomList {
+          flex-direction: row;
+
+          .right_2 {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

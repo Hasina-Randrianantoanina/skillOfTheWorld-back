@@ -1,0 +1,78 @@
+@import "../css/index.scss";
+
+.divSectionValeur {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: min(930px, 100%);
+  padding: 25px;
+  margin: 0 auto;
+
+  .divCard {
+    position: relative;
+    text-align: center;
+    margin: 20px 10px;
+    width: 200px;
+
+    img {
+      width: 90%;
+      // height: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      border: 5px solid white;
+      // outline: 2px solid #112443;
+      transition: 0.5s;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    span {
+      position: absolute;
+      left: 50%;
+      top: 25%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+    }
+
+    h5 {
+      position: absolute;
+      font-size: 0.8rem;
+      left: 50%;
+      top: 59%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      font-family: PoppinsLight;
+      color: #112443;
+      text-align: center;
+      cursor: pointer;
+
+      b {
+        font-family: "PoppinsBold";
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divSectionValeur {
+    width: min(930px, 100%);
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .divSectionValeur {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: min(930px, 100%);
+    padding: 25px;
+    margin: 0 auto;
+  }
+}

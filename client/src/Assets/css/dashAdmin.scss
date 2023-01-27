@@ -1,0 +1,145 @@
+@import "../css/index.scss";
+
+.divDashboard {
+  position: relative;
+  width: min(375px, 100%);
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerDashboard {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    color: $heading_color;
+
+    h2 {
+      font-family: poppinsLight;
+      position: absolute;
+      top: 355px;
+      left: 50%;
+      width: max-content;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .linkRetour {
+      @include Link;
+      top: -20px;
+      left: 20px;
+
+      &:hover {
+        cursor: pointer;
+        color: #112443;
+      }
+    }
+
+    .left {
+      position: relative;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .right {
+      position: relative;
+      text-align: center;
+
+      .forBtn {
+        position: relative;
+        top: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: center;
+
+        button {
+          cursor: pointer;
+          width: 285px;
+          border: 1px solid $first_color;
+          padding: 15px 15px;
+          margin: 10px;
+          font-size: 20px;
+          color: $first_color;
+          border-radius: 5px;
+          transition: 0.5s;
+
+          &:hover {
+            color: #fff;
+            background: $first_color;
+          }
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divDashboard {
+    width: min(768px, 100%);
+
+    .innerDashboard {
+      top: 100px;
+      h2 {
+        top: 0;
+      }
+      .left {
+        width: 75%;
+        margin: 15px auto;
+      }
+
+      .right {
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 900px) {
+  .divDashboard {
+    width: min(1366px, 100%);
+    margin: 0 auto;
+
+    .innerDashboard {
+      display: flex;
+      flex-direction: row;
+      top: 120px;
+      width: 70%;
+      
+      @media screen and (min-width: 1024px) {
+        h2 {
+          font-family: "PoppinsExtraLight";
+          top: -20px;
+          font-size: 40px !important;
+        }
+      }
+      h2 {
+        top: -20px;
+        font-size: 30px;
+      }
+
+      .left {
+        width: 494px;
+        margin: 0 auto;
+        margin-top: 80px;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 30%;
+        margin-top: 80px;
+
+        .forBtn {
+          top: 0;
+          row-gap: 0;
+        }
+      }
+    }
+  }
+}

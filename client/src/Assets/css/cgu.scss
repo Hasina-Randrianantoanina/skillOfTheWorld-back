@@ -1,0 +1,87 @@
+@import "../css/index.scss";
+
+.outerCGU {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerCGU {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+
+    .linkRetour {
+      @include Link;
+      top: -35px;
+      left: 20px;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    h2, h3 {
+      font-family: poppinsBold;
+      color: $first_color;
+      margin-top: 20px;
+    }
+
+    h3 {
+      text-align: left;
+    }
+
+    ul {
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    .texte {
+      width: 100%;
+      margin-top: 25px;
+      padding: 0 10px;
+
+      p {
+        margin-top: 20px;
+        text-align: justify;
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 767px) {
+  .outerCGU {
+    width: min(768px, 100%);
+
+    .innerCGU {
+      top: 100px;
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .outerCGU {
+    width: min(1366px, 100%);
+
+    .innerCGU {
+      display: flex;
+      flex-direction: column;
+      top: 120px;
+      width: 75%;
+
+      .linkRetour {
+        top: -20px;
+        left: 10px;
+      }
+
+      h2 {
+        margin-top: 0;
+      }
+    }
+  }
+}

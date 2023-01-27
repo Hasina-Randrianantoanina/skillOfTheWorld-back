@@ -1,0 +1,11 @@
+@import "../css/index.scss";
+
+section {
+    width: 100%;
+
+    h1 {
+        font-family: 'Lora';
+        font-size: $heading_h1;
+        color: #343A40;
+    }
+}

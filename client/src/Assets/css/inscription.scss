@@ -1,0 +1,131 @@
+@import "../css/index.scss";
+
+.divInscription {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerInscription {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+
+    .linkRetour {
+      @include Link;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    .left {
+      position: relative;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .right {
+      position: relative;
+      text-align: center;
+      color: $heading_color;
+      h2 {
+        font-family: poppinsLight;
+
+        b {
+          font-family: poppinsBold;
+        }
+      }
+
+      .forBtn {
+        position: relative;
+        top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        row-gap: 10px;
+
+        a {
+          button {
+            width: 125px;
+            height: 45px;
+            background: $sec_color;
+            border: 1px solid $first_color;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: "Poppins";
+            transition: 0.5s;
+
+            &:hover {
+              background: $first_color;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divInscription {
+    width: min(768px, 100%);
+
+    .innerInscription {
+      top: 100px;
+
+      .left {
+        width: 75%;
+        margin: 15px auto;
+      }
+
+      .right {
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 900px) {
+  .divInscription {
+    width: min(1366px, 100%);
+
+    .innerInscription {
+      display: flex;
+      flex-direction: row-reverse;
+      top: 120px;
+      width: 85%;
+
+      .left {
+        width: 494px;
+        margin: 0 auto;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        @media screen and (min-width: 1024px) {
+          h2 {
+            font-size: 40px !important;
+          }
+        }
+        h2 {
+          font-family: "PoppinsExtraLight";
+          font-size: 30px;
+
+          b {
+            font-family: poppinsBold;
+          }
+        }
+      }
+    }
+  }
+}

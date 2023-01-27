@@ -1,0 +1,111 @@
+@import "../css/index.scss";
+
+.outerAddArticle {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerAddArticle {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+
+    .linkRetour {
+      @include Link;
+      top: -20px;
+      left: 20px;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    h2 {
+      font-family: poppinsLight;
+      color: $heading_color;
+    }
+
+    .forInput {
+      position: relative;
+      top: 50px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      row-gap: 10px;
+      align-items: center;
+
+      label {
+        font-family: poppinsBold;
+        color: $first_color;
+        width: 100%;
+        text-align: left;
+        padding: 0 0 5px 40px;
+      }
+
+      input,
+      textarea {
+        width: 93%;
+        padding: 1.3rem 10px;
+        font-size: 1rem;
+        letter-spacing: 0.062rem;
+        margin-bottom: 1.875rem;
+        border: 1px solid #00000033;
+        color: #757575;
+        background: #ffffff;
+        border-radius: 4px;
+
+        &:focus {
+          outline: none;
+          border: 1px solid #589d9d;
+        }
+      }
+
+      .forBtn {
+        width: 100%;
+
+        .btnArticle {
+          width: max-content;
+          @include roundedBtn;
+
+          &:hover {
+            transform: scaleX(1.1);
+          }
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 767px) {
+  .outerAddArticle {
+    width: min(768px, 100%);
+
+    .innerAddArticle {
+      top: 100px;
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .outerAddArticle {
+    width: min(1366px, 100%);
+
+    .innerAddArticle {
+      display: flex;
+      flex-direction: column;
+      top: 120px;
+      width: 70%;
+
+      .linkRetour {
+        left: 30px;
+      }
+    }
+  }
+}

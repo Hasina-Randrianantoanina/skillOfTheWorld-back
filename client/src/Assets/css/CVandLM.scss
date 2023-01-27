@@ -1,0 +1,228 @@
+@import "../css/index.scss";
+
+.outterDiv {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerDiv {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+
+    .linkRetour {
+      @include Link;
+
+      &:hover {
+        color: #112443;
+        cursor: pointer;
+      }
+    }
+
+    h2 {
+      position: relative;
+      top: 10px;
+      font-family: poppinsLight;
+      color: $heading_color;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      text-align: center;
+      top: 20px;
+
+      label {
+        font-weight: bold;
+        width: 90%;
+      }
+
+      .dragAndDrop {
+        background: white;
+        display: flex;
+        justify-content: space-between;
+        padding: 18px;
+        border-radius: 5px;
+        width: 100%;
+        border: 1px solid #00000063;
+        box-shadow: 0px 0px 3px 0px #00000066;
+        margin: 0 auto;
+        cursor: pointer;
+
+        span {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          p {
+            font-size: 12px;
+            color: #666;
+            font-weight: lighter;
+          }
+        }
+      }
+
+      input[type="file"] {
+        width: 90%;
+        padding: 1rem 10px;
+        font-size: 1rem;
+        letter-spacing: 0.062rem;
+        margin: 10px auto;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        color: #757575;
+        background: #ffffff;
+        border-radius: 4px;
+      }
+
+      input[type="submit"] {
+        width: max-content;
+        border: 2px solid #112442;
+        outline: none;
+        color: #112442;
+        font-weight: bold;
+        background-color: transparent;
+        cursor: pointer;
+        border-radius: 30px;
+        font-size: 1rem;
+        margin: 0 auto;
+        transition: 0.5s;
+        padding: 10px 20px;
+
+        &:hover {
+          transform: scaleX(1.1);
+        }
+      }
+    }
+
+    .divTable::-webkit-scrollbar {
+      display: none;
+    }
+
+    .divTable {
+      width: 95%;
+      margin: 35px auto;
+      white-space: nowrap;
+      overflow-x: scroll;
+
+      table.innerTable {
+        width: 693px;
+        background-color: #ffffff;
+        border-collapse: collapse;
+        border-width: 1px;
+        border-color: #9e9e9e;
+        border-style: solid;
+        color: #292929;
+        td {
+          border-width: 1px;
+          border-color: #9e9e9e;
+          border-style: solid;
+          padding: 5px;
+
+          a {
+            font-size: 11px;
+            font-weight: bold;
+            color: #506587;
+            padding-top: 5px;
+            cursor: pointer;
+            transition: 0.5s;
+
+            &:hover {
+              font-size: 12px;
+            }
+          }
+
+          button {
+            width: 91px;
+            height: 28px;
+            border-radius: 5px;
+            border: 1px solid #272727;
+            color: #ffffff;
+            background: #fa5353;
+            margin: 5px;
+            transition: 0.5s;
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+        }
+        th {
+          border-width: 1px;
+          border-color: #9e9e9e;
+          border-style: solid;
+          padding: 5px;
+        }
+        thead {
+          background-color: #f2f1e8;
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .outterDiv {
+    width: min(768px, 100%);
+
+    .innerDiv {
+      top: 100px;
+
+      h2 {
+        top: 0;
+      }
+
+      form {
+        label {
+          width: 50%;
+        }
+        input[type="file"] {
+          width: 50%;
+          margin: 20px auto;
+        }
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .outterDiv {
+    width: min(1366px, 100%);
+
+    .innerDiv {
+      display: block;
+      top: 120px;
+      width: 85%;
+
+      .linkRetour {
+        left: 130px;
+      }
+
+      h2 {
+        top: -10px;
+      }
+
+      form {
+        label {
+          width: 30%;
+        }
+        input[type="file"] {
+          width: 30%;
+        }
+      }
+
+      .divTable {
+        table.innerTable {
+          width: 830px;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}

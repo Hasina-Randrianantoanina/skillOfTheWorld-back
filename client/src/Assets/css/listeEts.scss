@@ -1,0 +1,245 @@
+@import "../css/index.scss";
+
+.divListe {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 75vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerListe {
+    position: relative;
+    top: 100px;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+
+    .linkRetour {
+      @include Link;
+
+      &:hover {
+        color: #112443;
+        cursor: pointer;
+      }
+    }
+
+    h2 {
+      position: relative;
+      top: 10px;
+      font-family: poppinsLight;
+      color: $heading_color;
+    }
+
+    .divTop {
+      @include divTop;
+      align-self: center;
+
+      .cardObjectif {
+        .value {
+          ul {
+            li {
+              text-align: left;
+              font-size: 14px;
+              font-weight: lighter;
+
+              &::before {
+                content: "•";
+                position: relative;
+                top: 2px;
+                color: $sec_color;
+                font-weight: bold;
+                display: inline-block;
+                font-size: 20px;
+                width: 0.8em;
+                margin-left: -15px;
+                line-height: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    h4 {
+      user-select: none;
+      text-align: center;
+      position: relative;
+      top: 20px;
+      left: 10px;
+      font-weight: lighter;
+    }
+
+    .btnAjout {
+      width: max-content;
+      border: 2px solid #112442;
+      outline: none;
+      color: #112442;
+      font-weight: bold;
+      background-color: transparent;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      margin: 60px auto 0;
+      transition: 0.5s;
+      padding: 15px 20px;
+
+      &:hover {
+        transform: scaleX(1.1);
+      }
+    }
+
+    .divTable::-webkit-scrollbar {
+      display: none;
+    }
+
+    .divTable {
+      width: 95%;
+      margin: 35px auto;
+      white-space: nowrap;
+      overflow-x: scroll;
+
+      table.innerTable {
+        margin: 0 auto;
+        width: 693px;
+        background-color: #ffffff;
+        border-collapse: collapse;
+        border-width: 1px;
+        border-color: #9e9e9e;
+        border-style: solid;
+        color: #292929;
+        td {
+          border-width: 1px;
+          border-color: #9e9e9e;
+          border-style: solid;
+          padding: 5px;
+
+          span {
+            white-space: normal;
+          }
+
+          p {
+            font-size: 11px;
+            color: #7e7e7e;
+            padding-top: 5px;
+          }
+
+          button {
+            width: 91px;
+            height: 28px;
+            border-radius: 5px;
+            border: 1px solid #272727;
+            background: $sec_color;
+            margin: 5px;
+            transition: 0.5s;
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+        }
+        th {
+          border-width: 1px;
+          border-color: #9e9e9e;
+          border-style: solid;
+          padding: 5px;
+        }
+        thead {
+          background-color: #f2f1e8;
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divListe {
+    width: min(768px, 100%);
+
+    .innerListe {
+      top: 100px;
+
+      h2 {
+        top: 0;
+      }
+
+      .divTop {
+        width: 93%;
+        margin: 25px auto;
+        
+        .cardObjectif {
+          flex-direction: row;
+          align-items: center;
+
+          .value {
+            width: 100%;
+          }
+
+          .imgValue {
+            display: block;
+            width: 25%;
+            height: 200px;
+            margin-bottom: 0px;
+          }
+        }
+      }
+      .navigation {
+        display: flex;
+        column-gap: 10px;
+        h4 {
+          left: 20px;
+        }
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .divListe {
+    width: min(1366px, 100%);
+
+    .innerListe {
+      display: block;
+      top: 120px;
+      width: 70%;
+
+      .linkRetour {
+        left: 0px;
+      }
+
+      h2 {
+        top: -10px;
+      }
+
+      .navAndTable {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .navigation {
+          display: block;
+          width: 150px;
+
+          h4 {
+            left: 0;
+            line-height: 30px;
+            &:hover {
+              letter-spacing: 0px;
+              transform: scale(1.1) !important;
+            }
+          }
+        }
+
+        .divTable {
+          width: 80%;
+          margin-top: 20px;
+          table.innerTable {
+            width: 710px;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+  }
+}

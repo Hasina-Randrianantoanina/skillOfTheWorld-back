@@ -1,0 +1,217 @@
+@import "../css/index.scss";
+
+.divValidation {
+  position: relative;
+  width: min(375px, 100%);
+  min-height: 95vh;
+  padding-bottom: 200px;
+  margin: 0 auto;
+
+  .innerValidation {
+    position: relative;
+    top: 100px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+
+    .linkRetour {
+      @include Link;
+
+      &:hover {
+        color: #112443;
+        cursor: pointer;
+      }
+    }
+
+    h2 {
+      position: relative;
+      top: 10px;
+      font-family: poppinsLight;
+      color: $heading_color;
+    }
+
+    .btnAjout {
+      width: max-content;
+      border: 2px solid #112442;
+      outline: none;
+      color: #112442;
+      font-weight: bold;
+      background-color: transparent;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      margin: 60px auto 0;
+      padding: 15px 20px;
+      transition: 0.5s;
+
+      &:hover {
+        transform: scaleX(1.1);
+      }
+    }
+
+    h4 {
+      user-select: none;
+      text-align: left;
+      position: relative;
+      top: 20px;
+      left: 10px;
+      font-weight: lighter;
+
+      cursor: pointer;
+      transition: 0.5s;
+
+      &:hover {
+        letter-spacing: 3px;
+      }
+
+      &.active {
+        font-weight: bold;
+      }
+    }
+
+    .divTable::-webkit-scrollbar {
+      display: none;
+    }
+
+    .divTable {
+      width: 95%;
+      margin: 35px auto;
+      white-space: nowrap;
+      overflow-x: scroll;
+
+      table.innerTable {
+        width: 693px;
+        background-color: #ffffff;
+        border-collapse: collapse;
+        border-width: 1px;
+        border-color: #9e9e9e;
+        border-style: solid;
+        color: #292929;
+        td {
+          border-width: 1px;
+          border-color: #9e9e9e;
+          border-style: solid;
+          padding: 5px;
+
+          span {
+            display: flex;
+            justify-content: space-between;
+            white-space: normal;
+
+            h4 {
+              cursor: default;
+              top: 0;
+              left: 0;
+            }
+          }
+
+          p,
+          a.validationLink {
+            font-size: 11px;
+            color: #7e7e7e;
+            padding-top: 5px;
+          }
+
+          a.validationLink {
+            border-bottom: 1px solid #7e7e7e;
+          }
+
+          button {
+            width: 91px;
+            height: 28px;
+            border-radius: 5px;
+            border: 1px solid #272727;
+            background: $sec_color;
+            margin: 5px;
+            transition: 0.5s;
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+        }
+        th {
+          border-width: 1px;
+          border-color: #9e9e9e;
+          border-style: solid;
+          padding: 5px;
+        }
+        thead {
+          background-color: #f2f1e8;
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 768px) {
+  .divValidation {
+    width: min(768px, 100%);
+
+    .innerValidation {
+      top: 100px;
+
+      h2 {
+        top: 0;
+      }
+      .navigation {
+        display: flex;
+        column-gap: 10px;
+        h4 {
+          left: 20px;
+        }
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .divValidation {
+    width: min(1366px, 100%);
+
+    .innerValidation {
+      display: block;
+      top: 120px;
+      width: 75%;
+
+      .linkRetour {
+        left: 0px;
+      }
+
+      h2 {
+        top: -10px;
+      }
+
+      .navAndTable {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .navigation {
+          display: block;
+          width: 230px;
+
+          h4 {
+            left: 0;
+            line-height: 30px;
+            &:hover {
+              letter-spacing: 0px;
+              transform: scale(1.1) !important;
+            }
+          }
+        }
+
+        .divTable {
+          width: 80%;
+          margin-top: 20px;
+          table.innerTable {
+            width: 710px;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+  }
+}

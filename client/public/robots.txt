@@ -1,0 +1,5 @@
+# https://www.robotstxt.org/robotstxt.html
+User-Agent : Googlebot
+Allow : .js
+Allow : .scss
+Allow : .css
