@@ -178,11 +178,11 @@ module.exports.updatePassword = async (req, res) => {
   }
 };
 // read all entreprise
-module.exports.readAllEntreprise = (req, res) => {
-  Entreprise.find((err, docs) => {
-    if (!err) res.send(docs);
-    else console.log("Erreur d'obtention de données: " + err);
+module.exports.readAllEntreprise = async (req, res) => {
+  const entreprise = await Entreprise.find().sort({
+    createdAt: -1,
   });
+  res.status(200).send(entreprise);
 };
 
 //update a password
@@ -232,4 +232,17 @@ module.exports.loggedInEntreprise = async (req, res) => {
   } catch (err) {
     res.json(false);
   }
+};
+
+// delete a entreprise
+module.exports.deleteEntreprise = async (req, res) => {
+  const { id } = req.params;
+
+  const entreprise = await Entreprise.findOneAndDelete({ _id: id });
+
+  if (!entreprise) {
+    return res.status(400).json({ error: "Le entreprise n'existe pas" });
+  }
+
+  res.status(200).json(entreprise);
 };
