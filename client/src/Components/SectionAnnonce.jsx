@@ -1,27 +1,29 @@
 //eslint-disable-next-line
-import React, { useEffect, useState, useRef, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { IconContext } from 'react-icons/lib';
-import { FaRegCalendar } from 'react-icons/fa';
-import { AuthContext } from '../context/AuthContext';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import axios from 'axios';
+import React, { useEffect, useState, useRef, useContext } from "react";
+import { Link } from "react-router-dom";
+import { IconContext } from "react-icons/lib";
+import { FaRegCalendar } from "react-icons/fa";
+import { AuthContext } from "../context/AuthContext";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import axios from "axios";
 
-import '../Assets/css/sectionAnnonce.scss';
-import offrePic2 from '../Assets/img/offres/baobab_2.webp';
+import "../Assets/css/sectionAnnonce.scss";
+import offrePic2 from "../Assets/img/offres/defaultCover.webp";
 
 const SectionAnnonce = () => {
-  const [offreGlobale, setOffreGlobale] = useState([]);
+  const effectRan = useRef(false);
   const { getUrl, urlFile } = useContext(AuthContext);
 
-  const effectRan = useRef(false);
+  const [offreGlobale, setOffreGlobale] = useState([]);
+  const [isLoading, setIsLoading] = useState(" ");
 
   const getOffreValide = async () => {
     const idEntreprise = [];
+    setIsLoading("Chargement ...");
 
     const getOffre = await axios({
-      method: 'GET',
+      method: "GET",
       url: `${process.env.REACT_APP_API_URL}api/offre/valide/`,
     });
 
@@ -31,7 +33,7 @@ const SectionAnnonce = () => {
     const getEntreprise = await Promise.all(
       idEntreprise.map((i) =>
         axios({
-          method: 'GET',
+          method: "GET",
           url: `${process.env.REACT_APP_API_URL}api/user/entreprise/${i}`,
         })
       )
@@ -51,8 +53,11 @@ const SectionAnnonce = () => {
         },
       ]);
     }
+
+    offreGlobale.length === 0 && setIsLoading("Pas encore d'offre");
   };
 
+  console.log(offreGlobale);
   useEffect(() => {
     getUrl();
     if (effectRan.current === false) {
@@ -81,7 +86,7 @@ const SectionAnnonce = () => {
                   <img
                     src={
                       val && val.uploadCouverture
-                        ? `${urlFile.split('.com/')[0]}.com/${
+                        ? `${urlFile.split(".com/")[0]}.com/${
                             val.uploadCouverture
                           }`
                         : offrePic2
@@ -90,7 +95,7 @@ const SectionAnnonce = () => {
                   />
                   <h3>
                     {val.annonceAnonyme === true
-                      ? 'Skill of the world'
+                      ? "Skill of the world"
                       : val.nomEntreprise}
                   </h3>
                 </div>
@@ -102,8 +107,8 @@ const SectionAnnonce = () => {
                 <div className="calendar">
                   <IconContext.Provider
                     value={{
-                      color: '#0000008f',
-                      size: '13px',
+                      color: "#0000008f",
+                      size: "13px",
                     }}
                   >
                     <FaRegCalendar />
@@ -123,7 +128,7 @@ const SectionAnnonce = () => {
             );
           })
         ) : (
-          <span style={{ margin: '10px auto' }}>{offreGlobale ? 'Chargement ...' : "Pas encore d'offre"}</span>
+          <span style={{ margin: "10px auto" }}>{isLoading}</span>
         )}
       </div>
       <div className="btnAnnonce">
@@ -136,5 +141,3 @@ const SectionAnnonce = () => {
 };
 
 export default SectionAnnonce;
-
-export const test = 'coco';

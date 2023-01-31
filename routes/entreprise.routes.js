@@ -21,4 +21,8 @@ router.patch(
 );
 router.patch('/initialise/:id', entrepriseCtlr.updatePassword);
 router.patch('/reset/:id', entrepriseCtlr.updatePasswordEmail);
+
+//delete entreprise
+router.delete('/delete/:id', entrepriseCtlr.deleteEntreprise);
+
 module.exports = router;

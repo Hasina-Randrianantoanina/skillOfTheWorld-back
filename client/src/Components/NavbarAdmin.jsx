@@ -286,6 +286,11 @@ const NavbarAdmin = () => {
                   <b>Candidature</b>
                 </Link>
               </li>
+              <li ref={historiqueRef} onClick={handleClicHistorique}>
+                <Link to="/listeEntrepriseAdmin">
+                  <b>Entreprise</b>
+                </Link>
+              </li>
               {/* <li ref={titreRef} onClick={handleClicHistorique}>
                 <Link to="/modificationTitre">
                   <b>Titre</b>
@@ -413,6 +418,14 @@ const NavbarAdmin = () => {
             className={dropdownHistoriqueResp ? "active" : undefined}
           >
             <b>Candidature</b>
+          </Link>
+
+          <Link
+            to="/listeEntrepriseAdmin"
+            onClick={handleClickHistoriqueResp}
+            className={dropdownHistoriqueResp ? "active" : undefined}
+          >
+            <b>Entreprise</b>
           </Link>
 
           {/* Titre */}

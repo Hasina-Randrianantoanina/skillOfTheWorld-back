@@ -21,12 +21,15 @@ const ListeJobDatingGlobale = () => {
   const [champ, setChamp] = useState(false);
   const [query, setQuery] = useState('');
   const [jobdatingPublie, setJobdatingPublie] = useState([]);
+  const [isLoading, setIsLoading] = useState(" ");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
     const getJDpublie = async () => {
+      setIsLoading("Chargement ...");
+
       await axios({
         method: 'GET',
         url: `${process.env.REACT_APP_API_URL}api/jobdating/publie/`,
@@ -37,6 +40,8 @@ const ListeJobDatingGlobale = () => {
         .catch((err) => {
           console.log(err);
         });
+        
+        jobdatingPublie.length === 0 && setIsLoading("Pas encore de job dating pour le moment");
     };
     getJDpublie();
   }, []);
@@ -298,7 +303,7 @@ const ListeJobDatingGlobale = () => {
             )
           ) : (
             <span style={{ textAlign: 'center', width: '100%' }}>
-              {jobdatingPublie ? 'Chargement ...' : 'Pas encore de Job Dating ajoutée'}
+              {isLoading}
             </span>
           )}
         </div>

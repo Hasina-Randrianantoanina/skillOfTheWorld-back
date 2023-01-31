@@ -1,5 +1,6 @@
 const Entreprise = require('../models/Entreprise.model');
 const sendEmail = require('../utils/sendEmail');
+const receiveEmail = require('../utils/receiveEmail');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ObjectID = require('mongoose').Types.ObjectId;
@@ -41,11 +42,13 @@ module.exports.signup = async (req, res) => {
       isVerified,
       password,
     });
-    // res.status(201).json({ entreprise: entreprise._id });
-
-    res.status(201).send(entreprise);
     const url = `Pour confirmer votre inscription à la plateforme Skill Of The World, veuillez cliquer sur ce lien ${process.env.CLIENT_URL}/api/user/entreprise/verification/${entreprise._id} et suivre les instructions. `;
+    await receiveEmail(
+      "Inscription d'une nouvelle entreprise",
+      `${req.body.nomEntreprise} viens de faire une inscription sur la plateforme.`
+    );
     await sendEmail(entreprise.email, 'Verification email', url);
+    res.status(201).send(entreprise);
   } catch (err) {
     const errors = signUperrors(err);
     res.status(200).send({ errors });
@@ -175,11 +178,11 @@ module.exports.updatePassword = async (req, res) => {
   }
 };
 // read all entreprise
-module.exports.readAllEntreprise = (req, res) => {
-  Entreprise.find((err, docs) => {
-    if (!err) res.send(docs);
-    else console.log("Erreur d'obtention de données: " + err);
+module.exports.readAllEntreprise = async (req, res) => {
+  const entreprise = await Entreprise.find().sort({
+    createdAt: -1,
   });
+  res.status(200).send(entreprise);
 };
 
 //update a password
@@ -229,4 +232,17 @@ module.exports.loggedInEntreprise = async (req, res) => {
   } catch (err) {
     res.json(false);
   }
+};
+
+// delete a entreprise
+module.exports.deleteEntreprise = async (req, res) => {
+  const { id } = req.params;
+
+  const entreprise = await Entreprise.findOneAndDelete({ _id: id });
+
+  if (!entreprise) {
+    return res.status(400).json({ error: "Le entreprise n'existe pas" });
+  }
+
+  res.status(200).json(entreprise);
 };

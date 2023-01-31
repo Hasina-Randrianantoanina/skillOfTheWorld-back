@@ -13,7 +13,6 @@ import countries from "../Utils/africaCountry.json";
 import fonctions from "../Utils/fonction.json";
 import "../Assets/css/ajoutOffre.scss";
 import "../Assets/css/confirmModal.scss";
-import Loading from "../Components/loading/Loading";
 
 const AjoutOffre = () => {
   const { uid } = useContext(AuthContext);

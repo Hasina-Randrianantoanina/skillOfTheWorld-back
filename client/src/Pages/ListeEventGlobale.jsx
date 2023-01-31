@@ -22,12 +22,14 @@ const ListeEventGobale = () => {
   const [champ, setChamp] = useState(false);
   const [eventValide, setEventValide] = useState([]);
   const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(" ");
+  
   const [currentPage, setCurrentPage] = useState(1);
-
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
     const getEventPublie = async () => {
+      setIsLoading("Chargement ...");
       await axios({
         method: "GET",
         url: `${process.env.REACT_APP_API_URL}api/evenement/publie`,
@@ -38,6 +40,7 @@ const ListeEventGobale = () => {
         .catch((err) => {
           console.log(err);
         });
+        eventValide.length === 0 && setIsLoading("Pas encore d'évènement pour le moment");
     };
 
     if (effectRan.current === false) {
@@ -209,7 +212,7 @@ const ListeEventGobale = () => {
             )
           ) : (
             <span style={{ textAlign: "center", width: "100%" }}>
-              {eventValide ? 'Chargement ...' : "Pas encore d'évènement ajouté"}
+              {isLoading}
             </span>
           )}
         </div>

@@ -1,23 +1,27 @@
-import axios from 'axios';
-import React, { useEffect, useState, useRef, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import moment from 'moment/moment';
-import 'moment/locale/fr';
-import { AuthContext } from '../context/AuthContext';
+import axios from "axios";
+import React, { useEffect, useState, useRef, useContext } from "react";
+import { Link } from "react-router-dom";
+import moment from "moment/moment";
+import "moment/locale/fr";
+import { AuthContext } from "../context/AuthContext";
 
-import '../Assets/css/sectionJobDating.scss';
-import eventPic1 from '../Assets/img/event/event (1).webp';
-import eventProfile1 from '../Assets/img/SOTW_logo (5).webp';
+import "../Assets/css/sectionJobDating.scss";
+import eventPic1 from "../Assets/img/event/event (1).webp";
+import eventProfile1 from "../Assets/img/SOTW_logo (5).webp";
 
 const SectionEvent = () => {
-  const { getUrl, urlFile } = useContext(AuthContext);
   const effectRan = useRef(false);
+  const { getUrl, urlFile } = useContext(AuthContext);
+
   const [eventValide, setEventValide] = useState([]);
+  const [isLoading, setIsLoading] = useState(" ");
+
   const getEventPublie = async () => {
     const idEntreprise = [];
+    setIsLoading("Chargement ...");
 
     const getEventPublie = await axios({
-      method: 'GET',
+      method: "GET",
       url: `${process.env.REACT_APP_API_URL}api/evenement/publie`,
     });
 
@@ -27,7 +31,7 @@ const SectionEvent = () => {
     const getEntreprise = await Promise.all(
       idEntreprise.map((i) =>
         axios({
-          method: 'GET',
+          method: "GET",
           url: `${process.env.REACT_APP_API_URL}api/user/entreprise/${i}`,
         })
       )
@@ -43,10 +47,11 @@ const SectionEvent = () => {
           uploadLogo: getEntreprise[i].data.uploadLogo,
           nomEntreprise: getEntreprise[i].data.nomEntreprise
             ? getEntreprise[i].data.nomEntreprise
-            : 'Skill of The World',
+            : "Skill of The World",
         },
       ]);
     }
+    eventValide.length === 0 && setIsLoading("Pas encore d'évènement");
   };
   useEffect(() => {
     getUrl();
@@ -59,7 +64,7 @@ const SectionEvent = () => {
   }, []);
   return (
     <>
-      <h1 className="jd" style={{ color: '#112443' }}>
+      <h1 className="jd" style={{ color: "#112443" }}>
         Les évènements
       </h1>
       <div
@@ -76,7 +81,7 @@ const SectionEvent = () => {
                   <img
                     src={
                       val.photoCouverture
-                        ? `${urlFile.split('.com/')[0]}.com/${
+                        ? `${urlFile.split(".com/")[0]}.com/${
                             val.photoCouverture
                           }`
                         : eventPic1
@@ -88,7 +93,7 @@ const SectionEvent = () => {
                       <img
                         src={
                           val.uploadLogo
-                            ? `${urlFile.split('.com/')[0]}.com/${
+                            ? `${urlFile.split(".com/")[0]}.com/${
                                 val.uploadLogo
                               }`
                             : eventProfile1
@@ -103,7 +108,7 @@ const SectionEvent = () => {
                   </h4>
                 </div>
                 <div className="footer_jd">
-                  <h5>{moment(val.dateEvenement).locale('fr').format('LL')}</h5>
+                  <h5>{moment(val.dateEvenement).locale("fr").format("LL")}</h5>
                   <h5>
                     <Link to={`/detailEvent/${val._id}`}>Participer</Link>
                   </h5>
@@ -114,12 +119,12 @@ const SectionEvent = () => {
         ) : (
           <span
             style={{
-              display: 'block',
-              width: 'max-content',
-              margin: '35px auto',
+              display: "block",
+              width: "max-content",
+              margin: "35px auto",
             }}
           >
-            {eventValide ? 'Chargement ...' : "Pas encore d'évènement"}
+            {isLoading}
           </span>
         )}
         <div className="btnJD">

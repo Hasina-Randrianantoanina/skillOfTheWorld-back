@@ -1,91 +1,93 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
-import DatePicker from "react-date-picker/dist/entry.nostyle";
-import { BsCalendarDate } from "react-icons/bs";
-import { FaRegEye } from "react-icons/fa";
-import { FaRegEyeSlash } from "react-icons/fa";
-import { IconContext } from "react-icons";
-import { Helmet } from "react-helmet";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import DatePicker from 'react-date-picker/dist/entry.nostyle';
+import { BsCalendarDate } from 'react-icons/bs';
+import { FaRegEye } from 'react-icons/fa';
+import { FaRegEyeSlash } from 'react-icons/fa';
+import { IconContext } from 'react-icons';
+import { Helmet } from 'react-helmet';
 
-import inscriptionImg from "../Assets/img/global/inscription.svg";
-import "../Assets/css/inscriptionCandidat.scss";
-import countries from "../Utils/africaCountry.json";
-import ets_img from "../Assets/img/SOTW_logo (2).webp";
+import inscriptionImg from '../Assets/img/global/inscription.svg';
+import fonctions from '../Utils/fonction.json';
+import '../Assets/css/inscriptionCandidat.scss';
+import countries from '../Utils/africaCountry.json';
+import ets_img from '../Assets/img/SOTW_logo (2).webp';
 
 const InscriptionCandidat = () => {
   const redirect = useNavigate();
 
-  const [nom, setNom] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [dateNaissance, setDateNaissance] = useState("");
-  const [localisation, setLocalisation] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [nom, setNom] = useState('');
+  const [prenom, setPrenom] = useState('');
+  const [dateNaissance, setDateNaissance] = useState('');
+  const [localisation, setLocalisation] = useState('');
+  const [secteurActivite, setSecteurActivite] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [passwordType, setPasswordType] = useState("password");
+  const [passwordType, setPasswordType] = useState('password');
   const [icon, setIcon] = useState(<FaRegEyeSlash />);
 
   const handleShowPassword = () => {
-    console.log("there");
-    if (passwordType === "password") {
+    console.log('there');
+    if (passwordType === 'password') {
       setIcon(<FaRegEye />);
-      setPasswordType("text");
+      setPasswordType('text');
     } else {
       setIcon(<FaRegEyeSlash />);
-      setPasswordType("password");
+      setPasswordType('password');
     }
   };
 
   const inscriptionSuccess = () =>
     toast.success(
-      "Veuillez vérifier votre boîte mail pour valider votre inscription",
+      'Veuillez vérifier votre boîte mail pour valider votre inscription',
       {
-        position: "top-center",
+        position: 'top-center',
         autoClose: 60000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: 'dark',
       }
     );
 
   const mdpError = () =>
     toast.warning(
-      "Les mots de passe que vous avez saisi ne sont pas identiques",
+      'Les mots de passe que vous avez saisi ne sont pas identiques',
       {
-        position: "top-center",
+        position: 'top-center',
         autoClose: 10000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: 'dark',
       }
     );
 
   const Error = (err) =>
     toast.warning(err, {
-      position: "top-center",
+      position: 'top-center',
       autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: 'dark',
     });
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     if (password === confirmPassword) {
       await axios({
-        method: "POST",
+        method: 'POST',
         url: `${process.env.REACT_APP_API_URL}api/user/candidat/signup`,
         data: {
           nom: nom,
@@ -93,6 +95,7 @@ const InscriptionCandidat = () => {
           dateNaissance: dateNaissance,
           localisation: localisation,
           email: email,
+          secteurActivite: secteurActivite,
           uploadLogo: null,
           isVerified: false,
           password: password,
@@ -102,16 +105,17 @@ const InscriptionCandidat = () => {
       })
         .then((res) => {
           if (res.status === 201) {
-            console.log("Inscription succès");
-            setNom("");
-            setPrenom("");
-            setDateNaissance("");
-            setLocalisation("");
-            setEmail("");
-            setPassword("");
-            setConfirmPassword("");
+            console.log('Inscription succès');
+            setNom('');
+            setPrenom('');
+            setDateNaissance('');
+            setLocalisation('');
+            setEmail('');
+            setPassword('');
+            setSecteurActivite('');
+            setConfirmPassword('');
             inscriptionSuccess();
-            redirect("/login");
+            redirect('/login');
           } else if (res.status === 200) {
             Error(res.data.errors.email);
           }
@@ -137,7 +141,7 @@ const InscriptionCandidat = () => {
         <p className="linkRetour" onClick={() => redirect(-1)}>
           &#60; Retour
         </p>
-        <div className="bienvenue" style={{ textAlign: "center" }}>
+        <div className="bienvenue" style={{ textAlign: 'center' }}>
           <h2>
             <b>Bienvenue à vous, Talent !</b>
           </h2>
@@ -255,6 +259,24 @@ const InscriptionCandidat = () => {
                 );
               })}
             </select>
+            <select
+              name="fonction"
+              required
+              onChange={(event) => {
+                setSecteurActivite(event.target.value);
+              }}
+            >
+              <option defaultValue value="Marketing">
+                Secteur d'activité *
+              </option>
+              {fonctions.map((fonction, index) => {
+                return (
+                  <option key={index} value={`${fonction.nom}`}>
+                    {fonction.nom}
+                  </option>
+                );
+              })}
+            </select>
             <label htmlFor="datePicker">Date de Naissance</label>
             <DatePicker
               id="datePicker"
@@ -265,7 +287,7 @@ const InscriptionCandidat = () => {
                 setDateNaissance(dateNaissance);
               }}
               calendarIcon={
-                <IconContext.Provider value={{ size: "19px" }}>
+                <IconContext.Provider value={{ size: '19px' }}>
                   <span>
                     <BsCalendarDate />
                   </span>
@@ -298,7 +320,7 @@ const InscriptionCandidat = () => {
               value={uploadLogo}
             /> */}
 
-            <div style={{ position: "relative", width: "100%" }}>
+            <div style={{ position: 'relative', width: '100%' }}>
               <span className="passHint" onClick={handleShowPassword}>
                 {icon}
               </span>
@@ -315,7 +337,7 @@ const InscriptionCandidat = () => {
               />
             </div>
 
-            <div style={{ position: "relative", width: "100%" }}>
+            <div style={{ position: 'relative', width: '100%' }}>
               <span className="passHint" onClick={handleShowPassword}>
                 {icon}
               </span>

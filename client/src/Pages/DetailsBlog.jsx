@@ -48,7 +48,7 @@ const DetailsBlog = () => {
               </div>
             )}
 
-            <p>{article.description}</p>
+            <pre>{article.description}</pre>
             {admin && (
               <div className="forModif">
                 <Link to={`/modificationArticle/${article._id}`}>

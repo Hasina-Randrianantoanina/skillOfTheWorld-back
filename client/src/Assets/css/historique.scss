@@ -59,6 +59,28 @@
       white-space: nowrap;
       overflow-x: scroll;
 
+      .filterEts {
+        width: 80%;
+        margin: 20px auto;
+        input,
+        select {
+          width: 100%;
+          padding: 17px 10px;
+          font-size: 1rem;
+          letter-spacing: 0.062rem;
+          margin-bottom: 10px;
+          border: 1px solid #00000033;
+          color: #757575;
+          background: #ffffff;
+          border-radius: 4px;
+
+          &:focus {
+            outline: none;
+            border: 1px solid #589d9d;
+          }
+        }
+      }
+
       table.innerTable {
         width: 693px;
         background-color: #ffffff;
@@ -90,7 +112,8 @@
             padding-top: 5px;
           }
 
-          .nbrAction, .deleteAction {
+          .nbrAction,
+          .deleteAction {
             cursor: default;
             text-align: center;
             width: 30px;

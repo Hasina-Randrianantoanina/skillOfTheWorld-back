@@ -1,29 +1,33 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import moment from 'moment/moment';
-import 'moment/locale/fr';
-import { AuthContext } from '../context/AuthContext';
+import React, { useEffect, useState, useRef, useContext } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import moment from "moment/moment";
+import "moment/locale/fr";
+import { AuthContext } from "../context/AuthContext";
 
-import '../Assets/css/sectionJobDating.scss';
-import jdPic1 from '../Assets/img/jobDating/jd (1).webp';
+import "../Assets/css/sectionJobDating.scss";
+import jdPic1 from "../Assets/img/jobDating/jd (1).webp";
 // import jdPic2 from '../Assets/img/jobDating/jd (2).webp';
 // import jdPic3 from '../Assets/img/jobDating/jd (3).webp';
 // import jdPic4 from '../Assets/img/jobDating/jd (4).webp';
-import jdProfile1 from '../Assets/img/SOTW_logo (5).webp';
+import jdProfile1 from "../Assets/img/SOTW_logo (5).webp";
 // import jdProfile2 from '../Assets/img/jobDating/logo (2).webp';
 // import jdProfile3 from '../Assets/img/jobDating/logo (3).webp';
 // import jdProfile4 from '../Assets/img/jobDating/logo (4).webp';
 
 const SectionJobDating = () => {
-  const { getUrl, urlFile } = useContext(AuthContext);
   const effectRan = useRef(false);
+  const { getUrl, urlFile } = useContext(AuthContext);
+
   const [jobdatingPublie, setJobdatingPublie] = useState([]);
+  const [isLoading, setIsLoading] = useState(" ");
+
   const getJDpublie = async () => {
     const idEntreprise = [];
+    setIsLoading("Chargement ...");
 
     const getJDPublie = await axios({
-      method: 'GET',
+      method: "GET",
       url: `${process.env.REACT_APP_API_URL}api/jobdating/publie/`,
     });
 
@@ -33,7 +37,7 @@ const SectionJobDating = () => {
     const getEntreprise = await Promise.all(
       idEntreprise.map((i) =>
         axios({
-          method: 'GET',
+          method: "GET",
           url: `${process.env.REACT_APP_API_URL}api/user/entreprise/${i}`,
         })
       )
@@ -50,11 +54,13 @@ const SectionJobDating = () => {
           uploadLogo: getEntreprise[i].data.uploadLogo,
           nomEntreprise: getEntreprise[i].data.nomEntreprise
             ? getEntreprise[i].data.nomEntreprise
-            : 'Skill of The World',
+            : "Skill of The World",
         },
       ]);
     }
+    jobdatingPublie.length === 0 && setIsLoading("Pas encore de job dating");
   };
+
   useEffect(() => {
     getUrl();
     if (effectRan.current === false) {
@@ -81,7 +87,7 @@ const SectionJobDating = () => {
                   <img
                     src={
                       val.photoCouverture
-                        ? `${urlFile.split('.com/')[0]}.com/${
+                        ? `${urlFile.split(".com/")[0]}.com/${
                             val.photoCouverture
                           }`
                         : jdPic1
@@ -93,7 +99,7 @@ const SectionJobDating = () => {
                       <img
                         src={
                           val.uploadLogo
-                            ? `${urlFile.split('.com/')[0]}.com/${
+                            ? `${urlFile.split(".com/")[0]}.com/${
                                 val.uploadLogo
                               }`
                             : jdProfile1
@@ -108,7 +114,7 @@ const SectionJobDating = () => {
                   </h4>
                 </div>
                 <div className="footer_jd">
-                  <h5>{moment(val.dateDebut).locale('fr').format('LL')}</h5>
+                  <h5>{moment(val.dateDebut).locale("fr").format("LL")}</h5>
                   <h5>
                     <Link to={`/detailJD/${val._id}`}>Participer</Link>
                   </h5>
@@ -119,13 +125,13 @@ const SectionJobDating = () => {
         ) : (
           <span
             style={{
-              display: 'block',
-              width: 'max-content',
-              margin: '35px auto',
-              color: 'white',
+              display: "block",
+              width: "max-content",
+              margin: "35px auto",
+              color: "white",
             }}
           >
-            {jobdatingPublie ? "Chargement ...." : "Pas encore de job dating"}
+            {isLoading}
           </span>
         )}
 

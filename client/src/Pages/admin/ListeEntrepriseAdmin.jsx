@@ -11,51 +11,50 @@ import 'moment/locale/fr';
 import '../../Assets/css/historique.scss';
 import Pagination from '../../Components/Pagination';
 
-const CandidatureAdmin = () => {
+const ListeEntrepriseAdmin = () => {
   const redirect = useNavigate();
   const effectRan = useRef(false);
 
-  // const [showOffre, setShowOffre] = useState(true);
-  // const [showJD, setShowJD] = useState(false);
-  // const [showEvent, setShowEvent] = useState(false);
+  //   const [showOffre, setShowOffre] = useState(true);
+  //   const [showJD, setShowJD] = useState(false);
+  //   const [showEvent, setShowEvent] = useState(false);
+  const [societe, setSociete] = useState([]);
 
-  // const handleClickOffre = () => {
-  //   if (setShowOffre) {
-  //     setShowOffre(true);
-  //   } else {
-  //     setShowOffre(true);
-  //   }
-  //   setShowJD(false);
-  //   setShowEvent(false);
-  // };
+  //   const handleClickOffre = () => {
+  //     if (setShowOffre) {
+  //       setShowOffre(true);
+  //     } else {
+  //       setShowOffre(true);
+  //     }
+  //     setShowJD(false);
+  //     setShowEvent(false);
+  //   };
 
-  // const handleClickJD = () => {
-  //   setShowOffre(false);
-  //   if (setShowJD) {
-  //     setShowJD(true);
-  //   } else {
-  //     setShowJD(true);
-  //   }
-  //   setShowEvent(false);
-  // };
+  //   const handleClickJD = () => {
+  //     setShowOffre(false);
+  //     if (setShowJD) {
+  //       setShowJD(true);
+  //     } else {
+  //       setShowJD(true);
+  //     }
+  //     setShowEvent(false);
+  //   };
 
-  // const handleClickEvent = () => {
-  //   setShowOffre(false);
-  //   setShowJD(false);
-  //   if (setShowEvent) {
-  //     setShowEvent(true);
-  //   } else {
-  //     setShowEvent(true);
-  //   }
-  // };
-
-  const [candidat, setCandidat] = useState([]);
+  //   const handleClickEvent = () => {
+  //     setShowOffre(false);
+  //     setShowJD(false);
+  //     if (setShowEvent) {
+  //       setShowEvent(true);
+  //     } else {
+  //       setShowEvent(true);
+  //     }
+  //   };
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
   const deleteSuccess = () =>
-    toast.success('Candidat supprimé avec succès', {
+    toast.success('Entreprise supprimé avec succès', {
       position: 'top-right',
       autoClose: 5000,
       hideProgressBar: false,
@@ -66,14 +65,17 @@ const CandidatureAdmin = () => {
       theme: 'dark',
     });
 
-  const deleteCandidat = async (idCandidat) => {
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const deleteEntreprise = async (idEntreprise) => {
     await axios({
       method: 'DELETE',
-      url: `${process.env.REACT_APP_API_URL}api/user/candidat/delete/${idCandidat}`,
+      url: `${process.env.REACT_APP_API_URL}api/user/entreprise/delete/${idEntreprise}`,
     })
       .then((res) => {
         window.location.reload(false);
-        redirect('/CandidatureAdmin');
+        redirect('/listeEntrepriseAdmin');
         deleteSuccess();
       })
       .then((error) => {
@@ -81,14 +83,14 @@ const CandidatureAdmin = () => {
       });
   };
 
-  const submitFile = (idCandidat) => {
+  const submitFile = (idEntreprise) => {
     confirmAlert({
       title: 'Suppression',
       message: 'Supprimer le candidat ?',
       buttons: [
         {
           label: 'Supprimer',
-          onClick: () => deleteCandidat(idCandidat),
+          onClick: () => deleteEntreprise(idEntreprise),
         },
         {
           label: 'Annuler',
@@ -98,18 +100,18 @@ const CandidatureAdmin = () => {
     });
   };
 
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
   useEffect(() => {
-    const getOffre = async () => {
+    const getEntreprise = async () => {
       await axios({
         method: 'get',
-        url: `${process.env.REACT_APP_API_URL}api/user/candidat/`,
+        url: `${process.env.REACT_APP_API_URL}api/user/entreprise/`,
       })
         .then((res) => {
-          if (res.data.errors) {
-            console.log(res.data.errors);
-          } else {
-            setCandidat(res.data);
-          }
+          console.log(res.data);
+          setSociete(res.data);
         })
         .catch((error) => {
           console.log(error);
@@ -117,19 +119,12 @@ const CandidatureAdmin = () => {
     };
 
     if (effectRan.current === false) {
-      getOffre();
+      getEntreprise();
     }
     return () => {
       effectRan.current = true;
     };
   }, []);
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
   return (
     <div className="divHistorique">
@@ -138,7 +133,7 @@ const CandidatureAdmin = () => {
           {' '}
           &#60; Retour
         </p>
-        <h2>Candidature</h2>
+        <h2>Liste des entreprises</h2>
         <div className="navAndTable">
           {/* <div className="navigation">
             <h4
@@ -161,8 +156,15 @@ const CandidatureAdmin = () => {
             </h4>
           </div> */}
 
-          {/* OFFRE */}
+          {/* Liste des entreprises */}
           <div className="divTable">
+            <form className="filterEts">
+              <input
+                type="search"
+                name="offreSearch"
+                placeholder="Recherche : Nom de l'entreprise, pays, date ..."
+              />
+            </form>
             <table className="innerTable">
               <thead>
                 <tr>
@@ -173,62 +175,68 @@ const CandidatureAdmin = () => {
                       paddingLeft: '15px',
                     }}
                   >
-                    Liste des candidats
+                    Liste des Entreprises
                   </th>
-                  <th>Nombre d'action (offre)</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {candidat.length === 0 && (
+                {societe.length > 0 ? (
+                  societe.map((val, key) => {
+                    return (
+                      <tr key={val._id}>
+                        <td style={{ textAlign: 'left', paddingLeft: '15px' }}>
+                          <span>
+                            <b>{val.nomEntreprise}</b>
+                            <h4>{val.createdAt}</h4>
+                          </span>
+                          <span>{val.lieuxActivite}</span>
+                        </td>
+                        <td>
+                          <Link to="#">
+                            <button>Détail</button>
+                          </Link>
+                          <button
+                            className="deleteAction"
+                            onClick={() => submitFile(val._id)}
+                          >
+                            <IconContext.Provider value={{ size: '12px' }}>
+                              <FaRegTrashAlt />
+                            </IconContext.Provider>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
                   <tr>
                     <td>Aucun candidat inscrit</td>
                   </tr>
                 )}
-                {candidat.length > 0 &&
-                  candidat
-                    .slice(indexOfFirstPost, indexOfLastPost)
-                    .map((val, key) => {
-                      return (
-                        <tr key={val._id}>
-                          <td
-                            style={{ textAlign: 'left', paddingLeft: '15px' }}
-                          >
-                            <span>
-                              {val.nom} {val.prenom}
-                              <h4>
-                                {moment(val.createdAt)
-                                  .locale('fr')
-                                  .format('LL')}
-                              </h4>
-                            </span>
-                            <span>
-                              <b>{val.secteurActivite}</b>
-                              <i>
-                                <h4>{val.localisation}</h4>
-                              </i>
-                            </span>
-                          </td>
-                          <td>
-                            <Link to={`/detailCandidatureAdmin/${val._id}`}>
-                              <button>Détail</button>
-                            </Link>
-
-                            <button className="nbrAction">
-                              {val.nombreAction}
-                            </button>
-                            <button
-                              className="deleteAction"
-                              onClick={() => submitFile(val._id)}
-                            >
-                              <IconContext.Provider value={{ size: '12px' }}>
-                                <FaRegTrashAlt />
-                              </IconContext.Provider>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
               </tbody>
+
+              {/* 
+              <tbody>
+                <tr>
+                  <td style={{ textAlign: 'left', paddingLeft: '15px' }}>
+                    <span>
+                      <b>Retina Corps</b>
+                      <h4>19 octobre 2023</h4>
+                    </span>
+                    <span>Madagasikara - Antananarivo</span>
+                  </td>
+                  <td>
+                    <Link to="#">
+                      <button>Détail</button>
+                    </Link>
+                    <button className="deleteAction">
+                      <IconContext.Provider value={{ size: '12px' }}>
+                        <FaRegTrashAlt />
+                      </IconContext.Provider>
+                    </button>
+                  </td>
+                </tr>
+              </tbody> */}
             </table>
           </div>
 
@@ -245,7 +253,7 @@ const CandidatureAdmin = () => {
                         paddingLeft: "15px",
                       }}
                     >
-                      Liste des candidats (job dating)
+                      Liste des entreprises (job dating)
                     </th>
                     <th>Nombre d'action</th>
                   </tr>
@@ -254,11 +262,10 @@ const CandidatureAdmin = () => {
                   <tr>
                     <td style={{ textAlign: "left", paddingLeft: "15px" }}>
                       <span>
-                        PIRAUDON Elsa
+                        <b>Economika</b>
+                        <h4>07 Juin 2023</h4>
                       </span>
-                      <span>
-                        <b>[elsa@gmail.com]</b>
-                      </span>
+                      <span>France - Paris</span>
                     </td>
                     <td>
                       <button className="nbrAction">8</button>
@@ -282,7 +289,7 @@ const CandidatureAdmin = () => {
                         paddingLeft: "15px",
                       }}
                     >
-                      Liste des candidats (évènement)
+                      Liste des entreprises (évènement)
                     </th>
                     <th>Nombre d'action</th>
                   </tr>
@@ -291,11 +298,10 @@ const CandidatureAdmin = () => {
                   <tr>
                     <td style={{ textAlign: "left", paddingLeft: "15px" }}>
                       <span>
-                        RAZAKAMANANTSOA Antsarivelo Tsaroana
+                        <b>Manager de demain</b>
+                        <h4>13 Fevrier 2023</h4>
                       </span>
-                      <span>
-                        <b>[tsaroana@gmail.com]</b>
-                      </span>
+                      <span>Madagascar - Antananarivo</span>
                     </td>
                     <td>
                       <button className="nbrAction">5</button>
@@ -306,14 +312,14 @@ const CandidatureAdmin = () => {
             </div>
           )} */}
         </div>
-        <Pagination
+        {/* <Pagination
           postsPerPage={postsPerPage}
           totalPosts={candidat.length}
           paginate={paginate}
-        />
+        /> */}
       </div>
     </div>
   );
 };
 
-export default CandidatureAdmin;
+export default ListeEntrepriseAdmin;

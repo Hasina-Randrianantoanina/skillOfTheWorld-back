@@ -22,12 +22,14 @@ const ListeOffreGlobale = () => {
   const [typeTravail, setTypeTravail] = useState("");
   const [localisation, setLocalisation] = useState("");
   const [fonction, setFonction] = useState("");
+  const [isLoading, setIsLoading] = useState(" ");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
     const getOffrePublie = async () => {
+      setIsLoading("Chargement ...");
       await axios({
         method: "get",
         url: `${process.env.REACT_APP_API_URL}api/offre/valide/`,
@@ -36,16 +38,17 @@ const ListeOffreGlobale = () => {
           if (res.data.errors) {
             console.log(res.data.errors);
           } else {
-            console.log(res.data);
             setOffre(res.data);
           }
         })
         .catch((error) => {
           console.log(error);
         });
+      offres.length === 0 && setIsLoading("Pas encore d'offre pour le moment");
     };
+
     getOffrePublie();
-  }, []);
+  }, [offres.length]);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -58,8 +61,13 @@ const ListeOffreGlobale = () => {
     <div className="outerDivOffre">
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Skill of the World - Externaliser et réduire ses délais de recrutement</title>
-        <meta name="keywords" content="Plateforme de recrutement, Recrutement externalisé, Cabinet de recrutement, Offre d’emploi, Recrutement international" />
+        <title>
+          Skill of the World - Externaliser et réduire ses délais de recrutement
+        </title>
+        <meta
+          name="keywords"
+          content="Plateforme de recrutement, Recrutement externalisé, Cabinet de recrutement, Offre d’emploi, Recrutement international"
+        />
       </Helmet>
       <div className="innerDivOffre">
         <p className="linkRetour" onClick={() => redirect(-1)}>
@@ -85,8 +93,17 @@ const ListeOffreGlobale = () => {
                 </div>
               </div>
             </div>
-            <div className="divTop" style={{ marginTop: "15px", flexDirection: "row-reverse" }}>
-              <div className="cardObjectif" style={{ flexDirection: "row-reverse", background:"powderBlue" }}>
+            <div
+              className="divTop"
+              style={{ marginTop: "15px", flexDirection: "row-reverse" }}
+            >
+              <div
+                className="cardObjectif"
+                style={{
+                  flexDirection: "row-reverse",
+                  background: "powderBlue",
+                }}
+              >
                 <div className="value">
                   <p>
                     Nous vous incitons fortement à joindre une{" "}
@@ -100,8 +117,11 @@ const ListeOffreGlobale = () => {
                     professionnels.
                   </p>
                 </div>
-                <div className="imgValue" style={{ height: "145px", marginRight:"50px"}}>
-                  <img src={ets_img} alt="Logo de Skill of the world"/>
+                <div
+                  className="imgValue"
+                  style={{ height: "145px", marginRight: "50px" }}
+                >
+                  <img src={ets_img} alt="Logo de Skill of the world" />
                 </div>
               </div>
             </div>
@@ -347,7 +367,7 @@ const ListeOffreGlobale = () => {
             )
           ) : (
             <span style={{ textAlign: "center", width: "100%" }}>
-              {offres ? 'Chargement ...' : "Pas encore d'offre ajouté"}
+              {isLoading}
             </span>
           )}
         </div>

@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/AuthContext';
 
 import './../../Assets/css/updateProfil.scss';
 import profilIllustration from './../../Assets/img/profil/profil.svg';
+import fonctions from '../../Utils/fonction.json';
 
 const ModifierProfilCandidat = () => {
   const redirect = useNavigate();
@@ -17,6 +18,7 @@ const ModifierProfilCandidat = () => {
   const [uploadLogo, setUploadLogo] = useState('');
   const [email, setEmail] = useState('');
   const [candidatInfo, setCandidatInfo] = useState([]);
+  const [secteurActivite, setSecteurActivite] = useState('');
 
   const modifSucces = () =>
     toast.success('Votre profil a été modifié avec succès', {
@@ -48,6 +50,9 @@ const ModifierProfilCandidat = () => {
   const updateProfil = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    if (secteurActivite !== '') {
+      formData.append('secteurActivite', secteurActivite);
+    }
     if (email !== '') {
       formData.append('email', email);
     }
@@ -147,6 +152,23 @@ const ModifierProfilCandidat = () => {
                     setEmail(event.target.value);
                   }}
                 />
+                <select
+                  name="fonction"
+                  onChange={(event) => {
+                    setSecteurActivite(event.target.value);
+                  }}
+                >
+                  <option defaultValue value="">
+                    Secteur d'activité
+                  </option>
+                  {fonctions.map((fonction, index) => {
+                    return (
+                      <option key={index} value={`${fonction.nom}`}>
+                        {fonction.nom}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
             )}
 

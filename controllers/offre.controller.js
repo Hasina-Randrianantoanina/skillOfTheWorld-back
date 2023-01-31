@@ -125,7 +125,7 @@ module.exports.createOffre = async (req, res) => {
       );
     }
     await receiveEmail(
-      `Nouvelle offre d'emploi en attente`,
+      `Nouvelle offre d'emploi en attente de l'entreprise ${req.body.nomEntreprise}`,
       `Bonjour,
     Une nouvelle offre ${req.body.intitulePoste} est en attente de validation. 
     Cliquez sur ce lien pour consulter les offres en attente ${process.env.CLIENT_URL}/validationOffre `
@@ -171,7 +171,7 @@ module.exports.createOffreWithutfile = async (req, res) => {
       );
     }
     await receiveEmail(
-      `Nouvelle offre d'emploi en attente`,
+      `Nouvelle offre d'emploi en attente de l'entreprise ${req.body.nomEntreprise}`,
       `Bonjour,
     Une nouvelle offre ${req.body.intitulePoste} est en attente de validation. 
     Cliquez sur ce lien pour consulter les offres en attente ${process.env.CLIENT_URL}/validationOffre `

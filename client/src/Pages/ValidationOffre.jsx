@@ -194,8 +194,6 @@ const ValidationOffre = () => {
           &#60; Retour
         </p>
         <h2>Validation des offres</h2>
-
-        {console.log(offreValide)}
         <div className="navAndTable">
           <div className="navigation">
             <h4
@@ -309,7 +307,7 @@ const ValidationOffre = () => {
                 </thead>
                 <tbody>
                   {offreValide.length > 0 ? (
-                    offreValide.map((val, key) => {
+                    offreValide.slice(indexOfFirstPost, indexOfLastPost).map((val, key) => {
                       return (
                         <tr key={val._id}>
                           {val.isValidate === true &&
@@ -404,7 +402,7 @@ const ValidationOffre = () => {
                 </thead>
                 <tbody>
                   {offreDEpublie.length > 0 ? (
-                    offreDEpublie.map((val, key) => {
+                    offreDEpublie.slice(indexOfFirstPost, indexOfLastPost).map((val, key) => {
                       return (
                         <tr key={val._id}>
                           {val.isValidate === true && val.depublie === true && (

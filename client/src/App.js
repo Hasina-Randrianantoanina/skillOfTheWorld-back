@@ -1,136 +1,132 @@
-import React, { useContext, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from "./context/AuthContext";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useContext, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import ProtectedRoute from "./Components/ProtectedRoute";
-import ProtectedRouteEts from "./Components/ProtectedRouteEts";
-import ProtectedRouteAdmin from "./Components/ProtectedRouteAdmin";
+import ProtectedRoute from './Components/ProtectedRoute';
+import ProtectedRouteEts from './Components/ProtectedRouteEts';
+import ProtectedRouteAdmin from './Components/ProtectedRouteAdmin';
 
-import Accueil from "./Pages/Accueil";
-import Footer from "./Components/Footer";
-import Navbar from "./Components/Navbar";
-import NavbarAdmin from "./Components/NavbarAdmin";
-import NavbarCandidat from "./Components/NavbarCandidat";
-import NavbarEntreprise from "./Components/NavbarEntreprise";
-import AjoutOffre from "./Pages/AjoutOffre";
-import CandidatureOffre from "./Pages/CandidatureOffre";
-import DashAdmin from "./Pages/DashAdmin";
-import DashCandidat from "./Pages/DashCandidat";
-import DashEntreprise from "./Pages/DashEntreprise";
-import GestionCV from "./Pages/GestionCV";
-import GestionLM from "./Pages/GestionLM";
-import HistoriqueCandidat from "./Pages/HistoriqueCandidat";
-import HistoriqueEntreprise from "./Pages/HistoriqueEntreprise";
-import Inscription from "./Pages/Inscription";
-import InscriptionCandidat from "./Pages/InscriptionCandidat";
-import InscriptionEntreprise from "./Pages/InscriptionEntreprise";
-import ListeJobDatingGlobale from "./Pages/ListeJobDatingGlobale";
-import ListeEventEts from "./Pages/ListeEventEts";
-import ListeJdEts from "./Pages/ListeJdEts";
-import ListeOffreEts from "./Pages/ListeOffreEts";
-import LoginPage from "./Pages/LoginPage";
-import LoginPageAdmin from "./Pages/LoginPageAdmin";
+import Accueil from './Pages/Accueil';
+import Footer from './Components/Footer';
+import Navbar from './Components/Navbar';
+import NavbarAdmin from './Components/NavbarAdmin';
+import NavbarCandidat from './Components/NavbarCandidat';
+import NavbarEntreprise from './Components/NavbarEntreprise';
+import AjoutOffre from './Pages/AjoutOffre';
+import CandidatureOffre from './Pages/CandidatureOffre';
+import DashAdmin from './Pages/DashAdmin';
+import DashCandidat from './Pages/DashCandidat';
+import DashEntreprise from './Pages/DashEntreprise';
+import GestionCV from './Pages/GestionCV';
+import GestionLM from './Pages/GestionLM';
+import HistoriqueCandidat from './Pages/HistoriqueCandidat';
+import HistoriqueEntreprise from './Pages/HistoriqueEntreprise';
+import Inscription from './Pages/Inscription';
+import InscriptionCandidat from './Pages/InscriptionCandidat';
+import InscriptionEntreprise from './Pages/InscriptionEntreprise';
+import ListeJobDatingGlobale from './Pages/ListeJobDatingGlobale';
+import ListeEventEts from './Pages/ListeEventEts';
+import ListeJdEts from './Pages/ListeJdEts';
+import ListeOffreEts from './Pages/ListeOffreEts';
+import LoginPage from './Pages/LoginPage';
+import LoginPageAdmin from './Pages/LoginPageAdmin';
 // import ListeOffreGlobale from './Pages/ListeOffreGlobale';
-import ValidationEvent from "./Pages/ValidationEvent";
-import ValidationJD from "./Pages/ValidationJD";
-import ValidationOffre from "./Pages/ValidationOffre";
-import ListeEventGobale from "./Pages/ListeEventGlobale";
-import GoToTop from "./Components/GoToTop";
-import DetailOffreGlobale from "./Pages/DetailOffreGlobale";
-import UpdateOffreAdmin from "./Pages/UpdateOffreAdmin";
-import ListeBlogGlobale from "./Pages/ListeBlogGlobale";
-import PageErreur from "./Pages/PageErreur";
-import DetailsBlog from "./Pages/DetailsBlog";
-import ContactUs from "./Pages/ContactUs";
-import ModifierProfilCandidat from "./Pages/candidat/ModifierProfilCandidat";
-import ModifierProfilEntreprise from "./Pages/entreprise/ModifierProfilEntreprise";
-import ModifierProfilAdmin from "./Pages/admin/ModifierProfilAdmin";
-import ListeOffreGlobaleCandidat from "./Pages/ListeOffreGlobaleCandidat";
-import ValidationCvLm from "./Pages/admin/ValidationCvLm";
-import CandidatureAdmin from "./Pages/admin/CandidatureAdmin";
-import Loading from "./Components/loading/Loading";
-import axios from "axios";
+import ValidationEvent from './Pages/ValidationEvent';
+import ValidationJD from './Pages/ValidationJD';
+import ValidationOffre from './Pages/ValidationOffre';
+import ListeEventGobale from './Pages/ListeEventGlobale';
+import GoToTop from './Components/GoToTop';
+import DetailOffreGlobale from './Pages/DetailOffreGlobale';
+import UpdateOffreAdmin from './Pages/UpdateOffreAdmin';
+import ListeBlogGlobale from './Pages/ListeBlogGlobale';
+import PageErreur from './Pages/PageErreur';
+import DetailsBlog from './Pages/DetailsBlog';
+import ContactUs from './Pages/ContactUs';
+import ModifierProfilCandidat from './Pages/candidat/ModifierProfilCandidat';
+import ModifierProfilEntreprise from './Pages/entreprise/ModifierProfilEntreprise';
+import ModifierProfilAdmin from './Pages/admin/ModifierProfilAdmin';
+import ListeOffreGlobaleCandidat from './Pages/ListeOffreGlobaleCandidat';
+import ValidationCvLm from './Pages/admin/ValidationCvLm';
+import CandidatureAdmin from './Pages/admin/CandidatureAdmin';
+import DetailCandidatureAdmin from './Pages/admin/DetailCandidatureAdmin';
+import ListeEntrepriseAdmin from './Pages/admin/ListeEntrepriseAdmin';
+import Loading from './Components/loading/Loading';
+import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
-const JeRecrute = React.lazy(() => import("./Pages/entreprise/JeRecrute"));
-const QuiSommesNous = React.lazy(() => import("./Pages/QuiSommesNous"));
+const JeRecrute = React.lazy(() => import('./Pages/entreprise/JeRecrute'));
+const QuiSommesNous = React.lazy(() => import('./Pages/QuiSommesNous'));
 const JeChercheEmploie = React.lazy(() =>
-  import("./Pages/candidat/JeChercheEmploie")
+  import('./Pages/candidat/JeChercheEmploie')
 );
 const ResetMdpCandidat = React.lazy(() =>
-  import("./Pages/candidat/ResetMdpCandidat")
+  import('./Pages/candidat/ResetMdpCandidat')
 );
-const ResetMdpAdmin = React.lazy(() => import("./Pages/admin/ResetMdpAdmin"));
+const ResetMdpAdmin = React.lazy(() => import('./Pages/admin/ResetMdpAdmin'));
 const ResetMdpEntreprise = React.lazy(() =>
-  import("./Pages/entreprise/ResetMdpEntreprise")
+  import('./Pages/entreprise/ResetMdpEntreprise')
 );
 const MesFormations = React.lazy(() =>
-  import("./Pages/entreprise/MesFormations")
+  import('./Pages/entreprise/MesFormations')
 );
-const ParticiperJD = React.lazy(() => import("./Pages/ParticiperJD"));
-const ParticiperEvent = React.lazy(() => import("./Pages/ParticiperEvent"));
-const CGU = React.lazy(() => import("./Pages/CGU/CGU"));
-const Politique = React.lazy(() => import("./Pages/CGU/Politique"));
+const ParticiperJD = React.lazy(() => import('./Pages/ParticiperJD'));
+const ParticiperEvent = React.lazy(() => import('./Pages/ParticiperEvent'));
+const CGU = React.lazy(() => import('./Pages/CGU/CGU'));
+const Politique = React.lazy(() => import('./Pages/CGU/Politique'));
 const EmailConfirmation = React.lazy(() =>
-  import("./Pages/forgotPassword/EmailConfirmation")
+  import('./Pages/forgotPassword/EmailConfirmation')
 );
 const ResetPasswordCandidat = React.lazy(() =>
-  import("./Pages/forgotPassword/ResetPasswordCandidat")
+  import('./Pages/forgotPassword/ResetPasswordCandidat')
 );
 const ResetPasswordEntreprise = React.lazy(() =>
-  import("./Pages/forgotPassword/ResetPasswordEntreprise")
+  import('./Pages/forgotPassword/ResetPasswordEntreprise')
 );
 const MailVerificationPageCandidat = React.lazy(() =>
-  import("./Pages/mailVerificationPage/MailVerificationPageCandidat")
+  import('./Pages/mailVerificationPage/MailVerificationPageCandidat')
 );
 const MailVerificationPageEntreprise = React.lazy(() =>
-  import("./Pages/mailVerificationPage/MailVerificationPageEntreprise")
+  import('./Pages/mailVerificationPage/MailVerificationPageEntreprise')
 );
 const NotificationCandidat = React.lazy(() =>
-  import("./Pages/notification/NotificationCandidat")
+  import('./Pages/notification/NotificationCandidat')
 );
 const NotificationEntreprise = React.lazy(() =>
-  import("./Pages/notification/NotificationEntreprise")
+  import('./Pages/notification/NotificationEntreprise')
 );
 const NotificationAdmin = React.lazy(() =>
-  import("./Pages/notification/NotificationAdmin")
+  import('./Pages/notification/NotificationAdmin')
 );
-const AjoutJD = React.lazy(() => import("./Pages/entreprise/AjoutJD"));
-const AjoutEvent = React.lazy(() => import("./Pages/entreprise/AjoutEvent"));
-const OrganiserEvent = React.lazy(() => import("./Pages/admin/OrganiserEvent"));
-const OrganiserJD = React.lazy(() => import("./Pages/admin/OrganiserJD"));
-const OrgEventEts = React.lazy(() => import("./Pages/entreprise/OrgEventEts"));
-const OrgJdEts = React.lazy(() => import("./Pages/entreprise/OrgJdEts"));
-const Evenement = React.lazy(() => import("./Pages/Evenement"));
-const DetailEvent = React.lazy(() => import("./Pages/global/DetailEvent"));
-const DetailJD = React.lazy(() => import("./Pages/global/DetailJD"));
-const ListeArticle = React.lazy(() => import("./Pages/admin/ListeArticle"));
-const AjoutArticle = React.lazy(() => import("./Pages/admin/AjoutArticle"));
+const AjoutJD = React.lazy(() => import('./Pages/entreprise/AjoutJD'));
+const AjoutEvent = React.lazy(() => import('./Pages/entreprise/AjoutEvent'));
+const OrganiserEvent = React.lazy(() => import('./Pages/admin/OrganiserEvent'));
+const OrganiserJD = React.lazy(() => import('./Pages/admin/OrganiserJD'));
+const OrgEventEts = React.lazy(() => import('./Pages/entreprise/OrgEventEts'));
+const OrgJdEts = React.lazy(() => import('./Pages/entreprise/OrgJdEts'));
+const Evenement = React.lazy(() => import('./Pages/Evenement'));
+const DetailEvent = React.lazy(() => import('./Pages/global/DetailEvent'));
+const DetailJD = React.lazy(() => import('./Pages/global/DetailJD'));
+const ListeArticle = React.lazy(() => import('./Pages/admin/ListeArticle'));
+const AjoutArticle = React.lazy(() => import('./Pages/admin/AjoutArticle'));
 const ModificationArticle = React.lazy(() =>
-  import("./Pages/admin/ModificationArticle")
+  import('./Pages/admin/ModificationArticle')
 );
 const ModificationTitre = React.lazy(() =>
-  import("./Pages/admin/ModificationTitre")
+  import('./Pages/admin/ModificationTitre')
 );
-const SOTW = React.lazy(() => import("./../src/Pages/global/SOTW"));
+const SOTW = React.lazy(() => import('./../src/Pages/global/SOTW'));
 
 const App = () => {
   const { uid, candidat, entreprise, admin } = useContext(AuthContext);
 
-  document.addEventListener("contextmenu", (event) => event.preventDefault());
-
-  console.log("Hey window.location.href", window.location.href);
+  document.addEventListener('contextmenu', (event) => event.preventDefault());
 
   // redirecting http://
   if (window.location.href.includes('http://'))
     window.location.href = window.location.href.replace('http://', 'https://');
-
-  // redirecting non-www skilloftheworld
-  if (window.location.href('https://skilloftheworld.com/'))
-    window.location.href = window.location.href.replace('https://skilloftheworld.com/', 'https://www.skilloftheworld.com/');
 
   return (
     <React.Suspense fallback={<Loading />}>
@@ -370,6 +366,24 @@ const App = () => {
             element={
               <ProtectedRouteAdmin>
                 <CandidatureAdmin />
+              </ProtectedRouteAdmin>
+            }
+          />
+          <Route
+            exact
+            path="/detailCandidatureAdmin/:id"
+            element={
+              <ProtectedRouteAdmin>
+                <DetailCandidatureAdmin />
+              </ProtectedRouteAdmin>
+            }
+          />
+          <Route
+            exact
+            path="/listeEntrepriseAdmin"
+            element={
+              <ProtectedRouteAdmin>
+                <ListeEntrepriseAdmin />
               </ProtectedRouteAdmin>
             }
           />
