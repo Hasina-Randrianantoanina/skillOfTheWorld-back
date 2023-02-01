@@ -61,25 +61,22 @@ const DetailCandidatureAdmin = () => {
             <div className="titre">
               <h4>
                 <b>
-                  {candidat.nom !== '' && candidat.nom}{' '}
-                  {candidat.prenom !== '' && candidat.prenom}
+                  {candidat.nom} {candidat.prenom}
                 </b>
               </h4>
               <i>
-                <p>{candidat.localisation !== '' && candidat.localisation}</p>
+                <p>{candidat.localisation}</p>
               </i>
             </div>
-            <p style={{ marginTop: '12px' }}>
-              {candidat.secteurActivite !== '' && candidat.secteurActivite}
-            </p>
+            <p style={{ marginTop: '12px' }}>{candidat.secteurActivite}</p>
             <p>
               Date de naissance :{' '}
-              <b>{candidat.dateNaissance !== '' && candidat.dateNaissance}</b>
+              <b>{moment(candidat.dateNaissance).locale('fr').format('LL')}</b>
             </p>
-            <p>{candidat.email !== '' && candidat.email}</p>
+            <p>{candidat.email}</p>
             <p>
               Date d'inscription à sotw :{' '}
-              <b>{candidat.createdAt !== '' && candidat.createdAt}</b>
+              <b>{moment(candidat.createdAt).locale('fr').format('LL')}</b>
             </p>
           </div>
         </div>

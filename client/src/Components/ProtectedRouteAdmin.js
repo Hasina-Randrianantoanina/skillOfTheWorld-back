@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import { AuthContext } from "../context/AuthContext";
-import SOTW from "../Pages/global/SOTW";
-import Accueil from "../Pages/Accueil";
+import { AuthContext } from '../context/AuthContext';
+import SOTW from '../Pages/global/SOTW';
+import Accueil from '../Pages/Accueil';
 
 const ProtectedRouteAdmin = ({ children }) => {
-    const { uid, candidat, entreprise, admin } = useContext(AuthContext);
+  const { uid, candidat, entreprise, admin } = useContext(AuthContext);
 
   if (uid) {
     if (admin) {

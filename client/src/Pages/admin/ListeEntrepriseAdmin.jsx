@@ -188,12 +188,14 @@ const ListeEntrepriseAdmin = () => {
                         <td style={{ textAlign: 'left', paddingLeft: '15px' }}>
                           <span>
                             <b>{val.nomEntreprise}</b>
-                            <h4>{val.createdAt}</h4>
+                            <h4>
+                              {moment(val.createdAt).locale('fr').format('LL')}
+                            </h4>
                           </span>
                           <span>{val.lieuxActivite}</span>
                         </td>
                         <td>
-                          <Link to="#">
+                          <Link  to={`/detailEtsAdmin/${val._id}`}>
                             <button>Détail</button>
                           </Link>
                           <button
@@ -226,7 +228,7 @@ const ListeEntrepriseAdmin = () => {
                     <span>Madagasikara - Antananarivo</span>
                   </td>
                   <td>
-                    <Link to="#">
+                    <Link to="/detailEtsAdmin">
                       <button>Détail</button>
                     </Link>
                     <button className="deleteAction">

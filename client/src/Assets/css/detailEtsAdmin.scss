@@ -1,0 +1,203 @@
+@import "../css/index.scss";
+
+.outerDivDetailEtsAdmin {
+  position: relative;
+  width: min(375px, 100%);
+  padding-bottom: 395px;
+  margin: 0 auto;
+
+  .innerDivDetailEtsAdmin {
+    position: relative;
+    top: 110px;
+    width: 95%;
+    height: 120vh;
+    margin: 0 auto;
+    text-align: center;
+
+    .linkRetour {
+      @include Link;
+
+      &:hover {
+        color: #112443;
+      }
+    }
+
+    h2 {
+      font-size: 40px;
+      font-family: poppinsLight;
+      color: $heading_color;
+    }
+
+    // TOP CARD
+    .topCard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      width: 100%;
+      top: 20px;
+      padding: 45px 20px;
+      background-color: #ffffff;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0px 0px 6px #00000063;
+
+      &.forPreview {
+        margin-bottom: 5px;
+        padding: 0 !important;
+        height: 250px;
+        border-radius: 10px 10px 0 0;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 10px 10px 0 0;
+        }
+      }
+
+      .topLeft {
+        margin: 0 auto;
+        width: 100%;
+
+        img {
+          width: 120px;
+          height: 120px;
+          border-radius: 5px;
+          border: 1px solid #1e1e1e36;
+          object-fit: cover;
+        }
+      }
+
+      .topRight {
+        .titre {
+          position: relative;
+          top: 10px;
+
+          h5 {
+            color: #343a40;
+            &.ville {
+              color: #00000058;
+              font-family: "PoppinsLight";
+              font-weight: lighter;
+            }
+          }
+        }
+
+        h5 {
+          color: #00000058;
+          margin-top: 10px;
+        }
+
+        form,
+        div {
+          input {
+            width: 93%;
+            padding: 0.5rem 10px;
+            font-size: 0.8rem;
+            letter-spacing: 0.062rem;
+            margin: 10px;
+            border: 1px solid #00000033;
+            color: #757575;
+            background: #ffffff;
+            border-radius: 4px;
+
+            &:focus {
+              outline: none;
+              border: 1px solid #589d9d;
+            }
+          }
+
+          input[type="submit"],
+          input[type="button"] {
+            width: max-content !important;
+            margin-top: 10px;
+            background: #112443;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+            transition: 0.5s;
+
+            &:hover {
+              cursor: pointer;
+              transform: translateY(-5px);
+            }
+          }
+        }
+
+        span {
+          margin-top: 10px;
+        }
+
+        a {
+          display: -webkit-box;
+          color: #112443a6;
+          text-decoration: underline;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+// TABLETTE
+@media screen and (min-width: 767px) {
+  .outerDivDetailEtsAdmin {
+    width: min(768px, 100%);
+    padding-bottom: 285px;
+
+    .innerDivDetailEtsAdmin {
+      top: 100px;
+      height: 85vh;
+    }
+
+    .topCard {
+      top: 40px !important;
+
+      .topLeft {
+        margin: 0 !important;
+        width: 22% !important;
+      }
+
+      .topRight {
+        width: 85%;
+        text-align: left;
+        margin-top: 20px;
+
+        .titre {
+          display: flex;
+          justify-content: space-between;
+        }
+        form {
+          input {
+            width: 45% !important;
+            margin: 5px 10px 5px 0 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// DESKTOP
+@media screen and (min-width: 1280px) {
+  .outerDivDetailEtsAdmin {
+    width: min(1150px, 100%);
+    padding-bottom: 350px;
+
+    .innerDivDetailEtsAdmin {
+      display: flex;
+      flex-direction: column;
+      top: 120px;
+      width: 85%;
+
+      .linkRetour {
+        left: 0px;
+        top: 50px;
+      }
+    }
+  }
+}

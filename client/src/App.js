@@ -51,6 +51,7 @@ import ListeOffreGlobaleCandidat from './Pages/ListeOffreGlobaleCandidat';
 import ValidationCvLm from './Pages/admin/ValidationCvLm';
 import CandidatureAdmin from './Pages/admin/CandidatureAdmin';
 import DetailCandidatureAdmin from './Pages/admin/DetailCandidatureAdmin';
+import DetailEtsAdmin from './Pages/admin/DetailEtsAdmin';
 import ListeEntrepriseAdmin from './Pages/admin/ListeEntrepriseAdmin';
 import Loading from './Components/loading/Loading';
 import axios from 'axios';
@@ -204,6 +205,7 @@ const App = () => {
           />
 
           {/* DASHBOARD ENTREPRISE */}
+
           <Route
             exact
             path="/dashEntreprise"
@@ -375,6 +377,15 @@ const App = () => {
             element={
               <ProtectedRouteAdmin>
                 <DetailCandidatureAdmin />
+              </ProtectedRouteAdmin>
+            }
+          />
+          <Route
+            exact
+            path="/detailEtsAdmin/:id"
+            element={
+              <ProtectedRouteAdmin>
+                <DetailEtsAdmin />
               </ProtectedRouteAdmin>
             }
           />
