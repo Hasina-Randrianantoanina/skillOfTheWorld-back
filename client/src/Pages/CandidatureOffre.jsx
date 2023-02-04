@@ -92,7 +92,6 @@ const CandidatureOffre = () => {
         if (res.data.errors) {
           console.log(res.data.errors);
         } else {
-          console.log(res.data);
           redirect(`/candidatureOffre/${id}`);
           window.location.reload(false);
         }

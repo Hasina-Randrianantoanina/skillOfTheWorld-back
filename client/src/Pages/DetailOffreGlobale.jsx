@@ -84,7 +84,6 @@ const DetailOffreGlobale = () => {
         if (res.data.errors) {
           console.log(res.data.errors);
         } else {
-          console.log(res.data);
           redirect('/validationOffre');
           validationSuccess();
         }
@@ -103,7 +102,6 @@ const DetailOffreGlobale = () => {
       },
     })
       .then((res) => {
-        // console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -154,7 +152,6 @@ const DetailOffreGlobale = () => {
           if (res.data.errors) {
             console.log(res.data.errors);
           } else {
-            console.log(res.data);
             setIsPostuler(false);
             postuleSuccess();
           }
@@ -181,7 +178,6 @@ const DetailOffreGlobale = () => {
           if (res.data.errors) {
             console.log(res.data.errors);
           } else {
-            console.log(res.data);
             setIsPostuler(false);
             postuleSuccess();
           }
@@ -205,7 +201,6 @@ const DetailOffreGlobale = () => {
           if (res.data.errors) {
             console.log(res.data.errors);
           } else {
-            console.log(res.data);
             setIsPostuler(false);
             postuleSuccess();
           }
@@ -214,8 +209,6 @@ const DetailOffreGlobale = () => {
           console.log(err);
         });
     } else if (cvtheque) {
-      console.log(cvtheque);
-      console.log(idCandidat);
       await axios({
         method: 'PATCH',
         url: `${process.env.REACT_APP_API_URL}api/offre/cvtheque/${IdOffre}`,
@@ -229,7 +222,6 @@ const DetailOffreGlobale = () => {
           if (res.data.errors) {
             console.log(res.data.errors);
           } else {
-            console.log(res.data);
             setIsPostuler(false);
             postuleSuccess();
           }
@@ -245,7 +237,6 @@ const DetailOffreGlobale = () => {
       await axios
         .get(`${process.env.REACT_APP_API_URL}api/user/candidat/${idCandidat}`)
         .then((res) => {
-          console.log(res.data.listCV);
           setCandidatCV(res.data.listCV);
           setNombreAction(res.data.nombreAction);
         })

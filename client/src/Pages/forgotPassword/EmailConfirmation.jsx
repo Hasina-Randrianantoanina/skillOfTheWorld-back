@@ -43,11 +43,9 @@ const EmailConfirmation = () => {
       })
         .then((res) => {
           if (res.data[0]) {
-            console.log(res.data[0]);
             emailSuccess();
           } else {
             emailError();
-            console.log("Vous n'avez pas encore de compte");
 
           }
         })
@@ -61,11 +59,9 @@ const EmailConfirmation = () => {
       })
         .then((res) => {
           if (res.data[0]) {
-            console.log(res.data[0]);
             emailSuccess();
           } else {
             emailError();
-            console.log("Vous n'avez pas encore de compte");
           }
         })
         .catch((error) => {

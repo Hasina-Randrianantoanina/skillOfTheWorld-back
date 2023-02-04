@@ -75,7 +75,6 @@ const ModifierProfilCandidat = () => {
         modifSucces();
       })
       .catch((err) => {
-        console.log(err);
         modifError();
       });
   };

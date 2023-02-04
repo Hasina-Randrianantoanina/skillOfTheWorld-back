@@ -32,7 +32,6 @@ const InscriptionEntreprise = () => {
   const [icon, setIcon] = useState(<FaRegEyeSlash />);
 
   const handleShowPassword = () => {
-    console.log("there");
     if (passwordType === "password") {
       setIcon(<FaRegEye />);
       setPasswordType("text");
@@ -105,11 +104,9 @@ const InscriptionEntreprise = () => {
       })
         .then((res) => {
           if (res.status === 201) {
-            console.log("Inscription succès");
             inscriptionSuccess();
             redirect("/login");
           } else if (res.status === 200) {
-            console.log(res.data);
             Error(res.data.errors.email);
           }
         })
@@ -264,7 +261,7 @@ const InscriptionEntreprise = () => {
               </option>
               {countries.map((country, index) => {
                 return (
-                  <option key={index} value={`${country.pays}`}>
+                  <option key={index} value={`${country.pays}` - `${country.capitale}`}>
                     {country.pays} - {country.capitale}
                   </option>
                 );

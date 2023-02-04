@@ -56,8 +56,7 @@ const SectionAnnonce = () => {
 
     offreGlobale.length === 0 && setIsLoading("Pas encore d'offre");
   };
-
-  console.log(offreGlobale);
+  
   useEffect(() => {
     getUrl();
     if (effectRan.current === false) {

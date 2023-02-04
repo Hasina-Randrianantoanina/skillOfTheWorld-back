@@ -19,7 +19,6 @@ const LoginPage = () => {
   const [icon, setIcon] = useState(<FaRegEyeSlash />);
 
   const handleShowPassword = () => {
-    console.log('there');
     if (passwordType === 'password') {
       setIcon(<FaRegEye />);
       setPasswordType('text');
@@ -82,13 +81,11 @@ const LoginPage = () => {
           `${process.env.REACT_APP_API_URL}api/user/entreprise/login`,
           loginD
         );
-        console.log(connexionEntreprise);
         if (connexionEntreprise.status === 202) {
           errorLogin(
             connexionEntreprise.data.errors.email,
             connexionEntreprise.data.errors.password
           );
-          console.log('error ETS');
         } else if (connexionEntreprise.status === 201) {
           mailVerification(connexionEntreprise.data);
         } else {

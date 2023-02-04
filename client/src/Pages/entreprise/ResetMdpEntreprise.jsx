@@ -46,7 +46,6 @@ const ResetMdpEntreprise = () => {
     });
 
   const handleShowPassword = () => {
-    console.log("there");
     if (passwordType === "password") {
       setIcon(<FaRegEye />);
       setPasswordType("text");
@@ -62,7 +61,6 @@ const ResetMdpEntreprise = () => {
       const getEmail = await axios.get(
         `${process.env.REACT_APP_API_URL}api/user/entreprise/${uid}`
       );
-      console.log(getEmail.data.email);
       await axios
         .patch(
           `${process.env.REACT_APP_API_URL}api/user/entreprise/initialise/${uid}`,

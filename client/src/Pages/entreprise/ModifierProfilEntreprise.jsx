@@ -83,7 +83,6 @@ const ModifierProfilEntreprise = () => {
         window.location.reload(false);
       })
       .catch((err) => {
-        console.log(err);
         modifError();
       });
   };
@@ -95,7 +94,6 @@ const ModifierProfilEntreprise = () => {
           `${process.env.REACT_APP_API_URL}api/user/entreprise/${idCandidat}`
         )
         .then((res) => {
-          console.log(res.data);
           setEntrepriseInfo(res.data);
         })
         .catch((err) => {

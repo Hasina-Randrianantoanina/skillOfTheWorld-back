@@ -18,7 +18,6 @@ const DetailsBlog = () => {
       })
         .then((res) => {
           setArticle(res.data);
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);

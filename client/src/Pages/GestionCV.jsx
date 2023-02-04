@@ -102,7 +102,6 @@ const GestionCV = () => {
       await axios
         .get(`${process.env.REACT_APP_API_URL}api/user/candidat/${idCandidat}`)
         .then((res) => {
-          console.log(res.data.listCV);
           setCandidatCV(res.data.listCV);
         })
         .catch((err) => {

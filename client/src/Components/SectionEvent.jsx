@@ -62,6 +62,7 @@ const SectionEvent = () => {
       effectRan.current = true;
     };
   }, []);
+  
   return (
     <>
       <h1 className="jd" style={{ color: "#112443" }}>

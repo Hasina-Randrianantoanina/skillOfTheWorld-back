@@ -17,7 +17,6 @@ const ResetMdpAdmin = () => {
   const [icon, setIcon] = useState(<FaRegEyeSlash />);
 
   const handleShowPassword = () => {
-    console.log('there');
     if (passwordType === "password") {
       setIcon(<FaRegEye />);
       setPasswordType("text");

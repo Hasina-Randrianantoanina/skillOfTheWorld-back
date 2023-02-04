@@ -75,7 +75,7 @@ const DetailCandidatureAdmin = () => {
             </p>
             <p>{candidat.email}</p>
             <p>
-              Date d'inscription à sotw :{' '}
+              Date d'inscription à la plateforme :{' '}
               <b>{moment(candidat.createdAt).locale('fr').format('LL')}</b>
             </p>
           </div>

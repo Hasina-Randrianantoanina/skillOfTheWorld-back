@@ -3,14 +3,14 @@
 .outerDivDetailEtsAdmin {
   position: relative;
   width: min(375px, 100%);
-  padding-bottom: 395px;
+  padding-bottom: 235px;
   margin: 0 auto;
 
   .innerDivDetailEtsAdmin {
     position: relative;
     top: 110px;
     width: 95%;
-    height: 120vh;
+    height: 1%;
     margin: 0 auto;
     text-align: center;
 
@@ -83,6 +83,10 @@
           }
         }
 
+        span {
+          margin-top: 10px;
+        }
+
         h5 {
           color: #00000058;
           margin-top: 10px;
@@ -126,10 +130,6 @@
           }
         }
 
-        span {
-          margin-top: 10px;
-        }
-
         a {
           display: -webkit-box;
           color: #112443a6;
@@ -147,11 +147,9 @@
 @media screen and (min-width: 767px) {
   .outerDivDetailEtsAdmin {
     width: min(768px, 100%);
-    padding-bottom: 285px;
 
     .innerDivDetailEtsAdmin {
       top: 100px;
-      height: 85vh;
     }
 
     .topCard {
@@ -171,6 +169,11 @@
           display: flex;
           justify-content: space-between;
         }
+
+        span {
+          display: flex;
+        }
+
         form {
           input {
             width: 45% !important;
@@ -186,7 +189,6 @@
 @media screen and (min-width: 1280px) {
   .outerDivDetailEtsAdmin {
     width: min(1150px, 100%);
-    padding-bottom: 350px;
 
     .innerDivDetailEtsAdmin {
       display: flex;

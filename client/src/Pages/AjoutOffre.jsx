@@ -141,7 +141,6 @@ const AjoutOffre = () => {
         })
         .then((res) => {
           if (res.status === 201) {
-            console.log('Ajout offre avec succès');
             ajoutSucces();
             redirect("/listeOffreEts");
             setIsLoading(false);
@@ -183,7 +182,6 @@ const AjoutOffre = () => {
       })
         .then((res) => {
           if (res.status === 201) {
-            console.log('Ajout offre avec succès');
             ajoutSucces();
             redirect('/listeOffreEts');
           }

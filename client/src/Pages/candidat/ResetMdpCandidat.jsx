@@ -45,7 +45,6 @@ const ResetMdpCandidat = () => {
     });
 
   const handleShowPassword = () => {
-    console.log("there");
     if (passwordType === "password") {
       setIcon(<FaRegEye />);
       setPasswordType("text");

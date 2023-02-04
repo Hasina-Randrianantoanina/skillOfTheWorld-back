@@ -110,7 +110,6 @@ const ListeEntrepriseAdmin = () => {
         url: `${process.env.REACT_APP_API_URL}api/user/entreprise/`,
       })
         .then((res) => {
-          console.log(res.data);
           setSociete(res.data);
         })
         .catch((error) => {

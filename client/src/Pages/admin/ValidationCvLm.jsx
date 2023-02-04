@@ -58,9 +58,7 @@ const ValidationCvLm = () => {
     })
       .then((res) => {
         if (res.data.errors) {
-          console.log(res.data.errors);
         } else {
-          console.log(res.data);
           redirect(`/validationCvLm/${id}`);
           window.location.reload(false);
           acceptedSucces();
@@ -82,9 +80,7 @@ const ValidationCvLm = () => {
     })
       .then((res) => {
         if (res.data.errors) {
-          console.log(res.data.errors);
         } else {
-          console.log(res.data);
           redirect(`/validationCvLm/${id}`);
           window.location.reload(false);
           acceptedSucces();
@@ -103,7 +99,6 @@ const ValidationCvLm = () => {
       const getOffre = await axios.get(
         `${process.env.REACT_APP_API_URL}api/offre/${idOffre}`
       );
-      console.log(getOffre.data);
       for (let i = 0; i < getOffre.data.listCandidat.length; i++) {
         idCandidat.push(getOffre.data.listCandidat[i].candidatId);
       }
@@ -135,7 +130,6 @@ const ValidationCvLm = () => {
     };
     if (effectRan.current === false) {
       getOffreWithCandidat(id);
-      console.log(offre);
     }
     return () => {
       effectRan.current = true;

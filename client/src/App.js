@@ -32,7 +32,6 @@ import ListeJdEts from './Pages/ListeJdEts';
 import ListeOffreEts from './Pages/ListeOffreEts';
 import LoginPage from './Pages/LoginPage';
 import LoginPageAdmin from './Pages/LoginPageAdmin';
-// import ListeOffreGlobale from './Pages/ListeOffreGlobale';
 import ValidationEvent from './Pages/ValidationEvent';
 import ValidationJD from './Pages/ValidationJD';
 import ValidationOffre from './Pages/ValidationOffre';

@@ -31,7 +31,6 @@ const InscriptionCandidat = () => {
   const [icon, setIcon] = useState(<FaRegEyeSlash />);
 
   const handleShowPassword = () => {
-    console.log('there');
     if (passwordType === 'password') {
       setIcon(<FaRegEye />);
       setPasswordType('text');
@@ -105,7 +104,6 @@ const InscriptionCandidat = () => {
       })
         .then((res) => {
           if (res.status === 201) {
-            console.log('Inscription succès');
             setNom('');
             setPrenom('');
             setDateNaissance('');
@@ -253,7 +251,7 @@ const InscriptionCandidat = () => {
               </option>
               {countries.map((country, index) => {
                 return (
-                  <option key={index} value={`${country.pays}`}>
+                  <option key={index} value={`${country.pays}` - `${country.capitale}`}>
                     {country.pays} - {country.capitale}
                   </option>
                 );
