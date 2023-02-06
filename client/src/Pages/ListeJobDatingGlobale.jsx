@@ -1,27 +1,29 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import moment from 'moment/moment';
-import 'moment/locale/fr';
-import { IconContext } from 'react-icons/lib';
-import { FaRegCalendar } from 'react-icons/fa';
-import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import moment from "moment/moment";
+import "moment/locale/fr";
+import { IconContext } from "react-icons/lib";
+import { FaRegCalendar } from "react-icons/fa";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 import { Helmet } from "react-helmet";
 
-import '../Assets/css/offreglobale.scss';
-import ets_img from '../Assets/img/SOTW_logo (2).webp';
-import countries from '../Utils/africaCountry.json';
-import fonctions from '../Utils/fonction.json';
-import Pagination from '../Components/Pagination';
+import "../Assets/css/offreglobale.scss";
+import ets_img from "../Assets/img/SOTW_logo (2).webp";
+import countries from "../Utils/africaCountry.json";
+import fonctions from "../Utils/fonction.json";
+import Pagination from "../Components/Pagination";
 
 const ListeJobDatingGlobale = () => {
   const redirect = useNavigate();
   const { candidat } = useContext(AuthContext);
 
   const [champ, setChamp] = useState(false);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [jobdatingPublie, setJobdatingPublie] = useState([]);
   const [isLoading, setIsLoading] = useState(" ");
+  const [results, setResults] = useState([]);
+  const [isNotFound, setIsNotFound] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
@@ -29,9 +31,9 @@ const ListeJobDatingGlobale = () => {
   useEffect(() => {
     const getJDpublie = async () => {
       setIsLoading("Chargement ...");
-
+      setIsNotFound("");
       await axios({
-        method: 'GET',
+        method: "GET",
         url: `${process.env.REACT_APP_API_URL}api/jobdating/publie/`,
       })
         .then((res) => {
@@ -40,11 +42,21 @@ const ListeJobDatingGlobale = () => {
         .catch((err) => {
           console.log(err);
         });
-        
-        jobdatingPublie.length === 0 && setIsLoading("Pas encore de job dating pour le moment");
+
+      jobdatingPublie.length === 0 &&
+        setIsLoading("Pas encore de job dating pour le moment");
+      results.length === 0 && setIsNotFound("Aucun résultat trouvé");
     };
     getJDpublie();
   }, []);
+
+  useEffect(() => {
+    setResults(
+      jobdatingPublie.filter((val) =>
+        val.intitulePoste.toLowerCase().includes(query)
+      )
+    );
+  }, [jobdatingPublie, query]);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -58,11 +70,14 @@ const ListeJobDatingGlobale = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Skill of the World - Recruter partout et tout le temps</title>
-        <meta name="keywords" content="Plateforme de recrutement, Recrutement externalisé, Cabinet de recrutement, Offre d’emploi, Recrutement international" />
+        <meta
+          name="keywords"
+          content="Plateforme de recrutement, Recrutement externalisé, Cabinet de recrutement, Offre d’emploi, Recrutement international"
+        />
       </Helmet>
       <div className="innerDivOffre">
         <p className="linkRetour" onClick={() => redirect(-1)}>
-          {' '}
+          {" "}
           &#60; Retour
         </p>
         <h2>Nos job dating</h2>
@@ -73,7 +88,7 @@ const ListeJobDatingGlobale = () => {
                 <div className="value">
                   <div
                     className="imgValue imgJdValue"
-                    style={{ height: '145px' }}
+                    style={{ height: "145px" }}
                   >
                     <img src={ets_img} alt="Logo de Skill of the world" />
                   </div>
@@ -89,14 +104,14 @@ const ListeJobDatingGlobale = () => {
                 <div className="value">
                   <div
                     className="imgValue imgJdValue"
-                    style={{ height: '145px' }}
+                    style={{ height: "145px" }}
                   >
                     <img src={ets_img} alt="Logo de Skill of the world" />
                   </div>
                   <p>
-                    Si votre candidature est sélectionnée, <b>vous serez contacter
-                    directement</b> par l’entreprise qui recrute afin de vous fixer
-                    un entretien.
+                    Si votre candidature est sélectionnée,{" "}
+                    <b>vous serez contacter directement</b> par l’entreprise qui
+                    recrute afin de vous fixer un entretien.
                   </p>
                 </div>
               </div>
@@ -106,14 +121,14 @@ const ListeJobDatingGlobale = () => {
                 <div className="value">
                   <div
                     className="imgValue imgJdValue"
-                    style={{ height: '145px' }}
+                    style={{ height: "145px" }}
                   >
                     <img src={ets_img} alt="Logo de Skill of the world" />
                   </div>
+                  <p>Bonnne chance à vous et n’oubliez pas :</p>
                   <p>
-                    Bonnne chance à vous et n’oubliez pas : 
+                    <b>soyez vous-même !</b>
                   </p>
-                  <p><b>soyez vous-même !</b></p>
                 </div>
               </div>
             </div>
@@ -124,7 +139,7 @@ const ListeJobDatingGlobale = () => {
           <input
             type="search"
             name="offreSearch"
-            placeholder="Poste"
+            placeholder="Poste ..."
             s
             onChange={(event) => {
               setQuery(event.target.value);
@@ -171,9 +186,9 @@ const ListeJobDatingGlobale = () => {
                 Délais du recrutement
               </option>
               <option value="de suite">de suite</option>
-              <option value={'1 mois'}>1 mois</option>
-              <option value={'2 mois'}>2 mois</option>
-              <option value={'3 mois'}>3 mois</option>
+              <option value={"1 mois"}>1 mois</option>
+              <option value={"2 mois"}>2 mois</option>
+              <option value={"3 mois"}>3 mois</option>
             </select>
 
             {/* Télétravail */}
@@ -181,9 +196,9 @@ const ListeJobDatingGlobale = () => {
               <option defaultValue value="Présentiel possible">
                 Télétravail
               </option>
-              <option value={'Présentiel possible'}>Présentiel possible</option>
-              <option value={'Partiel possible'}>Partiel possible</option>
-              <option value={'Total'}>Total</option>
+              <option value={"Présentiel possible"}>Présentiel possible</option>
+              <option value={"Partiel possible"}>Partiel possible</option>
+              <option value={"Total"}>Total</option>
             </select>
 
             {/* Niveau d'étude */}
@@ -191,11 +206,11 @@ const ListeJobDatingGlobale = () => {
               <option defaultValue value="bac">
                 Niveau d'étude
               </option>
-              <option value={'bac'}>bac</option>
-              <option value={'bac+2'}>bac+2</option>
-              <option value={'bac+3'}>bac+3</option>
-              <option value={'bac+4'}>bac+4</option>
-              <option value={'bac+5'}>bac+5</option>
+              <option value={"bac"}>bac</option>
+              <option value={"bac+2"}>bac+2</option>
+              <option value={"bac+3"}>bac+3</option>
+              <option value={"bac+4"}>bac+4</option>
+              <option value={"bac+5"}>bac+5</option>
             </select>
 
             {/* Type de contrat */}
@@ -203,11 +218,11 @@ const ListeJobDatingGlobale = () => {
               <option defaultValue value="CDD">
                 Type de contrat
               </option>
-              <option value={'CDD'}>CDD</option>
-              <option value={'CDI'}>CDI</option>
-              <option value={'Freelance'}>Freelance</option>
-              <option value={'Freelance'}>Stage de fin d'étude</option>
-              <option value={'Freelance'}>Apprentissage</option>
+              <option value={"CDD"}>CDD</option>
+              <option value={"CDI"}>CDI</option>
+              <option value={"Freelance"}>Freelance</option>
+              <option value={"Freelance"}>Stage de fin d'étude</option>
+              <option value={"Freelance"}>Apprentissage</option>
             </select>
 
             {/* Experience souhaité */}
@@ -215,7 +230,7 @@ const ListeJobDatingGlobale = () => {
               <option defaultValue value="Débutant accepté">
                 Experience souhaitée
               </option>
-              <option value={'Débutant accepté'}>Débutant accepté</option>
+              <option value={"Débutant accepté"}>Débutant accepté</option>
               <option value={"De 1 à 3 ans d'expérience"}>
                 De 1 à 3 ans d'expérience
               </option>
@@ -223,7 +238,7 @@ const ListeJobDatingGlobale = () => {
                 De 3 à 5 ans d'expérience
               </option>
               <option value={"Superieur 5 ans d'expérience"}>
-                {' '}
+                {" "}
                 &gt; 5 ans d'expérience
               </option>
             </select>
@@ -235,7 +250,7 @@ const ListeJobDatingGlobale = () => {
         {/* Fin section Recherche */}
         <div className="forCardOffre">
           {jobdatingPublie.length > 0 ? (
-            query !== '' ? (
+            query !== "" ? (
               jobdatingPublie
                 .filter((val) =>
                   val.intitulePoste.toLowerCase().includes(query)
@@ -247,19 +262,18 @@ const ListeJobDatingGlobale = () => {
                       <div className="titre">
                         <h5>{val.intitulePoste}</h5>
                       </div>
-                      <h5>Organisé par {val.nomEntreprise}</h5>
                       <div className="forBtn">
                         <div className="calendar">
                           <IconContext.Provider
                             value={{
-                              color: '#0000008f',
-                              size: '13px',
+                              color: "#0000008f",
+                              size: "13px",
                             }}
                           >
                             <FaRegCalendar />
                           </IconContext.Provider>
                           <h5>
-                            {moment(val.dateDebut).locale('fr').format('LL')}
+                            {moment(val.dateDebut).locale("fr").format("LL")}
                           </h5>
                         </div>
                         <Link to={`/detailJD/${val._id}`}>
@@ -283,14 +297,14 @@ const ListeJobDatingGlobale = () => {
                         <div className="calendar">
                           <IconContext.Provider
                             value={{
-                              color: '#0000008f',
-                              size: '13px',
+                              color: "#0000008f",
+                              size: "13px",
                             }}
                           >
                             <FaRegCalendar />
                           </IconContext.Provider>
                           <h5>
-                            {moment(val.dateDebut).locale('fr').format('LL')}
+                            {moment(val.dateDebut).locale("fr").format("LL")}
                           </h5>
                         </div>
                         <Link to={`/detailJD/${val._id}`}>
@@ -302,8 +316,13 @@ const ListeJobDatingGlobale = () => {
                 })
             )
           ) : (
-            <span style={{ textAlign: 'center', width: '100%' }}>
+            <span style={{ textAlign: "center", width: "100%" }}>
               {isLoading}
+            </span>
+          )}
+          {results.length <= 0 && jobdatingPublie.length > 0 && (
+            <span style={{ textAlign: "center", width: "100%" }}>
+              {isNotFound}
             </span>
           )}
         </div>

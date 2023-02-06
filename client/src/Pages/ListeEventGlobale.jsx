@@ -23,6 +23,8 @@ const ListeEventGobale = () => {
   const [eventValide, setEventValide] = useState([]);
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(" ");
+  const [results, setResults] = useState([]);
+  const [isNotFound, setIsNotFound] = useState("");
   
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
@@ -30,6 +32,7 @@ const ListeEventGobale = () => {
   useEffect(() => {
     const getEventPublie = async () => {
       setIsLoading("Chargement ...");
+      setIsNotFound("");
       await axios({
         method: "GET",
         url: `${process.env.REACT_APP_API_URL}api/evenement/publie`,
@@ -41,6 +44,7 @@ const ListeEventGobale = () => {
           console.log(err);
         });
         eventValide.length === 0 && setIsLoading("Pas encore d'évènement pour le moment");
+        results.length === 0 && setIsNotFound("Aucun résultat trouvé");
     };
 
     if (effectRan.current === false) {
@@ -50,6 +54,14 @@ const ListeEventGobale = () => {
       effectRan.current = true;
     };
   }, []);
+
+  useEffect(() => {
+    setResults(
+      eventValide.filter((val) =>
+        val.theme.toLowerCase().includes(query)
+      )
+    );
+  }, [eventValide, query]);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -106,7 +118,7 @@ const ListeEventGobale = () => {
           <input
             type="search"
             name="offreSearch"
-            placeholder="Thème de l'évènement"
+            placeholder="Thème de l'évènement ..."
             onChange={(event) => {
               setQuery(event.target.value);
             }}
@@ -152,7 +164,6 @@ const ListeEventGobale = () => {
                       <div className="titre">
                         <h5>{val.theme}</h5>
                       </div>
-                      <h5>Organisé par {val.nomEntreprise}</h5>
                       <div className="forBtn">
                         <div className="calendar">
                           <IconContext.Provider
@@ -213,6 +224,11 @@ const ListeEventGobale = () => {
           ) : (
             <span style={{ textAlign: "center", width: "100%" }}>
               {isLoading}
+            </span>
+          )}
+          {results.length <= 0 && eventValide.length > 0 && (
+            <span style={{ textAlign: "center", width: "100%" }}>
+              {isNotFound}
             </span>
           )}
         </div>

@@ -194,7 +194,7 @@ const ListeEntrepriseAdmin = () => {
                           <span>{val.lieuxActivite}</span>
                         </td>
                         <td>
-                          <Link  to={`/detailEtsAdmin/${val._id}`}>
+                          <Link to={`/detailEtsAdmin/${val._id}`}>
                             <button>Détail</button>
                           </Link>
                           <button
@@ -211,7 +211,7 @@ const ListeEntrepriseAdmin = () => {
                   })
                 ) : (
                   <tr>
-                    <td>Aucun candidat inscrit</td>
+                    <td>Aucun entreprise inscrit</td>
                   </tr>
                 )}
               </tbody>

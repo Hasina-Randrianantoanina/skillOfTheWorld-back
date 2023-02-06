@@ -303,11 +303,11 @@ module.exports.updatePasswordEmail = async (req, res) => {
 };
 
 // read all candidat
-module.exports.readAllCandidat = (req, res) => {
-  Candidat.find((err, docs) => {
-    if (!err) res.send(docs);
-    else console.log("Erreur d'obtention de données: " + err);
+module.exports.readAllCandidat = async (req, res) => {
+  const candidat = await Candidat.find().sort({
+    createdAt: -1,
   });
+  res.status(200).send(candidat);
 };
 
 module.exports.checkMailCandidat = (req, res) => {

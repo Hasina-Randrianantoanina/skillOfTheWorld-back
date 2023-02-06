@@ -23,6 +23,8 @@ const ListeOffreGlobale = () => {
   const [localisation, setLocalisation] = useState("");
   const [fonction, setFonction] = useState("");
   const [isLoading, setIsLoading] = useState(" ");
+  const [results, setResults] = useState([]);
+  const [isNotFound, setIsNotFound] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
@@ -30,6 +32,7 @@ const ListeOffreGlobale = () => {
   useEffect(() => {
     const getOffrePublie = async () => {
       setIsLoading("Chargement ...");
+      setIsNotFound("");
       await axios({
         method: "get",
         url: `${process.env.REACT_APP_API_URL}api/offre/valide/`,
@@ -45,10 +48,17 @@ const ListeOffreGlobale = () => {
           console.log(error);
         });
       offres.length === 0 && setIsLoading("Pas encore d'offre pour le moment");
+      results.length === 0 && setIsNotFound("Aucun résultat trouvé");
     };
 
     getOffrePublie();
-  }, [offres.length]);
+  }, []);
+
+  useEffect(() => {
+    setResults(
+      offres.filter((val) => val.intitulePoste.toLowerCase().includes(query))
+    );
+  }, [offres, query]);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -366,8 +376,15 @@ const ListeOffreGlobale = () => {
               })
             )
           ) : (
+            <>
+              <span style={{ textAlign: "center", width: "100%" }}>
+                {isLoading}
+              </span>
+            </>
+          )}
+          {results.length <= 0 && offres.length > 0 && (
             <span style={{ textAlign: "center", width: "100%" }}>
-              {isLoading}
+              {isNotFound}
             </span>
           )}
         </div>
