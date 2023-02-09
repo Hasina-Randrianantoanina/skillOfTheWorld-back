@@ -83,13 +83,12 @@ const EmailConfirmation = () => {
           <form className="forInput" autoComplete="off" onSubmit={handleLogin}>
             <select
               name="enTantQue"
-              required
               onChange={(e) => {
                 setType(e.target.value);
               }}
-              requ
-            >
-              <option defaultValue value="candidat">
+              required
+              >
+              <option selected disabled value="">
                 En tant que ...
               </option>
               <option value={`candidat`}>Candidat</option>

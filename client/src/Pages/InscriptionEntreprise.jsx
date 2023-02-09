@@ -23,7 +23,7 @@ const InscriptionEntreprise = () => {
   const [telephone, setTelephone] = useState("");
   const [email, setEmail] = useState("");
   const [lieuxActivite, setLieuxActivite] = useState("");
-  const [nombreSalaire, setNombreSalaire] = useState("");
+  const [nombreSalaire, setNombreSalaire] = useState("non mentionné");
   const [siteWeb, setSiteWeb] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -255,13 +255,14 @@ const InscriptionEntreprise = () => {
               onChange={(event) => {
                 setLieuxActivite(event.target.value);
               }}
+              required
             >
-              <option defaultValue value="Lieu activité">
-                Lieu d'activités
+              <option selected disabled value="">
+                Lieu d'activités *
               </option>
               {countries.map((country, index) => {
                 return (
-                  <option key={index} value={`${country.pays}` - `${country.capitale}`}>
+                  <option key={index} value={`${country.pays} - ${country.capitale}`}>
                     {country.pays} - {country.capitale}
                   </option>
                 );
@@ -273,7 +274,7 @@ const InscriptionEntreprise = () => {
                 setNombreSalaire(event.target.value);
               }}
             >
-              <option defaultValue value={"Inferieur à 10"}>
+              <option selected disabled value="">
                 Nombre de salariés
               </option>
               <option value={"Inferieur à 10"}>Inferieur à 10</option>

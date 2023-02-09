@@ -51,6 +51,7 @@ const CandidatureAdmin = () => {
 
   const [candidat, setCandidat] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(" ");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
@@ -100,6 +101,7 @@ const CandidatureAdmin = () => {
 
   useEffect(() => {
     const getOffre = async () => {
+      setIsLoading("Chargement ...");
       await axios({
         method: 'get',
         url: `${process.env.REACT_APP_API_URL}api/user/candidat/`,
@@ -109,6 +111,7 @@ const CandidatureAdmin = () => {
             console.log(res.data.errors);
           } else {
             setCandidat(res.data);
+            candidat.length === 0 && setIsLoading("Aucun candidat inscrit");
           }
         })
         .catch((error) => {
@@ -138,7 +141,7 @@ const CandidatureAdmin = () => {
           {' '}
           &#60; Retour
         </p>
-        <h2>Candidature</h2>
+        <h2>Liste des candidats inscrits</h2>
         <div className="navAndTable">
           {/* <div className="navigation">
             <h4
@@ -181,7 +184,7 @@ const CandidatureAdmin = () => {
               <tbody>
                 {candidat.length === 0 && (
                   <tr>
-                    <td>Aucun candidat inscrit</td>
+                    <td>{isLoading}</td>
                   </tr>
                 )}
                 {candidat.length > 0 &&

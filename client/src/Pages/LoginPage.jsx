@@ -154,7 +154,7 @@ const LoginPage = () => {
                 }}
                 required
               >
-                <option defaultValue value="enTantQue">
+                <option selected disabled value="">
                   En tant que ...
                 </option>
                 <option value={`candidat`}>Candidat</option>

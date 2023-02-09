@@ -155,9 +155,10 @@ const OrganiserEvent = () => {
             onChange={(event) => {
               setTypeEvenement(event.target.value);
             }}
+            required
           >
-            <option defaultValue value={'public'}>
-              Lien public ou privée
+            <option selected disabled value="">
+              Lien public ou privée *
             </option>
             <option value={'Public'}>Public</option>
             <option value={'Privée'}>Privée</option>

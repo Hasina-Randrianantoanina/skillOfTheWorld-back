@@ -17,6 +17,7 @@ const ListeArticle = () => {
 
   const [article, setArticle] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(" ");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
@@ -68,12 +69,14 @@ const ListeArticle = () => {
   };
 
   const getArticles = async () => {
+    setIsLoading("Chargement ...");
     await axios({
       method: "GET",
       url: `${process.env.REACT_APP_API_URL}api/article`,
     })
       .then((res) => {
         setArticle(res.data);
+        article.length === 0 && setIsLoading("Aucun article ajouté");
       })
       .catch((err) => {
         console.log(err);
@@ -165,7 +168,7 @@ const ListeArticle = () => {
                     })
                 ) : (
                   <tr>
-                    <td>Aucun article ajouté</td>
+                    <td>{isLoading}</td>
                   </tr>
                 )}
               </tbody>

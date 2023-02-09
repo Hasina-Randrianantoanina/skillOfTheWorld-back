@@ -22,13 +22,13 @@ const AjoutJD = () => {
   const [intitulePoste, setIntitulePoste] = useState('');
   const [localisation, setLocalisation] = useState('');
   const [fonction, setFonction] = useState('');
-  const [niveauEtude, setNiveauEtude] = useState('');
+  const [niveauEtude, setNiveauEtude] = useState('non mentionné');
   const [typeContrat, setTypeContrat] = useState('');
-  const [typeTravail, setTypeTravail] = useState('');
+  const [typeTravail, setTypeTravail] = useState('non mentionné');
   const [dateDebut, setDateDebut] = useState('');
-  const [delaisRecrutement, setdelaisRecrutement] = useState('');
-  const [expSouhaite, setExpSouhaite] = useState('');
-  const [siteWeb, setSiteWeb] = useState('');
+  const [delaisRecrutement, setdelaisRecrutement] = useState('non mentionné');
+  const [expSouhaite, setExpSouhaite] = useState('non mentionné');
+  const [siteWeb, setSiteWeb] = useState('Aucun site web');
   const [lienConnexion, setLienConnexion] = useState('');
   const [description, setDescription] = useState('');
   const [competencesAttendues, setCompetencesAttendues] = useState('');
@@ -221,12 +221,12 @@ const AjoutJD = () => {
           {/* Localisation */}
           <select
             name="localisation"
-            required
             onChange={(event) => {
               setLocalisation(event.target.value);
             }}
+            required
           >
-            <option defaultValue value="Madagascar - Antananarivo">
+            <option selected disabled value="">
               Localisation *
             </option>
             {countries.map((country, index) => {
@@ -241,12 +241,12 @@ const AjoutJD = () => {
           {/* Fonction */}
           <select
             name="fonction"
-            required
             onChange={(event) => {
               setFonction(event.target.value);
             }}
+            required
           >
-            <option defaultValue value="Marketing">
+            <option selected disabled value="">
               Fonction *
             </option>
             {fonctions.map((fonction, index) => {
@@ -265,7 +265,7 @@ const AjoutJD = () => {
               setNiveauEtude(event.target.value);
             }}
           >
-            <option defaultValue value="bac">
+            <option selected disabled value="">
               Niveau d'étude minimum
             </option>
             <option value={'bac'}>bac</option>
@@ -278,12 +278,12 @@ const AjoutJD = () => {
           {/* Type de contrat */}
           <select
             name="typeContrat"
-            required
             onChange={(event) => {
               setTypeContrat(event.target.value);
             }}
+            required
           >
-            <option defaultValue value="CDD">
+            <option selected disabled value="">
               Type de contrat *
             </option>
             <option value={'CDD'}>CDD</option>
@@ -300,7 +300,7 @@ const AjoutJD = () => {
               setTypeTravail(event.target.value);
             }}
           >
-            <option defaultValue value="...">
+            <option selected disabled value="">
               Télétravail
             </option>
             <option value={'Télétravail ponctuel autorisé'}>
@@ -353,7 +353,7 @@ const AjoutJD = () => {
               setdelaisRecrutement(event.target.value);
             }}
           >
-            <option defaultValue value="de suite">
+            <option selected disabled value="">
               Délai du recrutement
             </option>
             <option value="de suite">de suite</option>
@@ -369,7 +369,7 @@ const AjoutJD = () => {
               setExpSouhaite(event.target.value);
             }}
           >
-            <option defaultValue value="Débutant accepté">
+            <option selected disabled value="">
               Experience souhaitée
             </option>
             <option value={'Débutant accepté'}>Débutant accepté</option>
@@ -397,14 +397,14 @@ const AjoutJD = () => {
 
           {/* Lien pour se connecter */}
           <select name="appli">
-            <option defaultValue value="ZOOM">
+            <option selected disabled value="">
               Appli préferentiel de connexion
             </option>
             <option value={'ZOOM'}>ZOOM</option>
             <option value={'TEAMS'}>TEAMS</option>
             <option value={'WHATSAPP'}>WHATSAPP</option>
             <option value={'SKYPE'}>SKYPE</option>
-            <option value={'AUTRE'}>AUTRE</option>
+            <option value={'Autre'}>AUTRE</option>
           </select>
 
           {/* Description de l'offre */}

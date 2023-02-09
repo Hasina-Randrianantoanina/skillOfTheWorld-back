@@ -17,6 +17,8 @@ const ValidationEvent = () => {
   const [showEventNonPublier, setShowEventNonPublier] = useState(true);
   const [showEventPublier, setShowEventPublier] = useState(false);
 
+  const [isNonPublieLoading, setIsNonPublieLoading] = useState(" ");
+  const [isLoading, setIsLoading] = useState(" ");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
@@ -37,10 +39,12 @@ const ValidationEvent = () => {
       setShowEventPublier(true);
     }
   };
+
   const [eventValide, setEventValide] = useState([]);
   const [eventNonValide, setEventNonValide] = useState([]);
 
   const getEventNotPublie = async () => {
+    setIsNonPublieLoading("Chargement ...");
     const idEntreprise = [];
 
     const getEventNotPublie = await axios({
@@ -71,8 +75,11 @@ const ValidationEvent = () => {
         },
       ]);
     }
+    eventNonValide.length === 0 && setIsNonPublieLoading("Aucun évènement");
   };
+
   const getEventPublie = async () => {
+    setIsLoading("Chargement ...")
     const idEntreprise = [];
 
     const getEventPublie = await axios({
@@ -103,6 +110,7 @@ const ValidationEvent = () => {
         },
       ]);
     }
+    eventValide.length === 0 && setIsLoading("Aucun évènement publié");
   };
 
   useEffect(() => {
@@ -205,7 +213,7 @@ const ValidationEvent = () => {
                       })
                   ) : (
                     <tr>
-                      <td>{eventNonValide.length > 0 ? "Chargement ..." : "Pas encore d'evènement"}</td>
+                      <td>{isNonPublieLoading}</td>
                     </tr>
                   )}
                 </tbody>
@@ -269,7 +277,7 @@ const ValidationEvent = () => {
                       })
                   ) : (
                     <tr>
-                      <td>{eventValide.length > 0 ? "Chargement ..." : "Pas encore d'evènement"}</td>
+                      <td>{isLoading}</td>
                     </tr>
                   )}
                 </tbody>

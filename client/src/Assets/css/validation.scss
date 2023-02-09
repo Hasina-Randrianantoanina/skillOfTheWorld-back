@@ -116,7 +116,8 @@
             border-bottom: 1px solid #7e7e7e;
           }
 
-          button {
+          button,
+          label {
             width: 91px;
             height: 28px;
             border-radius: 5px;
@@ -128,6 +129,14 @@
             &:hover {
               transform: scale(1.1);
             }
+          }
+
+          label {
+            font-family: Arial;
+            font-size: 13.3px;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
           }
         }
         th {

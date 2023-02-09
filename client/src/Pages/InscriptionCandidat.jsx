@@ -240,18 +240,18 @@ const InscriptionCandidat = () => {
               required
             /> */}
             <select
-              required
               name="localisation"
               onChange={(event) => {
                 setLocalisation(event.target.value);
               }}
+              required
             >
-              <option defaultValue value="Localisation">
+              <option selected disabled value="">
                 Localisation *
               </option>
               {countries.map((country, index) => {
                 return (
-                  <option key={index} value={`${country.pays}` - `${country.capitale}`}>
+                  <option key={index} value={`${country.pays} - ${country.capitale}`}>
                     {country.pays} - {country.capitale}
                   </option>
                 );
@@ -259,12 +259,12 @@ const InscriptionCandidat = () => {
             </select>
             <select
               name="fonction"
-              required
               onChange={(event) => {
                 setSecteurActivite(event.target.value);
               }}
+              required
             >
-              <option defaultValue value="Marketing">
+              <option selected disabled value="">
                 Secteur d'activité *
               </option>
               {fonctions.map((fonction, index) => {

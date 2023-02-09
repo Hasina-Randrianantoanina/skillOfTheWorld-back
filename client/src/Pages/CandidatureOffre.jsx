@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
-import { reponseRefuse, reponseAttente, reponseValide } from '../Utils/reponse';
+import React, { useState, useContext, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+import { reponseRefuse, reponseAttente, reponseValide } from "../Utils/reponse";
 
-import '../Assets/css/candidatureOffre.scss';
-import Pagination from '../Components/Pagination';
+import "../Assets/css/candidatureOffre.scss";
+import Pagination from "../Components/Pagination";
 
 const CandidatureOffre = () => {
   const redirect = useNavigate();
@@ -79,7 +79,7 @@ const CandidatureOffre = () => {
     titrePoste
   ) => {
     await axios({
-      method: 'PUT',
+      method: "PUT",
       url: `${process.env.REACT_APP_API_URL}api/offre/validate/${offreId}`,
       data: {
         candidatId: candida,
@@ -109,7 +109,7 @@ const CandidatureOffre = () => {
     titrePoste
   ) => {
     await axios({
-      method: 'PUT',
+      method: "PUT",
       url: `${process.env.REACT_APP_API_URL}api/offre/validate/${offreId}`,
       data: {
         candidatId: candida,
@@ -139,7 +139,7 @@ const CandidatureOffre = () => {
     titrePoste
   ) => {
     await axios({
-      method: 'PUT',
+      method: "PUT",
       url: `${process.env.REACT_APP_API_URL}api/offre/validate/${offreId}`,
       data: {
         candidatId: candida,
@@ -216,7 +216,7 @@ const CandidatureOffre = () => {
     <div className="divCandidature">
       <div className="innerCandidature">
         <p className="linkRetour" onClick={() => redirect(-1)}>
-          {' '}
+          {" "}
           &#60; Retour
         </p>
         <h2>Candidatures</h2>
@@ -228,25 +228,25 @@ const CandidatureOffre = () => {
           <div className="navigation">
             <h4
               onClick={handleClickTalent}
-              className={showTalent ? 'active' : undefined}
+              className={showTalent ? "active" : undefined}
             >
               Les talents {/*[23] */}
             </h4>
             <h4
               onClick={handleClickAccepted}
-              className={isAccepted ? 'active' : undefined}
+              className={isAccepted ? "active" : undefined}
             >
               Accepté {/* [10] */}
             </h4>
             <h4
               onClick={handleClickRefused}
-              className={isRefused ? 'active' : undefined}
+              className={isRefused ? "active" : undefined}
             >
               Refusé {/*[07] */}
             </h4>
             <h4
               onClick={handleClickAttente}
-              className={enAttente ? 'active' : undefined}
+              className={enAttente ? "active" : undefined}
             >
               Mis en attente {/*[07] */}
             </h4>
@@ -260,9 +260,9 @@ const CandidatureOffre = () => {
                   <tr>
                     <th
                       style={{
-                        width: '75%',
-                        textAlign: 'left',
-                        paddingLeft: '15px',
+                        width: "75%",
+                        textAlign: "left",
+                        paddingLeft: "15px",
                       }}
                     >
                       Liste des talents
@@ -273,39 +273,40 @@ const CandidatureOffre = () => {
                 <tbody>
                   {listCandidat.slice(indexOfFirstPost, indexOfLastPost).map(
                     (val) =>
-                      val.resultat === 'envoye' &&
+                      val.resultat === "envoye" &&
                       val.isValideCV === true && (
                         <tr key={val._id}>
                           <td
-                            style={{ textAlign: 'left', paddingLeft: '15px' }}
+                            style={{ textAlign: "left", paddingLeft: "15px" }}
                           >
-                            <span>{val.nom + ' ' + val.prenom} </span>
+                            <span>{val.nom + " " + val.prenom} </span>
                             <a
                               download
-                              href={`${urlFile.split('.com/')[0]}.com/${
+                              href={`${urlFile.split(".com/")[0]}.com/${
                                 val.cv_path
                               }`}
                             >
                               Telecharger le CV
-                            </a>{' '}
-                            &nbsp; &nbsp;{' '}
+                            </a>{" "}
+                            &nbsp; &nbsp;{" "}
                             {val.lm_path && (
                               <a
                                 download
-                                href={`${urlFile.split('.com/')[0]}.com/${
+                                href={`${urlFile.split(".com/")[0]}.com/${
                                   val.lm_path
                                 }`}
                               >
                                 Telecharger la LM
                               </a>
                             )}
+                            {/* <a href="#">Telecharger le fichier supplementaire</a> */}
                           </td>
                           <td className="action">
                             <button
-                              style={{ border: 'none' }}
+                              style={{ border: "none" }}
                               onClick={() =>
                                 repondreValide(
-                                  'accepté',
+                                  "accepté",
                                   val.idCandida,
                                   id,
                                   val.email,
@@ -317,10 +318,10 @@ const CandidatureOffre = () => {
                             </button>
 
                             <button
-                              style={{ border: 'none' }}
+                              style={{ border: "none" }}
                               onClick={() =>
                                 repondreRefuse(
-                                  'Réfusée',
+                                  "Réfusée",
                                   val.idCandida,
                                   id,
                                   val.email,
@@ -331,10 +332,10 @@ const CandidatureOffre = () => {
                               Refusée
                             </button>
                             <button
-                              style={{ border: 'none' }}
+                              style={{ border: "none" }}
                               onClick={() =>
                                 repondreAttente(
-                                  'attente',
+                                  "attente",
                                   val.idCandida,
                                   id,
                                   val.email,
@@ -364,9 +365,9 @@ const CandidatureOffre = () => {
                   <tr>
                     <th
                       style={{
-                        width: '75%',
-                        textAlign: 'left',
-                        paddingLeft: '15px',
+                        width: "75%",
+                        textAlign: "left",
+                        paddingLeft: "15px",
                       }}
                     >
                       Liste des talents acceptés
@@ -376,37 +377,37 @@ const CandidatureOffre = () => {
                 <tbody>
                   {listCandidat.slice(indexOfFirstPost, indexOfLastPost).map(
                     (val) =>
-                      val.resultat === 'accepté' &&
+                      val.resultat === "accepté" &&
                       val.isValideCV === true && (
                         <tr key={val._id}>
                           <td
                             style={{
-                              textAlign: 'left',
-                              paddingLeft: '15px',
-                              background: 'rgba(20, 220, 97, 0.346)',
+                              textAlign: "left",
+                              paddingLeft: "15px",
+                              background: "rgba(20, 220, 97, 0.346)",
                             }}
                           >
-                            <span>{val.nom + ' ' + val.prenom} </span>
-                            <br />
+                            <span>{val.nom + " " + val.prenom} </span>
                             <a
                               download
-                              href={`${urlFile.split('.com/')[0]}.com/${
+                              href={`${urlFile.split(".com/")[0]}.com/${
                                 val.cv_path
                               }`}
                             >
                               Telecharger le CV
-                            </a>{' '}
-                            &nbsp; &nbsp;{' '}
+                            </a>{" "}
+                            &nbsp; &nbsp;{" "}
                             {val.lm_path && (
                               <a
                                 download
-                                href={`${urlFile.split('.com/')[0]}.com/${
+                                href={`${urlFile.split(".com/")[0]}.com/${
                                   val.lm_path
                                 }`}
                               >
                                 Telecharger la LM
                               </a>
                             )}
+                            {/* <a href="#">Telecharger le fichier supplementaire</a> */}
                           </td>
                         </tr>
                       )
@@ -424,9 +425,9 @@ const CandidatureOffre = () => {
                   <tr>
                     <th
                       style={{
-                        width: '75%',
-                        textAlign: 'left',
-                        paddingLeft: '15px',
+                        width: "75%",
+                        textAlign: "left",
+                        paddingLeft: "15px",
                       }}
                     >
                       Liste des talents refusés
@@ -436,31 +437,30 @@ const CandidatureOffre = () => {
                 <tbody>
                   {listCandidat.slice(indexOfFirstPost, indexOfLastPost).map(
                     (val) =>
-                      val.resultat === 'Réfusée' &&
+                      val.resultat === "Réfusée" &&
                       val.isValideCV === true && (
                         <tr key={val._id}>
                           <td
                             style={{
-                              textAlign: 'left',
-                              paddingLeft: '15px',
-                              background: 'rgba(220, 20, 20, 0.258)',
+                              textAlign: "left",
+                              paddingLeft: "15px",
+                              background: "rgba(220, 20, 20, 0.258)",
                             }}
                           >
-                            <span>{val.nom + ' ' + val.prenom} </span>
-                            <br />
+                            <span>{val.nom + " " + val.prenom}</span>
                             <a
                               download
-                              href={`${urlFile.split('.com/')[0]}.com/${
+                              href={`${urlFile.split(".com/")[0]}.com/${
                                 val.cv_path
                               }`}
                             >
                               Telecharger le CV
-                            </a>{' '}
-                            &nbsp; &nbsp;{' '}
+                            </a>{" "}
+                            &nbsp; &nbsp;{" "}
                             {val.lm_path && (
                               <a
                                 download
-                                href={`${urlFile.split('.com/')[0]}.com/${
+                                href={`${urlFile.split(".com/")[0]}.com/${
                                   val.lm_path
                                 }`}
                               >
@@ -484,9 +484,9 @@ const CandidatureOffre = () => {
                   <tr>
                     <th
                       style={{
-                        width: '75%',
-                        textAlign: 'left',
-                        paddingLeft: '15px',
+                        width: "75%",
+                        textAlign: "left",
+                        paddingLeft: "15px",
                       }}
                     >
                       Liste des talents mis en attente
@@ -497,43 +497,44 @@ const CandidatureOffre = () => {
                 <tbody>
                   {listCandidat.slice(indexOfFirstPost, indexOfLastPost).map(
                     (val) =>
-                      val.resultat === 'attente' &&
+                      val.resultat === "attente" &&
                       val.isValideCV === true && (
                         <tr key={val._id}>
                           <td
                             style={{
-                              textAlign: 'left',
-                              paddingLeft: '15px',
-                              background: 'rgba(220, 153, 20, 0.346)',
+                              textAlign: "left",
+                              paddingLeft: "15px",
+                              background: "rgba(220, 153, 20, 0.346)",
                             }}
                           >
-                            <span>{val.nom + ' ' + val.prenom} </span>
+                            <span>{val.nom + " " + val.prenom} </span>
                             <a
                               download
-                              href={`${urlFile.split('.com/')[0]}.com/${
+                              href={`${urlFile.split(".com/")[0]}.com/${
                                 val.cv_path
                               }`}
                             >
                               Telecharger le CV
-                            </a>{' '}
-                            &nbsp; &nbsp;{' '}
+                            </a>{" "}
+                            &nbsp; &nbsp;{" "}
                             {val.lm_path && (
                               <a
                                 download
-                                href={`${urlFile.split('.com/')[0]}.com/${
+                                href={`${urlFile.split(".com/")[0]}.com/${
                                   val.lm_path
                                 }`}
                               >
                                 Telecharger la LM
                               </a>
                             )}
+                            {/* <a href="#">Telecharger le fichier supplementaire</a> */}
                           </td>
                           <td className="action">
                             <button
-                              style={{ border: 'none' }}
+                              style={{ border: "none" }}
                               onClick={() =>
                                 repondreValide(
-                                  'accepté',
+                                  "accepté",
                                   val.idCandida,
                                   id,
                                   val.email,
@@ -545,10 +546,10 @@ const CandidatureOffre = () => {
                             </button>
 
                             <button
-                              style={{ border: 'none' }}
+                              style={{ border: "none" }}
                               onClick={() =>
                                 repondreRefuse(
-                                  'Réfusée',
+                                  "Réfusée",
                                   val.idCandida,
                                   id,
                                   val.email,
@@ -559,10 +560,10 @@ const CandidatureOffre = () => {
                               Refusée
                             </button>
                             <button
-                              style={{ border: 'none' }}
+                              style={{ border: "none" }}
                               onClick={() =>
                                 repondreAttente(
-                                  'attente',
+                                  "attente",
                                   val.idCandida,
                                   id,
                                   val.email,

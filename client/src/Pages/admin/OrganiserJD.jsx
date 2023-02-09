@@ -20,13 +20,13 @@ const OrganiserJD = () => {
   const [intitulePoste, setIntitulePoste] = useState("");
   const [localisation, setLocalisation] = useState("");
   const [fonction, setFonction] = useState("");
-  const [niveauEtude, setNiveauEtude] = useState("");
+  const [niveauEtude, setNiveauEtude] = useState("non mentionné");
   const [typeContrat, setTypeContrat] = useState("");
-  const [typeTravail, setTypeTravail] = useState("");
+  const [typeTravail, setTypeTravail] = useState("non mentionné");
   const [dateDebut, setDateDebut] = useState("");
-  const [delaisRecrutement, setdelaisRecrutement] = useState("");
-  const [expSouhaite, setExpSouhaite] = useState("");
-  const [siteWeb, setSiteWeb] = useState("");
+  const [delaisRecrutement, setdelaisRecrutement] = useState("non mentionné");
+  const [expSouhaite, setExpSouhaite] = useState("non mentionné");
+  const [siteWeb, setSiteWeb] = useState("Aucun site web");
   const [lienConnexion, setLienConnexion] = useState("");
   const [description, setDescription] = useState("");
   const [competencesAttendues, setCompetencesAttendues] = useState("");
@@ -34,8 +34,6 @@ const OrganiserJD = () => {
   const [photoCouverture, setPhotoCouverture] = useState("");
   const [pourquoiPostuler, setPourquoiPostuler] = useState("");
   const [lienJobDating, setLienJobDating] = useState("");
-
-  const [showPaymentMethod, setShowPaymentMethod] = useState(false);
 
   const ajoutSucces = () =>
     toast.success("votre job dating a été envoyer avec succès", {
@@ -148,12 +146,12 @@ const OrganiserJD = () => {
           {/* Localisation */}
           <select
             name="localisation"
-            required
             onChange={(event) => {
               setLocalisation(event.target.value);
             }}
+            required
           >
-            <option defaultValue value="Madagascar - Antananarivo">
+            <option selected disabled value="">
               Localisation *
             </option>
             {countries.map((country, index) => {
@@ -168,12 +166,12 @@ const OrganiserJD = () => {
           {/* Fonction */}
           <select
             name="fonction"
-            required
             onChange={(event) => {
               setFonction(event.target.value);
             }}
+            required
           >
-            <option defaultValue value="Marketing">
+            <option selected disabled value="">
               Fonction *
             </option>
             {fonctions.map((fonction, index) => {
@@ -192,7 +190,7 @@ const OrganiserJD = () => {
               setNiveauEtude(event.target.value);
             }}
           >
-            <option defaultValue value="bac">
+            <option selected disabled value="">
               Niveau d'étude minimum
             </option>
             <option value={"bac"}>bac</option>
@@ -210,7 +208,7 @@ const OrganiserJD = () => {
               setTypeContrat(event.target.value);
             }}
           >
-            <option defaultValue value="CDD">
+            <option selected disabled value="">
               Type de contrat *
             </option>
             <option value={"CDD"}>CDD</option>
@@ -227,7 +225,7 @@ const OrganiserJD = () => {
               setTypeTravail(event.target.value);
             }}
           >
-            <option defaultValue value="Présentiel possible">
+            <option selected disabled value="">
               Télétravail
             </option>
             <option value={"Présentiel possible"}>Présentiel possible</option>
@@ -274,7 +272,7 @@ const OrganiserJD = () => {
               setdelaisRecrutement(event.target.value);
             }}
           >
-            <option defaultValue value="de suite">
+            <option selected disabled value="">
               Délai du recrutement
             </option>
             <option value="de suite">de suite</option>
@@ -290,7 +288,7 @@ const OrganiserJD = () => {
               setExpSouhaite(event.target.value);
             }}
           >
-            <option defaultValue value="Débutant accepté">
+            <option selected disabled value="">
               Experience souhaitée
             </option>
             <option value={"Débutant accepté"}>Débutant accepté</option>

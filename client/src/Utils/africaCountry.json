@@ -9,7 +9,7 @@
   },
   {
     "pays": "Åland (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Albanie ",
@@ -33,11 +33,11 @@
   },
   {
     "pays": "Anguilla",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Antarctique ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Antigua-et-Barbuda",
@@ -57,7 +57,7 @@
   },
   {
     "pays": "Aruba",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Australie ",
@@ -105,7 +105,7 @@
   },
   {
     "pays": "Bermudes ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Bhoutan ",
@@ -117,7 +117,7 @@
   },
   {
     "pays": "Bonaire, Saint-Eustache et Saba",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Bosnie-Herzégovine ",
@@ -129,7 +129,7 @@
   },
   {
     "pays": "Bouvet (l'Île)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Brésil ",
@@ -157,7 +157,7 @@
   },
   {
     "pays": "Caïmans (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Cambodge ",
@@ -181,7 +181,7 @@
   },
   {
     "pays": "Christmas (l'Île)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Chypre",
@@ -189,7 +189,7 @@
   },
   {
     "pays": "Cocos (les Îles) / Keeling (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Colombie ",
@@ -209,7 +209,7 @@
   },
   {
     "pays": "Cook (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Corée (la République de)",
@@ -237,7 +237,7 @@
   },
   {
     "pays": "Curaçao",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Danemark ",
@@ -297,11 +297,11 @@
   },
   {
     "pays": "Falkland (les Îles) /Malouines (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Féroé (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Fidji ",
@@ -329,7 +329,7 @@
   },
   {
     "pays": "Géorgie du Sud-et-les Îles Sandwich du Sud ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Ghana ",
@@ -337,7 +337,7 @@
   },
   {
     "pays": "Gibraltar",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Grèce ",
@@ -349,15 +349,15 @@
   },
   {
     "pays": "Groenland ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Guadeloupe ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Guam",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Guatemala ",
@@ -365,7 +365,7 @@
   },
   {
     "pays": "Guernesey",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Guinée ",
@@ -385,7 +385,7 @@
   },
   {
     "pays": "Guyane française (la)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Haïti",
@@ -393,7 +393,7 @@
   },
   {
     "pays": "Heard-et-Îles MacDonald (l'Île)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Honduras ",
@@ -401,7 +401,7 @@
   },
   {
     "pays": "Hong Kong",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Hongrie ",
@@ -409,11 +409,11 @@
   },
   {
     "pays": "Île de Man",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Îles mineures éloignées des États-Unis ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Inde ",
@@ -421,7 +421,7 @@
   },
   {
     "pays": "Indien (le Territoire britannique de l'océan)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Indonésie ",
@@ -461,7 +461,7 @@
   },
   {
     "pays": "Jersey",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Jordanie ",
@@ -525,7 +525,7 @@
   },
   {
     "pays": "Macao",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Macédoine du Nord ",
@@ -580,7 +580,7 @@
   },
   {
     "pays": "Mariannes du Nord (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Maroc ",
@@ -592,7 +592,7 @@
   },
   {
     "pays": "Martinique ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Maurice",
@@ -604,7 +604,7 @@
   },
   {
     "pays": "Mayotte",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Mexique ",
@@ -632,7 +632,7 @@
   },
   {
     "pays": "Montserrat",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Mozambique ",
@@ -668,11 +668,11 @@
   },
   {
     "pays": "Niue",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Norfolk (l'Île)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Norvège ",
@@ -680,7 +680,7 @@
   },
   {
     "pays": "Nouvelle-Calédonie ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Nouvelle-Zélande ",
@@ -736,7 +736,7 @@
   },
   {
     "pays": "Pitcairn",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Pologne ",
@@ -744,11 +744,11 @@
   },
   {
     "pays": "Polynésie française ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Porto Rico",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Portugal ",
@@ -768,7 +768,7 @@
   },
   {
     "pays": "Réunion ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Roumanie ",
@@ -788,15 +788,15 @@
   },
   {
     "pays": "Sahara occidental",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Saint-Barthélemy",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Sainte-Hélène, Ascension et Tristan da Cunha",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Sainte-Lucie",
@@ -812,15 +812,15 @@
   },
   {
     "pays": "Saint-Martin (partie française)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Saint-Martin (partie néerlandaise)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Saint-Pierre-et-Miquelon",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Saint-Siège ",
@@ -840,7 +840,7 @@
   },
   {
     "pays": "Samoa américaines ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Sao Tomé-et-Principe",
@@ -904,7 +904,7 @@
   },
   {
     "pays": "Svalbard et l'Île Jan Mayen ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Tadjikistan ",
@@ -928,7 +928,7 @@
   },
   {
     "pays": "Terres australes françaises ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Thaïlande ",
@@ -944,7 +944,7 @@
   },
   {
     "pays": "Tokelau ",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Tonga ",
@@ -964,7 +964,7 @@
   },
   {
     "pays": "Turks-et-Caïcos (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Turquie ",
@@ -992,11 +992,11 @@
   },
   {
     "pays": "Vierges britanniques (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Vierges des États-Unis (les Îles)",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Viet Nam ",
@@ -1004,7 +1004,7 @@
   },
   {
     "pays": "Wallis-et-Futuna",
-    "capitale": "-"
+    "capitale": ""
   },
   {
     "pays": "Yémen ",

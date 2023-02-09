@@ -16,20 +16,24 @@ const ListeOffreEts = () => {
 
   const [offre, setOffre] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(" ");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
-
+  
   useEffect(() => {
+    setIsLoading("Chargement ...");
     axios({
       method: 'GET',
       url: `${process.env.REACT_APP_API_URL}api/offre/entreprise/${uid}`,
     })
       .then((response) => {
         setOffre(response.data);
+        offre.length === 0 && setIsLoading("Aucune offre ajoutée");
       })
       .catch((error) => {
         console.log(error);
       });
+      
   }, [setOffre]);
 
   // Change page
@@ -142,7 +146,7 @@ const ListeOffreEts = () => {
                   })
               ) : (
                 <tr>
-                  <td>Aucune offre ajoutée</td>
+                  <td>{isLoading}</td>
                 </tr>
               )}
             </tbody>

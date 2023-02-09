@@ -12,13 +12,17 @@ const ValidationOffre = () => {
   const redirect = useNavigate();
   const [offreValide, setOffreValide] = useState([]);
   const [offreNonValide, setOffreNonValide] = useState([]);
-  const [offreDEpublie, setOffreDepublie] = useState([]);
+  const [offreDEpublie, setOffreDepublie] = useState([]); 
 
   const [showOffreEnCours, setShowOffreEnCours] = useState(true);
   const [showOffreValider, setShowOffreValider] = useState(false);
   const [showOffreDepublier, setShowOffreDepublier] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
+
+  const [isLoading, setIsLoading] = useState(" ");
+  const [isValideLoading, setIsValideLoading] = useState(" ");
+  const [isDepublieLoading, setIsDepublieLoading] = useState(" ");
 
   const effectRan = useRef(false);
 
@@ -70,6 +74,7 @@ const ValidationOffre = () => {
 
   useEffect(() => {
     const getOffreValide = async () => {
+      setIsValideLoading("Chargement ...");
       const idEntreprise = [];
 
       const getJOValide = await axios({
@@ -101,9 +106,11 @@ const ValidationOffre = () => {
           },
         ]);
       }
+      offreValide.length === 0 && setIsValideLoading("Aucune offre validée et publiée");
     };
 
     const getOffreNonValide = async () => {
+      setIsLoading("Chargement ...");
       const idEntreprise = [];
       const getJOValide = await axios({
         method: 'GET',
@@ -134,9 +141,11 @@ const ValidationOffre = () => {
           },
         ]);
       }
+      offreNonValide.length === 0 && setIsLoading("Aucune offre en cours de validation");
     };
 
     const getOffreDepublie = async () => {
+      setIsDepublieLoading("Chargement ...");
       const idEntreprise = [];
       const getJOValide = await axios({
         method: 'GET',
@@ -167,6 +176,7 @@ const ValidationOffre = () => {
           },
         ]);
       }
+      offreDEpublie.length === 0 && setIsDepublieLoading("Aucune offre dépubliée");
     };
 
     if (effectRan.current === false) {
@@ -194,6 +204,9 @@ const ValidationOffre = () => {
           &#60; Retour
         </p>
         <h2>Validation des offres</h2>
+        <Link to="/offreCandidatureAdmin">
+          <button className="btnAjout">Liste de tous les candidatures</button>
+        </Link>
         <div className="navAndTable">
           <div className="navigation">
             <h4
@@ -279,7 +292,7 @@ const ValidationOffre = () => {
                       })
                   ) : (
                     <tr>
-                      <td>{offreNonValide.isValidate === false ? "Chargement ..." : "Aucune offre en cours de validation"}</td>
+                      <td>{isLoading}</td>
                     </tr>
                   )}
                 </tbody>
@@ -375,7 +388,7 @@ const ValidationOffre = () => {
                     })
                   ) : (
                     <tr>
-                      <td>{offreValide.isValidate === true ? "Chargement ..." : "Aucune offre validée et publiée"}</td>
+                      <td>{isValideLoading}</td>
                     </tr>
                   )}
                 </tbody>
@@ -459,7 +472,7 @@ const ValidationOffre = () => {
                     })
                   ) : (
                     <tr>
-                      <td>{offreDEpublie.isValidate === true &&  offreDEpublie.depublie === true ? "Chargement ..." : "Aucune offre dépubliée"}</td>
+                      <td>{isDepublieLoading}</td>
                     </tr>
                   )}
                 </tbody>

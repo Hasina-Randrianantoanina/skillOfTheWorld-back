@@ -431,7 +431,7 @@ const DetailOffreGlobale = () => {
         {isPostuler && (
           <div className="upload">
             <form encType="multipart/form-data">
-              <h3 onClick={handlingUploadPC}> Télécharger de mon PC </h3>
+              <h3 onClick={handlingUploadPC}> Télécharger de mon PC </h3> 
 
               {uploadPC && (
                 <>

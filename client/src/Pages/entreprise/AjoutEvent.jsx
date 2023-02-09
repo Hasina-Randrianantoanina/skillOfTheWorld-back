@@ -78,7 +78,7 @@ const AjoutEvent = () => {
   const [dateEvenement, setDateEvenement] = useState();
   const [horaireSouhaite, setHoraireSouhaite] = useState();
   const [photoCouverture, setPhotoCouverture] = useState();
-  const [typeEvenement, setTypeEvenement] = useState();
+  const [typeEvenement, setTypeEvenement] = useState('public');
   const [modePayement, setModePayement] = useState();
 
   const handleOnSubmit = async (e) => {
@@ -226,7 +226,7 @@ const AjoutEvent = () => {
               setTypeEvenement(event.target.value);
             }}
           >
-            <option defaultValue value={'public'}>
+            <option selected disabled value="">
               Lien public ou privée
             </option>
             <option value={'Public'}>Public</option>

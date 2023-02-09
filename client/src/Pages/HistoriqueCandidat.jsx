@@ -20,6 +20,7 @@ const HistoriqueCandidat = () => {
   const [offre, setOffre] = useState([]);
   const idEntreprise = [];
 
+  const [isLoading, setIsLoading] = useState(" ");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
@@ -56,6 +57,7 @@ const HistoriqueCandidat = () => {
   useEffect(() => {
     if (effectRan.current === false) {
       const getOffreCandidat = async (idCandidat) => {
+        setIsLoading("Chargement ...");
         const idEntreprise = [];
         const resultat = [];
         const listCandidat = [];
@@ -99,6 +101,7 @@ const HistoriqueCandidat = () => {
             },
           ]);
         }
+        offreGlobale.length === 0 && setIsLoading("Aucune offre postulée");
       };
 
       getOffreCandidat(uid);
@@ -132,7 +135,7 @@ const HistoriqueCandidat = () => {
               onClick={handleClickOffre}
               className={showOffre ? 'active' : undefined}
             >
-              Offre
+              Offre postulé
             </h4>
             {/* <h4
               onClick={handleClickJD}
@@ -222,7 +225,7 @@ const HistoriqueCandidat = () => {
                         })
                     ) : (
                       <tr>
-                        <td>Aucun historique</td>
+                        <td>{isLoading}</td>
                       </tr>
                     )}
                   </tbody>

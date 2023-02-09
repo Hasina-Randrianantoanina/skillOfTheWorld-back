@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
-import { FaRegTrashAlt } from 'react-icons/fa';
-import { IconContext } from 'react-icons';
-import { confirmAlert } from 'react-confirm-alert';
-import { toast } from 'react-toastify';
-import moment from 'moment/moment';
-import 'moment/locale/fr';
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { IconContext } from "react-icons";
+import { confirmAlert } from "react-confirm-alert";
+import { toast } from "react-toastify";
+import moment from "moment/moment";
+import "moment/locale/fr";
 
-import '../../Assets/css/historique.scss';
-import Pagination from '../../Components/Pagination';
+import "../../Assets/css/historique.scss";
+import Pagination from "../../Components/Pagination";
 
 const ListeEntrepriseAdmin = () => {
   const redirect = useNavigate();
@@ -50,19 +50,20 @@ const ListeEntrepriseAdmin = () => {
   //     }
   //   };
 
+  const [isLoading, setIsLoading] = useState(" ");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
   const deleteSuccess = () =>
-    toast.success('Entreprise supprimé avec succès', {
-      position: 'top-right',
+    toast.success("Entreprise supprimé avec succès", {
+      position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'dark',
+      theme: "dark",
     });
 
   // Change page
@@ -70,12 +71,12 @@ const ListeEntrepriseAdmin = () => {
 
   const deleteEntreprise = async (idEntreprise) => {
     await axios({
-      method: 'DELETE',
+      method: "DELETE",
       url: `${process.env.REACT_APP_API_URL}api/user/entreprise/delete/${idEntreprise}`,
     })
       .then((res) => {
         window.location.reload(false);
-        redirect('/listeEntrepriseAdmin');
+        redirect("/listeEntrepriseAdmin");
         deleteSuccess();
       })
       .then((error) => {
@@ -85,16 +86,16 @@ const ListeEntrepriseAdmin = () => {
 
   const submitFile = (idEntreprise) => {
     confirmAlert({
-      title: 'Suppression',
-      message: 'Supprimer le candidat ?',
+      title: "Suppression",
+      message: "Supprimer l'entreprise ?",
       buttons: [
         {
-          label: 'Supprimer',
+          label: "Supprimer",
           onClick: () => deleteEntreprise(idEntreprise),
         },
         {
-          label: 'Annuler',
-          onClick: () => console.log('Click No'),
+          label: "Annuler",
+          onClick: () => console.log("Click No"),
         },
       ],
     });
@@ -103,14 +104,17 @@ const ListeEntrepriseAdmin = () => {
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
   useEffect(() => {
     const getEntreprise = async () => {
+      setIsLoading("Chargement ...");
       await axios({
-        method: 'get',
+        method: "get",
         url: `${process.env.REACT_APP_API_URL}api/user/entreprise/`,
       })
         .then((res) => {
           setSociete(res.data);
+          societe.length === 0 && setIsLoading("Aucun entreprise inscrit");
         })
         .catch((error) => {
           console.log(error);
@@ -129,7 +133,7 @@ const ListeEntrepriseAdmin = () => {
     <div className="divHistorique">
       <div className="innerHistorique">
         <p className="linkRetour" onClick={() => redirect(-1)}>
-          {' '}
+          {" "}
           &#60; Retour
         </p>
         <h2>Liste des entreprises</h2>
@@ -169,9 +173,9 @@ const ListeEntrepriseAdmin = () => {
                 <tr>
                   <th
                     style={{
-                      width: '75%',
-                      textAlign: 'left',
-                      paddingLeft: '15px',
+                      width: "75%",
+                      textAlign: "left",
+                      paddingLeft: "15px",
                     }}
                   >
                     Liste des Entreprises
@@ -181,37 +185,43 @@ const ListeEntrepriseAdmin = () => {
               </thead>
               <tbody>
                 {societe.length > 0 ? (
-                  societe.map((val, key) => {
-                    return (
-                      <tr key={val._id}>
-                        <td style={{ textAlign: 'left', paddingLeft: '15px' }}>
-                          <span>
-                            <b>{val.nomEntreprise}</b>
-                            <h4>
-                              {moment(val.createdAt).locale('fr').format('LL')}
-                            </h4>
-                          </span>
-                          <span>{val.lieuxActivite}</span>
-                        </td>
-                        <td>
-                          <Link to={`/detailEtsAdmin/${val._id}`}>
-                            <button>Détail</button>
-                          </Link>
-                          <button
-                            className="deleteAction"
-                            onClick={() => submitFile(val._id)}
+                  societe
+                    .slice(indexOfFirstPost, indexOfLastPost)
+                    .map((val, key) => {
+                      return (
+                        <tr key={val._id}>
+                          <td
+                            style={{ textAlign: "left", paddingLeft: "15px" }}
                           >
-                            <IconContext.Provider value={{ size: '12px' }}>
-                              <FaRegTrashAlt />
-                            </IconContext.Provider>
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
+                            <span>
+                              <b>{val.nomEntreprise}</b>
+                              <h4>
+                                {moment(val.createdAt)
+                                  .locale("fr")
+                                  .format("LL")}
+                              </h4>
+                            </span>
+                            <span>{val.lieuxActivite}</span>
+                          </td>
+                          <td>
+                            <Link to={`/detailEtsAdmin/${val._id}`}>
+                              <button>Détail</button>
+                            </Link>
+                            <button
+                              className="deleteAction"
+                              onClick={() => submitFile(val._id)}
+                            >
+                              <IconContext.Provider value={{ size: "12px" }}>
+                                <FaRegTrashAlt />
+                              </IconContext.Provider>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
                 ) : (
                   <tr>
-                    <td>Aucun entreprise inscrit</td>
+                    <td>{isLoading}</td>
                   </tr>
                 )}
               </tbody>
@@ -313,11 +323,11 @@ const ListeEntrepriseAdmin = () => {
             </div>
           )} */}
         </div>
-        {/* <Pagination
+        <Pagination
           postsPerPage={postsPerPage}
-          totalPosts={candidat.length}
+          totalPosts={societe.length}
           paginate={paginate}
-        /> */}
+        />
       </div>
     </div>
   );

@@ -14,16 +14,19 @@ const ListeEventEts = () => {
 
   const [evenement, setEvenement] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(" ");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
+    setIsLoading("Chargement ...");
     axios({
       method: "GET",
       url: `${process.env.REACT_APP_API_URL}api/evenement/entreprise/${uid}`,
     })
       .then((response) => {
         setEvenement(response.data);
+        evenement.length === 0 && setIsLoading("Aucun évènement ajouté");
       })
       .catch((error) => {
         console.log(error);
@@ -113,7 +116,7 @@ const ListeEventEts = () => {
                   })
               ) : (
                 <tr>
-                  <td>Aucun évènement ajouté</td>
+                  <td>{isLoading}</td>
                 </tr>
               )}
             </tbody>

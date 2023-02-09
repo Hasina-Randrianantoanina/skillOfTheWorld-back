@@ -14,16 +14,19 @@ const ListeJdEts = () => {
 
   const [jobdating, setJobdating] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(" ");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
+    setIsLoading("Chargement ...");
     axios({
       method: "GET",
       url: `${process.env.REACT_APP_API_URL}api/jobdating/entreprise/${uid}`,
     })
       .then((response) => {
         setJobdating(response.data);
+        jobdating.length === 0 && setIsLoading("Aucun Job Dating ajouté");
       })
       .catch((error) => {
         console.log(error);
@@ -113,7 +116,7 @@ const ListeJdEts = () => {
                   })
               ) : (
                 <tr>
-                  <td>Aucun Job Dating ajouté</td>
+                  <td>{isLoading}</td>
                 </tr>
               )}
             </tbody>

@@ -18,6 +18,8 @@ const ValidatioJD = () => {
   const [showJdNonPublier, setShowJdNonPublier] = useState(true);
   const [showJdPublier, setShowJdPublier] = useState(false);
 
+  const [isNonPublieLoading, setIsNonPublieLoading] = useState(" ");
+  const [isLoading, setIsLoading] = useState(" ");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
@@ -39,6 +41,7 @@ const ValidatioJD = () => {
     }
   };
   const getJDNonpublie = async () => {
+    setIsNonPublieLoading("Chargement ...");
     const idEntreprise = [];
 
     const getJDNonpublie = await axios({
@@ -68,11 +71,11 @@ const ValidatioJD = () => {
         },
       ]);
     }
+    jobdatingNonPublie.length === 0 && setIsNonPublieLoading("Aucune job dating");
   };
 
-  console.log(jobdatingNonPublie);    
-
   const getJDpublie = async () => {
+    setIsLoading("Chargement ...")
     const idEntreprise = [];
 
     const getJDPublie = await axios({
@@ -103,6 +106,7 @@ const ValidatioJD = () => {
         },
       ]);
     }
+    jobdatingPublie.length === 0 && setIsLoading("Aucune job dating publiée");
   };
 
   useEffect(() => {
@@ -205,7 +209,7 @@ const ValidatioJD = () => {
                       })
                   ) : (
                     <tr>
-                      <td>{jobdatingNonPublie.length > 0 ? "Chargement ..." : "Pas encore de job dating"}</td>
+                      <td>{isNonPublieLoading}</td>
                     </tr>
                   )}
                 </tbody>
@@ -269,7 +273,7 @@ const ValidatioJD = () => {
                       })
                   ) : (
                     <tr>
-                      <td>{jobdatingPublie.length > 0 ? "Chargement ..." : "Pas encore de job dating"}</td>
+                      <td>{isLoading}</td>
                     </tr>
                   )}
                 </tbody>

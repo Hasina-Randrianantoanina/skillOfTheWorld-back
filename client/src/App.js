@@ -118,6 +118,7 @@ const ModificationTitre = React.lazy(() =>
   import('./Pages/admin/ModificationTitre')
 );
 const SOTW = React.lazy(() => import('./../src/Pages/global/SOTW'));
+const OffreCandidatureAdmin = React.lazy(() => import('./../src/Pages/admin/OffreCandidatureAdmin'));
 
 const App = () => {
   const { uid, candidat, entreprise, admin } = useContext(AuthContext);
@@ -367,6 +368,15 @@ const App = () => {
             element={
               <ProtectedRouteAdmin>
                 <CandidatureAdmin />
+              </ProtectedRouteAdmin>
+            }
+          />
+          <Route
+            exact
+            path="/offreCandidatureAdmin"
+            element={
+              <ProtectedRouteAdmin>
+                <OffreCandidatureAdmin />
               </ProtectedRouteAdmin>
             }
           />
