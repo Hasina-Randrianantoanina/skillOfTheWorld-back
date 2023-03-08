@@ -42,7 +42,11 @@ router.patch(
 router.put('/validate/:id', offreController.repondreCandidat);
 
 // validation de CV de candidat
-router.put('/validatecv/:id', offreController.valideCV);
+router.put(
+  '/validatecv/:id',
+  upload.single('uploadDocument'),
+  offreController.valideCV
+);
 
 // validation de lm de candidat
 router.put('/validatelm/:id', offreController.valideLM);
