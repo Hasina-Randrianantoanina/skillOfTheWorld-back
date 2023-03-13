@@ -17,6 +17,7 @@ const LoginPage = () => {
 
   const [passwordType, setPasswordType] = useState('password');
   const [icon, setIcon] = useState(<FaRegEyeSlash />);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleShowPassword = () => {
     if (passwordType === 'password') {
@@ -68,6 +69,7 @@ const LoginPage = () => {
     });
 
   const handleLogin = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     // const emailError = document.querySelector(".email.error");
     // const passwordError = document.querySelector(".password.error");
@@ -86,14 +88,18 @@ const LoginPage = () => {
             connexionEntreprise.data.errors.email,
             connexionEntreprise.data.errors.password
           );
+          setIsLoading(false);
         } else if (connexionEntreprise.status === 201) {
           mailVerification(connexionEntreprise.data);
+          setIsLoading(false);
         } else {
           await fetchUser();
           redirect('/dashEntreprise');
+          setIsLoading(false);
         }
       } catch (error) {
         console.error(error);
+        setIsLoading(false);
       }
     } else if (type === 'candidat') {
       try {
@@ -110,14 +116,18 @@ const LoginPage = () => {
             connexionCandidat.data.errors.email,
             connexionCandidat.data.errors.password
           );
+          setIsLoading(false);
         } else if (connexionCandidat.status === 201) {
           mailVerification(connexionCandidat.data);
+          setIsLoading(false);
         } else {
           await fetchUser();
           redirect('/dashCandidat');
+          setIsLoading(false);
         }
       } catch (error) {
         console.error(error);
+        setIsLoading(false);
       }
     } else if (type === 'enTantQue') {
       errorTantQue();
@@ -206,7 +216,7 @@ const LoginPage = () => {
                   Mots de passe oublié ?
                 </Link>
               </p>
-              <input type="submit" name="sign-in" value="Connexion" />
+              <input type="submit" name="sign-in" disabled={isLoading && true} value={isLoading ? "Chargement ...":"Connexion"} />
             </form>
           </div>
         </div>

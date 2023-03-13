@@ -1,31 +1,31 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import DatePicker from 'react-date-picker/dist/entry.nostyle';
-import { BsCalendarDate } from 'react-icons/bs';
-import { IconContext } from 'react-icons';
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { toast } from "react-toastify";
+import axios from "axios";
+import DatePicker from "react-date-picker/dist/entry.nostyle";
+import { BsCalendarDate } from "react-icons/bs";
+import { IconContext } from "react-icons";
 
-import { AuthContext } from '../../context/AuthContext';
-import fonctions from '../../Utils/fonction.json';
-import '../../Assets/css/ajoutOffre.scss';
-import '../../Assets/css/confirmModal.scss';
+import { AuthContext } from "../../context/AuthContext";
+import fonctions from "../../Utils/fonction.json";
+import "../../Assets/css/ajoutOffre.scss";
+import "../../Assets/css/confirmModal.scss";
 
 const OrganiserEvent = () => {
   const redirect = useNavigate();
   const { uid } = useContext(AuthContext);
 
   const ajoutSucces = () =>
-    toast.success('votre offre a été envoyer avec succès', {
-      position: 'top-center',
+    toast.success("votre offre a été envoyer avec succès", {
+      position: "top-center",
       autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'dark',
+      theme: "dark",
     });
   const [nomEntreprise, setNomEntreprise] = useState();
   const [theme, setTheme] = useState();
@@ -36,32 +36,37 @@ const OrganiserEvent = () => {
   const [typeEvenement, setTypeEvenement] = useState();
   const [lien, setLien] = useState();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleOnSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('idEntreprise', uid);
-    formData.append('nomEntreprise', nomEntreprise);
-    formData.append('theme', theme);
-    formData.append('personneContacter', personneContacter);
-    formData.append('dateEvenement', dateEvenement);
-    formData.append('typeEvenement', typeEvenement);
-    formData.append('horaireSouhaite', horaireSouhaite);
-    formData.append('photoCouverture', photoCouverture);
-    formData.append('lienEvenement', lien);
-    formData.append('isPublie', true);
+    formData.append("idEntreprise", uid);
+    formData.append("nomEntreprise", nomEntreprise);
+    formData.append("theme", theme);
+    formData.append("personneContacter", personneContacter);
+    formData.append("dateEvenement", dateEvenement);
+    formData.append("typeEvenement", typeEvenement);
+    formData.append("horaireSouhaite", horaireSouhaite);
+    formData.append("photoCouverture", photoCouverture);
+    formData.append("lienEvenement", lien);
+    formData.append("isPublie", true);
     await axios
       .post(`${process.env.REACT_APP_API_URL}api/evenement`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        redirect('/validationEvent');
+        redirect("/validationEvent");
         ajoutSucces();
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   };
 
@@ -69,7 +74,7 @@ const OrganiserEvent = () => {
     <div className="divAjoutOffre">
       <div className="innerAjoutOffre">
         <p className="linkRetour" onClick={() => redirect(-1)}>
-          {' '}
+          {" "}
           &#60; Retour
         </p>
         <h2>Organiser un évènement</h2>
@@ -118,7 +123,7 @@ const OrganiserEvent = () => {
               setDateEvenement(dateEvenement);
             }}
             calendarIcon={
-              <IconContext.Provider value={{ size: '19px' }}>
+              <IconContext.Provider value={{ size: "19px" }}>
                 <BsCalendarDate />
               </IconContext.Provider>
             }
@@ -141,8 +146,8 @@ const OrganiserEvent = () => {
             type="text"
             name="hours"
             placeholder="Horaire souhaité *"
-            onFocus={(e) => (e.target.type = 'time')}
-            onBlur={(e) => (e.target.type = 'text')}
+            onFocus={(e) => (e.target.type = "time")}
+            onBlur={(e) => (e.target.type = "text")}
             required
             onChange={(event) => {
               setHoraireSouhaite(event.target.value);
@@ -160,17 +165,17 @@ const OrganiserEvent = () => {
             <option selected disabled value="">
               Lien public ou privée *
             </option>
-            <option value={'Public'}>Public</option>
-            <option value={'Privée'}>Privée</option>
+            <option value={"Public"}>Public</option>
+            <option value={"Privée"}>Privée</option>
           </select>
 
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             {/* Upload couverture */}
             <label htmlFor="uploadCouverture" className="upload">
               Telecharger photo de couverture de l'évènement
             </label>
             <input
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
               type="file"
               id="photoCouverture"
               name="photoCouverture"
@@ -182,7 +187,7 @@ const OrganiserEvent = () => {
             <input
               type="text"
               placeholder="Lien de l'evenement"
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
               onChange={(event) => {
                 setLien(event.target.value);
               }}
@@ -195,7 +200,8 @@ const OrganiserEvent = () => {
               className="showPaymentMethod"
               type="submit"
               name="orgnaiser"
-              value="Organiser"
+              disabled={isLoading && true}
+              value={isLoading ? "Chargement ..." : "Organiser"}
             />
           </div>
         </form>

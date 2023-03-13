@@ -20,8 +20,8 @@ const DetailEvent = () => {
   const [prenom, setPrenom] = useState();
   const [email, setEmail] = useState();
   const [checkIdCandidat, setCheckIdCandidat] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [photoCouverture, setPhotoCouverture] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const postuleSuccess = () =>
     toast.success('Votre demande de participation a été envoyée avec succès', {
@@ -67,6 +67,7 @@ const DetailEvent = () => {
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   };
 

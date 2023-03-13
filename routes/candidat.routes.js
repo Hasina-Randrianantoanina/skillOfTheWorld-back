@@ -24,6 +24,11 @@ router.get('/logout', candidatCtlr.logout);
 router.get('/verification/:id', candidatCtlr.verificationCandidat);
 // get all  candidat
 router.get('/', candidatCtlr.readAllCandidat);
+// get all  candidat by activity
+router.get(
+  '/activity/:secteurActivite',
+  candidatCtlr.readAllCandidatByActivity
+);
 // get one candidat
 router.get('/:id', candidatCtlr.readOneCandidat);
 

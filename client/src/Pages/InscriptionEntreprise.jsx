@@ -30,6 +30,7 @@ const InscriptionEntreprise = () => {
 
   const [passwordType, setPasswordType] = useState("password");
   const [icon, setIcon] = useState(<FaRegEyeSlash />);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleShowPassword = () => {
     if (passwordType === "password") {
@@ -84,6 +85,7 @@ const InscriptionEntreprise = () => {
     });
 
   const handleOnSubmit = async (event) => {
+    setIsLoading(true);
     event.preventDefault();
     if (password === confirmPassword) {
       await axios({
@@ -106,15 +108,19 @@ const InscriptionEntreprise = () => {
           if (res.status === 201) {
             inscriptionSuccess();
             redirect("/login");
+            setIsLoading(false);
           } else if (res.status === 200) {
             Error(res.data.errors.email);
+            setIsLoading(false);
           }
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
         });
     } else {
       mdpError();
+      setIsLoading(false);
     }
   };
 
@@ -147,26 +153,26 @@ const InscriptionEntreprise = () => {
                 </p>{" "}
                 <br />
                 <p>
-                  L'<strong>externalisation </strong> de certain tàches de recrutement
-                  chronophages.
+                  L'<strong>externalisation </strong> de certain tàches de
+                  recrutement chronophages.
                 </p>
                 <br />
                 <li>Des candidats ciblés</li>
                 <li>
-                  Un <strong>tableau de bord</strong> de suivi avec réponse automatiques
-                  aux talents.
+                  Un <strong>tableau de bord</strong> de suivi avec réponse
+                  automatiques aux talents.
                 </li>
                 <li>
-                  Un <strong>Expert RH</strong> qui vous accompagnera durant tout le
-                  process.
+                  Un <strong>Expert RH</strong> qui vous accompagnera durant
+                  tout le process.
                 </li>
                 <li>
                   La possibilité d'associer vos annonces à des Job Dating en
                   ligne.
                 </li>
                 <li>
-                  Des <strong>évènements</strong> rien que pour mettre en avant votre
-                  entreprise, votre actualité et votre marque employeur.
+                  Des <strong>évènements</strong> rien que pour mettre en avant
+                  votre entreprise, votre actualité et votre marque employeur.
                 </li>
               </ul>
             </div>
@@ -262,7 +268,10 @@ const InscriptionEntreprise = () => {
               </option>
               {countries.map((country, index) => {
                 return (
-                  <option key={index} value={`${country.pays} - ${country.capitale}`}>
+                  <option
+                    key={index}
+                    value={`${country.pays} - ${country.capitale}`}
+                  >
                     {country.pays} - {country.capitale}
                   </option>
                 );
@@ -328,7 +337,12 @@ const InscriptionEntreprise = () => {
               />
             </div>
             <div className="btnSubmit">
-              <input type="submit" name="sign-up" value="S'inscrire" />
+              <input
+                type="submit"
+                name="sign-up"
+                disabled={isLoading && true}
+                value={isLoading ? "Chargement ..." : "Connexion"}
+              />
             </div>
           </form>
         </div>

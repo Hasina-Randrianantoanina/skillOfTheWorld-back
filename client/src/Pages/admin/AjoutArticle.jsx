@@ -13,6 +13,7 @@ const AjoutArticle = () => {
   const [titre, setTitre] = useState('');
   const [description, setDescription] = useState('');
   const [photoCouverture, setPhotoCouverture] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const pubicationSuccess = () =>
     toast.success('Article publié avec succès', {
@@ -27,6 +28,7 @@ const AjoutArticle = () => {
     });
 
   const handleOnSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const formData = new FormData();
@@ -42,9 +44,11 @@ const AjoutArticle = () => {
       .then((res) => {
         pubicationSuccess();
         redirect('/listeArticle');
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   };
   return (
@@ -61,7 +65,7 @@ const AjoutArticle = () => {
           encType="multipart/form-data"
           onSubmit={handleOnSubmit}
         >
-          <label htmlFor="titreArticle">Titre de l'article</label>
+          <label htmlFor="titreArticle">Titre de l'article *</label>
           <input
             type="text"
             name="titreArticle"
@@ -72,7 +76,7 @@ const AjoutArticle = () => {
               setTitre(event.target.value);
             }}
           />
-          <label htmlFor="descriptionArticle">Description de l'article</label>
+          <label htmlFor="descriptionArticle">Description de l'article *</label>
           <textarea
             name="descriptionArticle"
             id="descriptionArticle"
@@ -86,7 +90,7 @@ const AjoutArticle = () => {
           ></textarea>
           {/* Upload couverture */}
           <label htmlFor="photoCouverture" className="upload">
-            Telecharger photo de couverture de l'article
+            Telecharger photo de couverture de l'article *
           </label>
           <input
             type="file"
@@ -103,7 +107,8 @@ const AjoutArticle = () => {
               className="btnArticle"
               type="submit"
               name="publierArticle"
-              value="Publier"
+              disabled={isLoading && true}
+              value={isLoading ? "Chargement ...":"Publier"}
             />
           </div>
         </form>

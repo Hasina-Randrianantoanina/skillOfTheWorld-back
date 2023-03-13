@@ -12,7 +12,7 @@ const ValidationOffre = () => {
   const redirect = useNavigate();
   const [offreValide, setOffreValide] = useState([]);
   const [offreNonValide, setOffreNonValide] = useState([]);
-  const [offreDEpublie, setOffreDepublie] = useState([]); 
+  const [offreDEpublie, setOffreDepublie] = useState([]);
 
   const [showOffreEnCours, setShowOffreEnCours] = useState(true);
   const [showOffreValider, setShowOffreValider] = useState(false);
@@ -20,9 +20,9 @@ const ValidationOffre = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
-  const [isLoading, setIsLoading] = useState(" ");
-  const [isValideLoading, setIsValideLoading] = useState(" ");
-  const [isDepublieLoading, setIsDepublieLoading] = useState(" ");
+  const [isLoading, setIsLoading] = useState(' ');
+  const [isValideLoading, setIsValideLoading] = useState(' ');
+  const [isDepublieLoading, setIsDepublieLoading] = useState(' ');
 
   const effectRan = useRef(false);
 
@@ -74,7 +74,7 @@ const ValidationOffre = () => {
 
   useEffect(() => {
     const getOffreValide = async () => {
-      setIsValideLoading("Chargement ...");
+      setIsValideLoading('Chargement ...');
       const idEntreprise = [];
 
       const getJOValide = await axios({
@@ -98,7 +98,7 @@ const ValidationOffre = () => {
           ...oldOffre,
           {
             _id: getJOValide.data[i]._id,
-            intitulePoste: getJOValide.data[i].intitulePoste,
+            intitulePoste: getJOValide.data[i].intitulePoste, 
             isValidate: getJOValide.data[i].isValidate,
             depublie: getJOValide.data[i].depublie,
             createdAt: getJOValide.data[i].createdAt,
@@ -106,11 +106,12 @@ const ValidationOffre = () => {
           },
         ]);
       }
-      offreValide.length === 0 && setIsValideLoading("Aucune offre validée et publiée");
+      offreValide.length === 0 &&
+        setIsValideLoading('Aucune offre validée et publiée');
     };
 
     const getOffreNonValide = async () => {
-      setIsLoading("Chargement ...");
+      setIsLoading('Chargement ...');
       const idEntreprise = [];
       const getJOValide = await axios({
         method: 'GET',
@@ -141,11 +142,12 @@ const ValidationOffre = () => {
           },
         ]);
       }
-      offreNonValide.length === 0 && setIsLoading("Aucune offre en cours de validation");
+      offreNonValide.length === 0 &&
+        setIsLoading('Aucune offre en cours de validation');
     };
 
     const getOffreDepublie = async () => {
-      setIsDepublieLoading("Chargement ...");
+      setIsDepublieLoading('Chargement ...');
       const idEntreprise = [];
       const getJOValide = await axios({
         method: 'GET',
@@ -176,7 +178,8 @@ const ValidationOffre = () => {
           },
         ]);
       }
-      offreDEpublie.length === 0 && setIsDepublieLoading("Aucune offre dépubliée");
+      offreDEpublie.length === 0 &&
+        setIsDepublieLoading('Aucune offre dépubliée');
     };
 
     if (effectRan.current === false) {
@@ -205,7 +208,7 @@ const ValidationOffre = () => {
         </p>
         <h2>Validation des offres</h2>
         <Link to="/offreCandidatureAdmin">
-          <button className="btnAjout">Liste de tous les candidatures</button>
+          <button className="btnAjout">Validation des candidatures</button>
         </Link>
         <div className="navAndTable">
           <div className="navigation">
@@ -320,72 +323,76 @@ const ValidationOffre = () => {
                 </thead>
                 <tbody>
                   {offreValide.length > 0 ? (
-                    offreValide.slice(indexOfFirstPost, indexOfLastPost).map((val, key) => {
-                      return (
-                        <tr key={val._id}>
-                          {val.isValidate === true &&
-                            val.depublie === false && (
-                              <td
-                                style={{
-                                  textAlign: 'left',
-                                  paddingLeft: '15px',
-                                  background: 'rgba(20, 220, 97, 0.346)',
-                                }}
-                              >
-                                <span>
-                                  <h4 style={{ fontFamily: 'poppinsBold' }}>
-                                    {val.isValidate && val.intitulePoste}
-                                  </h4>
-                                  <h4>{val.nomEntreprise}</h4>
-                                </span>
-                                <span>
-                                  <p>
-                                    {moment(val.createdAt)
-                                      .locale('fr')
-                                      .format('LL')}
-                                  </p>
-                                  <Link
-                                    to={`/validationCvLm/${val._id}`}
-                                    className="validationLink"
-                                  >
-                                    Liste des CVs et LMs
+                    offreValide
+                      .slice(indexOfFirstPost, indexOfLastPost)
+                      .map((val, key) => {
+                        return (
+                          <tr key={val._id}>
+                            {val.isValidate === true &&
+                              val.depublie === false && (
+                                <td
+                                  style={{
+                                    textAlign: 'left',
+                                    paddingLeft: '15px',
+                                    background: 'rgba(20, 220, 97, 0.346)',
+                                  }}
+                                >
+                                  <span>
+                                    <h4 style={{ fontFamily: 'poppinsBold' }}>
+                                      {val.isValidate && val.intitulePoste}
+                                    </h4>
+                                    <h4>{val.nomEntreprise}</h4>
+                                  </span>
+                                  <span>
+                                    <p>
+                                      {moment(val.createdAt)
+                                        .locale('fr')
+                                        .format('LL')}
+                                    </p>
+                                    <Link
+                                      to={`/validationCvLm/${val._id}`}
+                                      className="validationLink"
+                                    >
+                                      Liste des CVs et LMs
+                                    </Link>
+                                  </span>
+                                </td>
+                              )}
+                            {val.isValidate === true &&
+                              val.depublie === false && (
+                                <td>
+                                  <Link to={`/detailOffreGlobale/${val._id}`}>
+                                    <button style={{ border: 'none' }}>
+                                      Details
+                                    </button>
                                   </Link>
-                                </span>
-                              </td>
-                            )}
-                          {val.isValidate === true &&
-                            val.depublie === false && (
-                              <td>
-                                <Link to={`/detailOffreGlobale/${val._id}`}>
-                                  <button style={{ border: 'none' }}>
-                                    Details
-                                  </button>
-                                </Link>
-                                <Link to={`/candidatureOffre/${val._id}`}>
-                                  <button>Talent</button>
-                                </Link>
-                                {val.depublie === true ? (
-                                  <button
-                                    style={{ border: 'none' }}
-                                    onClick={() =>
-                                      depublieOffre(val._id, false)
-                                    }
-                                  >
-                                    Publier
-                                  </button>
-                                ) : (
-                                  <button
-                                    style={{ border: 'none' }}
-                                    onClick={() => depublieOffre(val._id, true)}
-                                  >
-                                    Depublier
-                                  </button>
-                                )}
-                              </td>
-                            )}
-                        </tr>
-                      );
-                    })
+                                  <Link to={`/candidatureOffre/${val._id}`}>
+                                    <button>Talent</button>
+                                  </Link>
+                                  {val.depublie === true ? (
+                                    <button
+                                      style={{ border: 'none' }}
+                                      onClick={() =>
+                                        depublieOffre(val._id, false)
+                                      }
+                                    >
+                                      Publier
+                                    </button>
+                                  ) : (
+                                    <button
+                                      style={{ border: 'none' }}
+                                      onClick={() =>
+                                        depublieOffre(val._id, true)
+                                      }
+                                    >
+                                      Depublier
+                                    </button>
+                                  )}
+                                </td>
+                              )}
+                          </tr>
+                        );
+                      })
                   ) : (
                     <tr>
                       <td>{isValideLoading}</td>
@@ -415,61 +422,69 @@ const ValidationOffre = () => {
                 </thead>
                 <tbody>
                   {offreDEpublie.length > 0 ? (
-                    offreDEpublie.slice(indexOfFirstPost, indexOfLastPost).map((val, key) => {
-                      return (
-                        <tr key={val._id}>
-                          {val.isValidate === true && val.depublie === true && (
-                            <td
-                              style={{
-                                textAlign: 'left',
-                                paddingLeft: '15px',
-                                background: 'rgb(227 170 66 / 35%)',
-                              }}
-                            >
-                              <span>
-                                <h4 style={{ fontFamily: 'poppinsBold' }}>
-                                  {val.intitulePoste}
-                                </h4>
-                                <h4>{val.nomEntreprise}</h4>
-                              </span>
-                              <span></span>
-                              <p>
-                                {moment(val.createdAt)
-                                  .locale('fr')
-                                  .format('LL')}
-                              </p>
-                            </td>
-                          )}
-                          {val.isValidate === true && val.depublie === true && (
-                            <td>
-                              <Link to={`/detailOffreGlobale/${val._id}`}>
-                                <button style={{ border: 'none' }}>
-                                  Details
-                                </button>
-                              </Link>
-                              <Link to={`/candidatureOffre/${val._id}`}>
-                                <button>Talent</button>
-                              </Link>
-                              {val.depublie === true ? (
-                                <button
-                                  style={{ border: 'none' }}
-                                  onClick={() => depublieOffre(val._id, false)}
+                    offreDEpublie
+                      .slice(indexOfFirstPost, indexOfLastPost)
+                      .map((val, key) => {
+                        return (
+                          <tr key={val._id}>
+                            {val.isValidate === true &&
+                              val.depublie === true && (
+                                <td
+                                  style={{
+                                    textAlign: 'left',
+                                    paddingLeft: '15px',
+                                    background: 'rgb(227 170 66 / 35%)',
+                                  }}
                                 >
-                                  Publier
-                                </button>
-                              ) : (
-                                <button
-                                  style={{ border: 'none' }}
-                                  onClick={() => depublieOffre(val._id, true)}
-                                >
-                                  Depublier
-                                </button>
+                                  <span>
+                                    <h4 style={{ fontFamily: 'poppinsBold' }}>
+                                      {val.intitulePoste}
+                                    </h4>
+                                    <h4>{val.nomEntreprise}</h4>
+                                  </span>
+                                  <span></span>
+                                  <p>
+                                    {moment(val.createdAt)
+                                      .locale('fr')
+                                      .format('LL')}
+                                  </p>
+                                </td>
                               )}
-                            </td>
-                          )}
-                        </tr>
-                      );
-                    })
+                            {val.isValidate === true &&
+                              val.depublie === true && (
+                                <td>
+                                  <Link to={`/detailOffreGlobale/${val._id}`}>
+                                    <button style={{ border: 'none' }}>
+                                      Details
+                                    </button>
+                                  </Link>
+                                  <Link to={`/candidatureOffre/${val._id}`}>
+                                    <button>Talent</button>
+                                  </Link>
+                                  {val.depublie === true ? (
+                                    <button
+                                      style={{ border: 'none' }}
+                                      onClick={() =>
+                                        depublieOffre(val._id, false)
+                                      }
+                                    >
+                                      Publier
+                                    </button>
+                                  ) : (
+                                    <button
+                                      style={{ border: 'none' }}
+                                      onClick={() =>
+                                        depublieOffre(val._id, true)
+                                      }
+                                    >
+                                      Depublier
+                                    </button>
+                                  )}
+                                </td>
+                              )}
+                          </tr>
+                        );
+                      })
                   ) : (
                     <tr>
                       <td>{isDepublieLoading}</td>

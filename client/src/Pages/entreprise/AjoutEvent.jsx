@@ -1,24 +1,26 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import DatePicker from 'react-date-picker/dist/entry.nostyle';
-import { BsCalendarDate } from 'react-icons/bs';
-import { IconContext } from 'react-icons';
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import DatePicker from "react-date-picker/dist/entry.nostyle";
+import { BsCalendarDate } from "react-icons/bs";
+import { IconContext } from "react-icons";
 
-import { AuthContext } from '../../context/AuthContext';
-import '../../Assets/css/ajoutOffre.scss';
-import '../../Assets/css/confirmModal.scss';
-import eventPics from '../../Assets/img/event/event.webp';
+import { AuthContext } from "../../context/AuthContext";
+import "../../Assets/css/ajoutOffre.scss";
+import "../../Assets/css/confirmModal.scss";
+import eventPics from "../../Assets/img/event/event.webp";
 
 const AjoutEvent = () => {
   const redirect = useNavigate();
   const { uid } = useContext(AuthContext);
 
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const tarif = () => {
     confirmAlert({
@@ -58,15 +60,15 @@ const AjoutEvent = () => {
   };
 
   const ajoutSucces = () =>
-    toast.success('Votre évènement a été envoyé avec succès', {
-      position: 'top-center',
+    toast.success("Votre évènement a été envoyé avec succès", {
+      position: "top-center",
       autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'dark',
+      theme: "dark",
     });
 
   // const [error, setError] = useState();
@@ -78,41 +80,45 @@ const AjoutEvent = () => {
   const [dateEvenement, setDateEvenement] = useState();
   const [horaireSouhaite, setHoraireSouhaite] = useState();
   const [photoCouverture, setPhotoCouverture] = useState();
-  const [typeEvenement, setTypeEvenement] = useState('public');
+  const [typeEvenement, setTypeEvenement] = useState("public");
   const [modePayement, setModePayement] = useState();
 
   const handleOnSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     const formData = new FormData();
-    formData.append('idEntreprise', uid);
-    formData.append('nomEntreprise', nomEntreprise);
-    formData.append('theme', theme);
-    formData.append('typeEvenement', typeEvenement);
-    formData.append('personneContacter', personneContacter);
-    formData.append('dateEvenement', dateEvenement);
-    formData.append('horaireSouhaite', horaireSouhaite);
-    formData.append('photoCouverture', photoCouverture);
-    formData.append('modePayement', modePayement);
+    formData.append("idEntreprise", uid);
+    formData.append("nomEntreprise", nomEntreprise);
+    formData.append("theme", theme);
+    formData.append("typeEvenement", typeEvenement);
+    formData.append("personneContacter", personneContacter);
+    formData.append("dateEvenement", dateEvenement);
+    formData.append("horaireSouhaite", horaireSouhaite);
+    formData.append("photoCouverture", photoCouverture);
+    formData.append("modePayement", modePayement);
 
     await axios
       .post(`${process.env.REACT_APP_API_URL}api/evenement`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        redirect('/listeEventEts');
+        redirect("/listeEventEts");
         ajoutSucces();
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   };
+
   return (
     <div className="divAjoutOffre">
       <div className="innerAjoutOffre">
         <p className="linkRetour" onClick={() => redirect(-1)}>
-          {' '}
+          {" "}
           &#60; Retour
         </p>
         <h2>Organiser un évènement</h2>
@@ -140,7 +146,7 @@ const AjoutEvent = () => {
         </div>
         {/* <input type="button" name="cout" value="Tarifs" onClick={tarif} /> */}
         <form
-          style={{ margin: '0 auto' }}
+          style={{ margin: "0 auto" }}
           className="forInput"
           autoComplete="off"
           onSubmit={handleOnSubmit}
@@ -188,7 +194,7 @@ const AjoutEvent = () => {
               setDateEvenement(dateEvenement);
             }}
             calendarIcon={
-              <IconContext.Provider value={{ size: '19px' }}>
+              <IconContext.Provider value={{ size: "19px" }}>
                 <BsCalendarDate />
               </IconContext.Provider>
             }
@@ -211,8 +217,8 @@ const AjoutEvent = () => {
             type="text"
             name="hours"
             placeholder="Horaire souhaité *"
-            onFocus={(e) => (e.target.type = 'time')}
-            onBlur={(e) => (e.target.type = 'text')}
+            onFocus={(e) => (e.target.type = "time")}
+            onBlur={(e) => (e.target.type = "text")}
             required
             onChange={(event) => {
               setHoraireSouhaite(event.target.value);
@@ -229,8 +235,8 @@ const AjoutEvent = () => {
             <option selected disabled value="">
               Lien public ou privée
             </option>
-            <option value={'Public'}>Public</option>
-            <option value={'Privée'}>Privée</option>
+            <option value={"Public"}>Public</option>
+            <option value={"Privée"}>Privée</option>
           </select>
 
           {/* Upload couverture */}
@@ -251,7 +257,7 @@ const AjoutEvent = () => {
               className="showPaymentMethod"
               type="button"
               name="publier"
-              value={!showPaymentMethod ? 'Organiser' : 'Annuler'}
+              value={!showPaymentMethod ? "Organiser" : "Annuler"}
               onClick={() => setShowPaymentMethod(!showPaymentMethod)}
             />
           </div>
@@ -266,7 +272,7 @@ const AjoutEvent = () => {
                   type="radio"
                   id="virement"
                   name="virement"
-                  value={'Virement bancaire'}
+                  value={"Virement bancaire"}
                   onChange={(event) => {
                     setModePayement(event.target.value);
                   }}
@@ -278,7 +284,7 @@ const AjoutEvent = () => {
                   type="radio"
                   id="orange"
                   name="virement"
-                  value={'Orange Money'}
+                  value={"Orange Money"}
                   onChange={(event) => {
                     setModePayement(event.target.value);
                   }}
@@ -291,7 +297,8 @@ const AjoutEvent = () => {
                     className="btnPublier"
                     type="submit"
                     name="publier"
-                    value="Organiser"
+                    disabled={isLoading && true}
+                    value={isLoading ? "Chargement ...":"Organiser"}
                   />
                 </div>
               </div>

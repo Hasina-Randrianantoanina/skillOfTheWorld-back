@@ -310,6 +310,14 @@ module.exports.readAllCandidat = async (req, res) => {
   res.status(200).send(candidat);
 };
 
+// read all candidat
+module.exports.readAllCandidatByActivity = async (req, res) => {
+  const candidat = await Candidat.find({secteurActivite:req.params.secteurActivite}).sort({
+    createdAt: -1,
+  });
+  res.status(200).send(candidat);
+};
+
 module.exports.checkMailCandidat = (req, res) => {
   Candidat.find({ email: { $in: [req.params.email] } }, async (err, docs) => {
     if (!err) {

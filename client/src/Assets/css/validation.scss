@@ -117,7 +117,7 @@
           }
 
           button,
-          label {
+          label, input[type=submit] {
             width: 91px;
             height: 28px;
             border-radius: 5px;
@@ -137,6 +137,7 @@
             display: grid;
             place-items: center;
             cursor: pointer;
+            margin: 5px 1px 5px 5px;
           }
         }
         th {

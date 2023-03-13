@@ -16,6 +16,7 @@ const LoginPageAdmin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
   const [passwordType, setPasswordType] = useState("password");
   const [icon, setIcon] = useState(<FaRegEyeSlash />);
 
@@ -42,6 +43,7 @@ const LoginPageAdmin = () => {
     });
 
   const handleLogin = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       const loginData = {
@@ -57,9 +59,11 @@ const LoginPageAdmin = () => {
           connexionAdmin.data.errors.email,
           connexionAdmin.data.errors.password
         );
+        setIsLoading(false);
       } else {
         await fetchUser();
         redirect("/dashAdmin");
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
@@ -119,7 +123,7 @@ const LoginPageAdmin = () => {
                 />
                 <label>Mot de passe</label>
               </div>
-              <input type="submit" name="sign-in" value="Connexion" />
+              <input type="submit" name="sign-in" disabled={isLoading && true} value={isLoading ? "Chargement ...":"Connexion"} />
             </form>
           </div>
         </div>

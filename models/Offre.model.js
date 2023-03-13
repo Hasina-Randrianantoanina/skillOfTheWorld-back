@@ -134,6 +134,9 @@ const OffreSchema = new mongoose.Schema(
         isValideLM: {
           type: Boolean,
         },
+        documentTexte: {
+          type: String,
+        },
       },
     ],
   },

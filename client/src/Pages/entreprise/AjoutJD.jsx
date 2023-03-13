@@ -1,42 +1,43 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { AuthContext } from '../../context/AuthContext';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import { toast } from 'react-toastify';
-import DatePicker from 'react-date-picker/dist/entry.nostyle';
-import { BsCalendarDate } from 'react-icons/bs';
-import { IconContext } from 'react-icons';
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { toast } from "react-toastify";
+import DatePicker from "react-date-picker/dist/entry.nostyle";
+import { BsCalendarDate } from "react-icons/bs";
+import { IconContext } from "react-icons";
 
-import countries from '../../Utils/africaCountry.json';
-import fonctions from '../../Utils/fonction.json';
-import '../../Assets/css/ajoutOffre.scss';
-import '../../Assets/css/confirmModal.scss';
-import jobDatingPic from '../../Assets/img/jobDating/jobDating.webp';
+import countries from "../../Utils/africaCountry.json";
+import fonctions from "../../Utils/fonction.json";
+import "../../Assets/css/ajoutOffre.scss";
+import "../../Assets/css/confirmModal.scss";
+import jobDatingPic from "../../Assets/img/jobDating/jobDating.webp";
 
 const AjoutJD = () => {
   const redirect = useNavigate();
   const { uid } = useContext(AuthContext);
 
-  const [intitulePoste, setIntitulePoste] = useState('');
-  const [localisation, setLocalisation] = useState('');
-  const [fonction, setFonction] = useState('');
-  const [niveauEtude, setNiveauEtude] = useState('non mentionné');
-  const [typeContrat, setTypeContrat] = useState('');
-  const [typeTravail, setTypeTravail] = useState('non mentionné');
-  const [dateDebut, setDateDebut] = useState('');
-  const [delaisRecrutement, setdelaisRecrutement] = useState('non mentionné');
-  const [expSouhaite, setExpSouhaite] = useState('non mentionné');
-  const [siteWeb, setSiteWeb] = useState('Aucun site web');
-  const [lienConnexion, setLienConnexion] = useState('');
-  const [description, setDescription] = useState('');
-  const [competencesAttendues, setCompetencesAttendues] = useState('');
-  const [savoirIdeal, setSavoirIdeal] = useState('');
-  const [photoCouverture, setPhotoCouverture] = useState('');
-  const [pourquoiPostuler, setPourquoiPostuler] = useState('');
-  const [modePaiement, setModePaiement] = useState('');
+  const [intitulePoste, setIntitulePoste] = useState("");
+  const [localisation, setLocalisation] = useState("");
+  const [fonction, setFonction] = useState("");
+  const [niveauEtude, setNiveauEtude] = useState("non mentionné");
+  const [typeContrat, setTypeContrat] = useState("");
+  const [typeTravail, setTypeTravail] = useState("non mentionné");
+  const [dateDebut, setDateDebut] = useState("");
+  const [delaisRecrutement, setdelaisRecrutement] = useState("non mentionné");
+  const [expSouhaite, setExpSouhaite] = useState("non mentionné");
+  const [siteWeb, setSiteWeb] = useState("Aucun site web");
+  const [lienConnexion, setLienConnexion] = useState("");
+  const [description, setDescription] = useState("");
+  const [competencesAttendues, setCompetencesAttendues] = useState("");
+  const [savoirIdeal, setSavoirIdeal] = useState("");
+  const [photoCouverture, setPhotoCouverture] = useState("");
+  const [pourquoiPostuler, setPourquoiPostuler] = useState("");
+  const [modePaiement, setModePaiement] = useState("");
   const [showPaymentMethod, setShowPaymentMethod] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // const tarif = () => {
   //   confirmAlert({
@@ -76,55 +77,59 @@ const AjoutJD = () => {
   // };
 
   const ajoutSucces = () =>
-    toast.success('Votre job dating a été envoyé avec succès', {
-      position: 'top-center',
+    toast.success("Votre job dating a été envoyé avec succès", {
+      position: "top-center",
       autoClose: 10000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'dark',
+      theme: "dark",
     });
 
   const handleOnSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
+
     if (photoCouverture) {
       const formData = new FormData();
-      formData.append('entrepriseId', uid);
-      formData.append('intitulePoste', intitulePoste);
-      formData.append('localisation', localisation);
-      formData.append('fonction', fonction);
-      formData.append('niveauEtude', niveauEtude);
-      formData.append('typeContrat', typeContrat);
-      formData.append('typeTravail', typeTravail);
-      formData.append('dateDebut', dateDebut);
-      formData.append('delaisRecrutement', delaisRecrutement);
-      formData.append('expSouhaite', expSouhaite);
-      formData.append('siteWeb', siteWeb);
-      formData.append('lienConnexion', lienConnexion);
-      formData.append('description', description);
-      formData.append('modePaiement', modePaiement);
-      formData.append('competencesAttendues', competencesAttendues);
-      formData.append('savoirIdeal', savoirIdeal);
-      formData.append('photoCouverture', photoCouverture);
+      formData.append("entrepriseId", uid);
+      formData.append("intitulePoste", intitulePoste);
+      formData.append("localisation", localisation);
+      formData.append("fonction", fonction);
+      formData.append("niveauEtude", niveauEtude);
+      formData.append("typeContrat", typeContrat);
+      formData.append("typeTravail", typeTravail);
+      formData.append("dateDebut", dateDebut);
+      formData.append("delaisRecrutement", delaisRecrutement);
+      formData.append("expSouhaite", expSouhaite);
+      formData.append("siteWeb", siteWeb);
+      formData.append("lienConnexion", lienConnexion);
+      formData.append("description", description);
+      formData.append("modePaiement", modePaiement);
+      formData.append("competencesAttendues", competencesAttendues);
+      formData.append("savoirIdeal", savoirIdeal);
+      formData.append("photoCouverture", photoCouverture);
 
       await axios
         .post(`${process.env.REACT_APP_API_URL}api/jobdating`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         })
         .then((res) => {
-          redirect('/listeJdEts');
+          redirect("/listeJdEts");
           ajoutSucces();
+          setIsLoading(false);
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
         });
     } else {
       await axios({
-        method: 'POST',
+        method: "POST",
         url: `${process.env.REACT_APP_API_URL}api/jobdating`,
         data: {
           entrepriseId: uid,
@@ -149,13 +154,16 @@ const AjoutJD = () => {
         .then((res) => {
           if (res.data.errors) {
             console.log(res.data.errors);
+            setIsLoading(false);
           } else {
-            redirect('/listeJdEts');
+            redirect("/listeJdEts");
             ajoutSucces();
+            setIsLoading(false);
           }
         })
         .catch((error) => {
           console.log(error);
+          setIsLoading(false);
         });
     }
   };
@@ -164,7 +172,7 @@ const AjoutJD = () => {
     <div className="divAjoutOffre">
       <div className="innerAjoutOffre">
         <p className="linkRetour" onClick={() => redirect(-1)}>
-          {' '}
+          {" "}
           &#60; Retour
         </p>
         <h2>Organiser un job dating</h2>
@@ -191,18 +199,18 @@ const AjoutJD = () => {
               </p>
               <p>
                 - Si vous souhaitez rencotrer les candidats en presentiel, le
-                tri des CV aura déja été réalisé pour vous.{' '}
+                tri des CV aura déja été réalisé pour vous.{" "}
                 <b>Vous gagnez du temps !</b>
               </p>
             </div>
-            <div className="imgValue" style={{ height: '145px' }}>
+            <div className="imgValue" style={{ height: "145px" }}>
               <img src={jobDatingPic} alt="Inscription Illustration" />
             </div>
           </div>
         </div>
         {/* <input type="button" name="cout" value="Tarifs" onClick={tarif} /> */}
         <form
-          style={{ margin: '0 auto' }}
+          style={{ margin: "0 auto" }}
           className="forInput"
           autoComplete="off"
           onSubmit={handleOnSubmit}
@@ -268,11 +276,11 @@ const AjoutJD = () => {
             <option selected disabled value="">
               Niveau d'étude minimum
             </option>
-            <option value={'bac'}>bac</option>
-            <option value={'bac+2'}>bac+2</option>
-            <option value={'bac+3'}>bac+3</option>
-            <option value={'bac+4'}>bac+4</option>
-            <option value={'bac+5'}>bac+5</option>
+            <option value={"bac"}>bac</option>
+            <option value={"bac+2"}>bac+2</option>
+            <option value={"bac+3"}>bac+3</option>
+            <option value={"bac+4"}>bac+4</option>
+            <option value={"bac+5"}>bac+5</option>
           </select>
 
           {/* Type de contrat */}
@@ -286,11 +294,11 @@ const AjoutJD = () => {
             <option selected disabled value="">
               Type de contrat *
             </option>
-            <option value={'CDD'}>CDD</option>
-            <option value={'CDI'}>CDI</option>
-            <option value={'Freelance'}>Freelance</option>
-            <option value={'Freelance'}>Stage de fin d'étude</option>
-            <option value={'Freelance'}>Apprentissage</option>
+            <option value={"CDD"}>CDD</option>
+            <option value={"CDI"}>CDI</option>
+            <option value={"Freelance"}>Freelance</option>
+            <option value={"Freelance"}>Stage de fin d'étude</option>
+            <option value={"Freelance"}>Apprentissage</option>
           </select>
 
           {/* Télétravail */}
@@ -303,13 +311,13 @@ const AjoutJD = () => {
             <option selected disabled value="">
               Télétravail
             </option>
-            <option value={'Télétravail ponctuel autorisé'}>
+            <option value={"Télétravail ponctuel autorisé"}>
               Télétravail ponctuel autorisé
             </option>
-            <option value={'Télétravail partiel possible'}>
+            <option value={"Télétravail partiel possible"}>
               Télétravail partiel possible
             </option>
-            <option value={'Télétravail total possible'}>
+            <option value={"Télétravail total possible"}>
               Télétravail total possible
             </option>
           </select>
@@ -327,7 +335,7 @@ const AjoutJD = () => {
               setDateDebut(dateDebut);
             }}
             calendarIcon={
-              <IconContext.Provider value={{ size: '19px' }}>
+              <IconContext.Provider value={{ size: "19px" }}>
                 <BsCalendarDate />
               </IconContext.Provider>
             }
@@ -357,9 +365,9 @@ const AjoutJD = () => {
               Délai du recrutement
             </option>
             <option value="de suite">de suite</option>
-            <option value={'1 mois'}>1 mois</option>
-            <option value={'2 mois'}>2 mois</option>
-            <option value={'3 mois'}>3 mois</option>
+            <option value={"1 mois"}>1 mois</option>
+            <option value={"2 mois"}>2 mois</option>
+            <option value={"3 mois"}>3 mois</option>
           </select>
 
           {/* Experience souhaité */}
@@ -372,7 +380,7 @@ const AjoutJD = () => {
             <option selected disabled value="">
               Experience souhaitée
             </option>
-            <option value={'Débutant accepté'}>Débutant accepté</option>
+            <option value={"Débutant accepté"}>Débutant accepté</option>
             <option value={"De 1 à 3 ans d'expérience"}>
               De 1 à 3 ans d'expérience
             </option>
@@ -380,7 +388,7 @@ const AjoutJD = () => {
               De 3 à 5 ans d'expérience
             </option>
             <option value={"Superieur 5 ans d'expérience"}>
-              {' '}
+              {" "}
               &gt; 5 ans d'expérience
             </option>
           </select>
@@ -400,11 +408,11 @@ const AjoutJD = () => {
             <option selected disabled value="">
               Appli préferentiel de connexion
             </option>
-            <option value={'ZOOM'}>ZOOM</option>
-            <option value={'TEAMS'}>TEAMS</option>
-            <option value={'WHATSAPP'}>WHATSAPP</option>
-            <option value={'SKYPE'}>SKYPE</option>
-            <option value={'Autre'}>AUTRE</option>
+            <option value={"ZOOM"}>ZOOM</option>
+            <option value={"TEAMS"}>TEAMS</option>
+            <option value={"WHATSAPP"}>WHATSAPP</option>
+            <option value={"SKYPE"}>SKYPE</option>
+            <option value={"Autre"}>AUTRE</option>
           </select>
 
           {/* Description de l'offre */}
@@ -479,7 +487,7 @@ const AjoutJD = () => {
               className="showPaymentMethod"
               type="button"
               name="publier"
-              value={!showPaymentMethod ? 'Organiser' : 'Annuler'}
+              value={!showPaymentMethod ? "Organiser" : "Annuler"}
               onClick={() => setShowPaymentMethod(!showPaymentMethod)}
             />
           </div>
@@ -494,7 +502,7 @@ const AjoutJD = () => {
                   type="radio"
                   id="virement"
                   name="virement"
-                  value={'Virement bancaire'}
+                  value={"Virement bancaire"}
                   onChange={(event) => {
                     setModePaiement(event.target.value);
                   }}
@@ -506,7 +514,7 @@ const AjoutJD = () => {
                   type="radio"
                   id="orange"
                   name="virement"
-                  value={'Orange Money'}
+                  value={"Orange Money"}
                   onChange={(event) => {
                     setModePaiement(event.target.value);
                   }}
@@ -543,7 +551,8 @@ const AjoutJD = () => {
                     className="btnPublier"
                     type="submit"
                     name="publier"
-                    value="Publier"
+                    disabled={isLoading && true}
+                    value={isLoading ? "Chargement ..." : "Organiser"}
                   />
                 </div>
               </div>

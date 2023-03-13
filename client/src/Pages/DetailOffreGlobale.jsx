@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -15,7 +15,7 @@ import offreImg from '../Assets/img/global/defaultCover.webp';
 
 const DetailOffreGlobale = () => {
   const redirect = useNavigate();
-
+  const effectRan = useRef(false);
   const { uid, candidat, admin, getUrl, urlFile } = useContext(AuthContext);
   const [offre, setOffre] = useState([]);
   const [isPostuler, setIsPostuler] = useState(false);
@@ -30,6 +30,7 @@ const DetailOffreGlobale = () => {
   const [nombreAction, setNombreAction] = useState();
 
   const [societe, setSociete] = useState([]);
+  const [candidatEmail, setCandidatEmail] = useState([]);
   const [checkIdCandidat, setCheckIdCandidat] = useState(false);
   const [checkOffreValidate, setCheckOffreValidate] = useState(false);
 
@@ -78,6 +79,7 @@ const DetailOffreGlobale = () => {
       url: `${process.env.REACT_APP_API_URL}api/offre/update/${IdOffre}`,
       data: {
         isValidate: true,
+        candidatEmail: candidatEmail,
       },
     })
       .then((res) => {
@@ -101,8 +103,7 @@ const DetailOffreGlobale = () => {
         nombreAction: action,
       },
     })
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -138,6 +139,8 @@ const DetailOffreGlobale = () => {
       formData.append('file2', file2);
       formData.append('candidatId', idCandidat);
       formData.append('resultat', 'envoye');
+      formData.append('entreprise', societe.nomEntreprise);
+      formData.append('intitulePoste', offre.intitulePoste);
       await axios
         .patch(
           `${process.env.REACT_APP_API_URL}api/offre/${IdOffre}`,
@@ -164,6 +167,8 @@ const DetailOffreGlobale = () => {
       formData.append('file1', file1);
       formData.append('candidatId', idCandidat);
       formData.append('resultat', 'envoye');
+      formData.append('entreprise', societe.nomEntreprise);
+      formData.append('intitulePoste', offre.intitulePoste);
       await axios
         .patch(
           `${process.env.REACT_APP_API_URL}api/offre/cv/${IdOffre}`,
@@ -195,6 +200,8 @@ const DetailOffreGlobale = () => {
           resultat: 'envoye',
           cvtheque: cvtheque,
           lmtheque: lmtheque,
+          entreprise: societe.nomEntreprise,
+          intitulePoste: offre.intitulePoste,
         },
       })
         .then((res) => {
@@ -216,6 +223,8 @@ const DetailOffreGlobale = () => {
           candidatId: idCandidat,
           resultat: 'envoye',
           cvtheque: cvtheque,
+          entreprise: societe.nomEntreprise,
+          intitulePoste: offre.intitulePoste,
         },
       })
         .then((res) => {
@@ -232,7 +241,6 @@ const DetailOffreGlobale = () => {
     }
   };
   useEffect(() => {
-    getUrl();
     const getnombrecv = async (idCandidat) =>
       await axios
         .get(`${process.env.REACT_APP_API_URL}api/user/candidat/${idCandidat}`)
@@ -259,6 +267,19 @@ const DetailOffreGlobale = () => {
       const getOffre = await axios.get(
         `${process.env.REACT_APP_API_URL}api/offre/${id}`
       );
+      // get all candidat by her activity
+      const getCandiatByActivity = await axios.get(
+        `${process.env.REACT_APP_API_URL}api/user/candidat/activity/${getOffre.data.fonction}`
+      );
+      // ajout d'email de candidat
+      for (let i = 0; i < getCandiatByActivity.data.length; i++) {
+        setCandidatEmail((oldOffre) => [
+          ...oldOffre,
+          {
+            email: getCandiatByActivity.data[i].email,
+          },
+        ]);
+      }
       const getNameEntreprise = await axios.get(
         `${process.env.REACT_APP_API_URL}api/user/entreprise/${getOffre.data.offreId}`
       );
@@ -290,8 +311,14 @@ const DetailOffreGlobale = () => {
           console.log(err);
         });
     };
-    getOneOffre();
-    checkCandidat(id, uid);
+    if (effectRan.current === false) {
+      getUrl();
+      getOneOffre();
+      checkCandidat(id, uid);
+    }
+    return () => {
+      effectRan.current = true;
+    };
   }, [uid, id]);
 
   return (
@@ -431,7 +458,7 @@ const DetailOffreGlobale = () => {
         {isPostuler && (
           <div className="upload">
             <form encType="multipart/form-data">
-              <h3 onClick={handlingUploadPC}> Télécharger de mon PC </h3> 
+              <h3 onClick={handlingUploadPC}> Télécharger de mon PC </h3>
 
               {uploadPC && (
                 <>

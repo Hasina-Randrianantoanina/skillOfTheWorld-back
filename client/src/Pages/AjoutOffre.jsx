@@ -29,8 +29,8 @@ const AjoutOffre = () => {
   const [delaisRecrutement, setdelaisRecrutement] = useState("non mentionné");
   const [expSouhaite, setExpSouhaite] = useState("non mentionné");
   const [siteWeb, setSiteWeb] = useState("Aucun site web");
-  const [destinataire, setDestinataire] = useState("");
-  const [groupe, setGroupe] = useState("");
+  const [destinataire, setDestinataire] = useState("non mentionné");
+  const [groupe, setGroupe] = useState("non mentionné");
   const [annonceAnonyme, setAnnonceAnonyme] = useState("");
   const [souhaitAccompagnement, setSouhaitAccompagnement] = useState("");
   const [savoirIdeal, setSavoirIdeal] = useState("");
@@ -485,10 +485,10 @@ const AjoutOffre = () => {
                     id="annonceNON"
                     value={false}
                     name="annonce"
-                    required
                     onChange={(event) => {
                       setAnnonceAnonyme(event.target.value);
                     }}
+                    required
                   />
                   <label htmlFor="annonceNON">Non</label>
                 </span>
@@ -668,6 +668,7 @@ const AjoutOffre = () => {
                     className="btnPublier"
                     type="submit"
                     name="publier"
+                    disabled={isLoading && true}
                     value={isLoading ? 'Chargement ...' : 'Publier'}
                   />
                 </div>

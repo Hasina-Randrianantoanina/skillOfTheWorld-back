@@ -161,13 +161,13 @@ const ListeEntrepriseAdmin = () => {
 
           {/* Liste des entreprises */}
           <div className="divTable">
-            <form className="filterEts">
+            {/* <form className="filterEts">
               <input
                 type="search"
                 name="offreSearch"
                 placeholder="Recherche : Nom de l'entreprise, pays, date ..."
               />
-            </form>
+            </form> */}
             <table className="innerTable">
               <thead>
                 <tr>

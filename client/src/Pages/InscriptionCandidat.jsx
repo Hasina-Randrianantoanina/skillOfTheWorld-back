@@ -29,6 +29,7 @@ const InscriptionCandidat = () => {
 
   const [passwordType, setPasswordType] = useState('password');
   const [icon, setIcon] = useState(<FaRegEyeSlash />);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleShowPassword = () => {
     if (passwordType === 'password') {
@@ -82,8 +83,9 @@ const InscriptionCandidat = () => {
       theme: 'dark',
     });
 
-  const handleOnSubmit = async (event) => {
-    event.preventDefault();
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
     if (password === confirmPassword) {
       await axios({
         method: 'POST',
@@ -114,15 +116,19 @@ const InscriptionCandidat = () => {
             setConfirmPassword('');
             inscriptionSuccess();
             redirect('/login');
+            setIsLoading(false);
           } else if (res.status === 200) {
             Error(res.data.errors.email);
+            setIsLoading(false);
           }
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
         });
     } else {
       mdpError();
+      setIsLoading(false);
     }
   };
   return (
@@ -351,7 +357,7 @@ const InscriptionCandidat = () => {
                 }}
               />
             </div>
-            <input type="submit" name="sign-up" value="S'inscrire" />
+            <input type="submit" name="sign-up" disabled={isLoading && true} value={isLoading ? "Chargement ...":"S'inscrire"} />
           </form>
         </div>
       </div>

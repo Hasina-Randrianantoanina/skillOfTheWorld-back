@@ -35,6 +35,8 @@ const OrganiserJD = () => {
   const [pourquoiPostuler, setPourquoiPostuler] = useState("");
   const [lienJobDating, setLienJobDating] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const ajoutSucces = () =>
     toast.success("votre job dating a été envoyer avec succès", {
       position: "top-center",
@@ -48,6 +50,7 @@ const OrganiserJD = () => {
     });
 
   const handleOnSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     if (photoCouverture) {
       const formData = new FormData();
@@ -79,9 +82,11 @@ const OrganiserJD = () => {
         .then((res) => {
           redirect("/validationJD");
           ajoutSucces();
+          setIsLoading(false);
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
         });
     } else {
       await axios({
@@ -111,13 +116,16 @@ const OrganiserJD = () => {
         .then((res) => {
           if (res.data.errors) {
             console.log(res.data.errors);
+            setIsLoading(false);
           } else {
             redirect("/validationJD");
             ajoutSucces();
+            setIsLoading(false);
           }
         })
         .catch((error) => {
           console.log(error);
+          setIsLoading(false);
         });
     }
   };
@@ -409,7 +417,8 @@ const OrganiserJD = () => {
               className="showPaymentMethod"
               type="submit"
               name="orgnaiser"
-              value="Organiser"
+              disabled={isLoading && true}
+              value={isLoading ? "Chargement ...":"Organiser"}
             />
           </div>
         </form>
