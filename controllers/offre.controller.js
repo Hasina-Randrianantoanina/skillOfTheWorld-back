@@ -22,7 +22,7 @@ module.exports.readOffreValide = async (req, res) => {
 };
 
 module.exports.readOffreNonValide = async (req, res) => {
-  const offre = await OffreModel.find({ isValidate: false });
+  const offre = await OffreModel.find({ isValidate: false, depublie: false });
   res.status(200).json(offre);
 };
 module.exports.readOffreDepublie = async (req, res) => {
@@ -114,6 +114,7 @@ module.exports.createOffre = async (req, res) => {
     pourquoiPostuler: req.body.pourquoiPostuler,
     uploadCouverture: uploadCouverture,
     modePaiement: req.body.modePaiement,
+    isValidate: req.body.isValidate,
     listCandidat: [],
   });
 
@@ -124,12 +125,14 @@ module.exports.createOffre = async (req, res) => {
         `${req.body.nomEntreprise} ,${req.body.email} demande accompagnement total de recrutement`
       );
     }
-    await receiveEmail(
-      `Nouvelle offre d'emploi en attente de l'entreprise ${req.body.nomEntreprise}`,
-      `Bonjour,
-    Une nouvelle offre ${req.body.intitulePoste} est en attente de validation. 
-    Cliquez sur ce lien pour consulter les offres en attente ${process.env.CLIENT_URL}/validationOffre `
-    );
+    if (req.body.isValidate === false) {
+      await receiveEmail(
+        `Nouvelle offre d'emploi en attente de l'entreprise ${req.body.nomEntreprise}`,
+        `Bonjour,
+      Une nouvelle offre ${req.body.intitulePoste} est en attente de validation. 
+      Cliquez sur ce lien pour consulter les offres en attente ${process.env.CLIENT_URL}/validationOffre `
+      );
+    }
     const offre = await newOffre.save();
     return res.status(201).send(offre);
   } catch (err) {
@@ -158,6 +161,7 @@ module.exports.createOffreWithutfile = async (req, res) => {
     descriptionOffre: req.body.descriptionOffre,
     pourquoiPostuler: req.body.pourquoiPostuler,
     modePaiement: req.body.modePaiement,
+    isValidate: req.body.isValidate,
     listCandidat: [],
   });
 
@@ -232,6 +236,20 @@ module.exports.updateOffre = async (req, res) => {
     }
     res.status(200).send(offre);
   }
+};
+
+// depublie plusieurs offres
+module.exports.depublieMultiple = async (req, res) => {
+  // console.log(req.body.idOffre[0]);
+  for (let i = 0; i < req.body.idOffre.length; i++) {
+    await OffreModel.findOneAndUpdate(
+      { _id: req.body.idOffre[i] },
+      {
+        depublie: true,
+      }
+    );
+  }
+  res.status(200).send('succes');
 };
 
 module.exports.addCandidat = async (req, res) => {

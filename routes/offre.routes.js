@@ -41,6 +41,9 @@ router.patch(
 // validation de candidat
 router.put('/validate/:id', offreController.repondreCandidat);
 
+// depublie plusieurs offres
+router.patch('/depublieMultiple', offreController.depublieMultiple);
+
 // validation de CV de candidat
 router.put(
   '/validatecv/:id',
