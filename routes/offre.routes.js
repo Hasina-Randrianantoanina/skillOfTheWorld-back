@@ -38,6 +38,8 @@ router.patch(
   uploadImage.single('uploadCouverture'),
   offreController.updateOffre
 );
+//update offre
+router.patch('/depublication/:id', offreController.depublication);
 // validation de candidat
 router.put('/validate/:id', offreController.repondreCandidat);
 

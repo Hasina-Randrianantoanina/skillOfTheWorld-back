@@ -187,19 +187,6 @@ module.exports.createOffreWithutfile = async (req, res) => {
 };
 
 module.exports.updateOffre = async (req, res) => {
-  console.log();
-  for (let i = 0; i < req.body.candidatEmail.length; i++) {
-    sendEmail(
-      req.body.candidatEmail[i].email,
-      "Nouvelles offres d'emploi pour vous",
-      `Bonjour,
-
-      Nous avons le plaisir de vous informer que de nouvelles offres qui pourraient vous convenir sont disponible sur notre site https://www.skilloftheworld.com/offreEmploi.
-      
-      A très bientôt.
-      L'équipe de Skill Of The World`
-    );
-  }
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
 
@@ -218,6 +205,31 @@ module.exports.updateOffre = async (req, res) => {
         uploadCouverture,
       }
     );
+    if (req.body.candidatEmail.length > 0) {
+      for (let i = 0; i < req.body.candidatEmail.length; i++) {
+        sendEmail(
+          req.body.candidatEmail[i].email,
+          "Nouvelles offres d'emploi pour vous",
+          `Bonjour,
+    
+          Nous avons le plaisir de vous informer que de nouvelles offres qui pourraient vous convenir sont disponible sur notre site https://www.skilloftheworld.com/offreEmploi.
+          
+          A très bientôt.
+          L'équipe de Skill Of The World`
+        );
+      }
+    }
+    if (req.body.isValidate === true) {
+      await sendEmail(
+        emailEntreprise,
+        `Validation et publication offre ${req.body.intitulePoste}`,
+        `Bonjour,
+        Votre offre ${req.body.intitulePoste} a bien été validée et publiée.
+        Bien Cordialement,
+        L'équipe SKILL OF THE WORLD
+        `
+      );
+    }
     if (!offre) {
       return res
         .status(400)
@@ -231,6 +243,31 @@ module.exports.updateOffre = async (req, res) => {
         ...req.body,
       }
     );
+    if (req.body.candidatEmail.length > 0) {
+      for (let i = 0; i < req.body.candidatEmail.length; i++) {
+        sendEmail(
+          req.body.candidatEmail[i].email,
+          "Nouvelles offres d'emploi pour vous",
+          `Bonjour,
+    
+          Nous avons le plaisir de vous informer que de nouvelles offres qui pourraient vous convenir sont disponible sur notre site https://www.skilloftheworld.com/offreEmploi.
+          
+          A très bientôt.
+          L'équipe de Skill Of The World`
+        );
+      }
+    }
+    if (req.body.isValidate === true) {
+      await sendEmail(
+        req.body.emailEntreprise,
+        `Validation et publication offre ${req.body.intitulePoste}`,
+        `Bonjour,
+        Votre offre ${req.body.intitulePoste} a bien été validée et publiée.
+        Bien Cordialement,
+        L'équipe SKILL OF THE WORLD
+        `
+      );
+    }
     if (!offre) {
       return res.status(400).json({ error: "L'offre n'existe pas" });
     }
@@ -250,6 +287,17 @@ module.exports.depublieMultiple = async (req, res) => {
     );
   }
   res.status(200).send('succes');
+};
+
+// depublication offres
+module.exports.depublication = async (req, res) => {
+  const offre = await OffreModel.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      ...req.body,
+    }
+  );
+  res.status(200).send(offre);
 };
 
 module.exports.addCandidat = async (req, res) => {
