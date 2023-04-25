@@ -81,6 +81,11 @@ module.exports.createEvenement = async (req, res) => {
         lienEvenement,
         isPublie,
       });
+      await receiveMail(
+        `Une entreprise demande un organiser un évènement`,
+        `Bonjour,
+          Une entreprise demande un job dating qui intitule ${req.body.theme}.`
+      );
       res.status(200).send(evenement);
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -111,6 +116,11 @@ module.exports.createEvenement = async (req, res) => {
         lienEvenement,
         isPublie,
       });
+      await receiveMail(
+        `Une entreprise demande un organiser un évènement`,
+        `Bonjour,
+          Une entreprise demande un job dating qui intitule ${req.body.theme}.`
+      );
       res.status(200).send(evenement);
     } catch (error) {
       res.status(400).json({ error: error.message });

@@ -22,7 +22,7 @@ module.exports.readOffreValide = async (req, res) => {
 };
 
 module.exports.readOffreNonValide = async (req, res) => {
-  const offre = await OffreModel.find({ isValidate: false, depublie: false });
+  const offre = await OffreModel.find({ isValidate: false });
   res.status(200).json(offre);
 };
 module.exports.readOffreDepublie = async (req, res) => {

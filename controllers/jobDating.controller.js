@@ -1,6 +1,7 @@
 const JobDating = require('../models/JobDating.model');
 const ObjectID = require('mongoose').Types.ObjectId;
 const mongoose = require('mongoose');
+const receiveMail = require('../utils/receiveEmail');
 const receiveMailFile = require('../utils/receiveMailFile');
 const receiveCVLM = require('../utils/receiveCVLM');
 const sendMail = require('../utils/sendEmail');
@@ -94,6 +95,11 @@ module.exports.createJobDating = async (req, res) => {
         lienJobDating,
         isPublie,
       });
+      await receiveMail(
+        `Une entreprise demande un job dating`,
+        `Bonjour,
+          Une entreprise demande un job dating qui intitule ${req.body.intitulePoste}.`
+      );
       res.status(200).send(jobDating);
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -142,6 +148,11 @@ module.exports.createJobDating = async (req, res) => {
         lienJobDating,
         isPublie,
       });
+      await receiveMail(
+        `Une entreprise demande un job dating`,
+        `Bonjour,
+          Une entreprise demande un job dating qui intitule ${req.body.intitulePoste}.`
+      );
       res.status(200).send(jobDating);
     } catch (error) {
       res.status(400).json({ error: error.message });
