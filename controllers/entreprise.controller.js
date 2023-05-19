@@ -215,7 +215,7 @@ module.exports.updatePasswordEmail = async (req, res) => {
 
 module.exports.checkMailEntreprise = (req, res) => {
   Entreprise.find({ email: { $in: [req.params.email] } }, async (err, docs) => {
-    if (!err) {
+    if (!err && docs[0]._id) {
       const url = `Pour changer votre mot de passe , veuillez cliquez sur ce lien ${process.env.CLIENT_URL}/resetPasswordEntreprise/${docs[0]._id}/ et suivre les instructions.`;
       await sendEmail(req.params.email, 'Changement de mot de passe', url);
       res.send(docs);

@@ -312,7 +312,9 @@ module.exports.readAllCandidat = async (req, res) => {
 
 // read all candidat
 module.exports.readAllCandidatByActivity = async (req, res) => {
-  const candidat = await Candidat.find({secteurActivite:req.params.secteurActivite}).sort({
+  const candidat = await Candidat.find({
+    secteurActivite: req.params.secteurActivite,
+  }).sort({
     createdAt: -1,
   });
   res.status(200).send(candidat);
@@ -320,7 +322,7 @@ module.exports.readAllCandidatByActivity = async (req, res) => {
 
 module.exports.checkMailCandidat = (req, res) => {
   Candidat.find({ email: { $in: [req.params.email] } }, async (err, docs) => {
-    if (!err) {
+    if (!err && docs[0]._id) {
       const url = `Pour changer votre mot de passe , veuillez cliquez sur ce lien ${process.env.CLIENT_URL}/resetPasswordCandidat/${docs[0]._id}/ et suivre les instructions.`;
       await sendEmail(req.params.email, 'Changement de mot de passe', url);
       res.send(docs);
