@@ -9,7 +9,8 @@ module.exports = async (email, subject, text) => {
       service: 'gmail',
       auth: {
         user: 'contact@skilloftheworld.com',
-        pass: 'dcuxedsixrffcrla',
+        // pass: 'dcuxedsixrffcrla',
+        pass: 'hjdudfnpmheizcfi',
       },
     });
     const mailOption = {
