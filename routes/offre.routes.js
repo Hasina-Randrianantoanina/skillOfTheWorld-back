@@ -47,10 +47,19 @@ router.put('/validate/:id', offreController.repondreCandidat);
 router.patch('/depublieMultiple', offreController.depublieMultiple);
 
 // validation de CV de candidat
-router.put(
-  '/validatecv/:id',
+router.put('/validatecv/:id', offreController.valideCV);
+
+// ajout de document 1
+router.patch(
+  '/documentone/:id',
   upload.single('uploadDocument'),
-  offreController.valideCV
+  offreController.addDocument1
+);
+// ajout de document 2
+router.patch(
+  '/documenttwo/:id',
+  upload.single('uploadDocument2'),
+  offreController.addDocument2
 );
 
 // validation de lm de candidat
@@ -67,4 +76,13 @@ router.patch('/theque/:id', offreController.addCandidatTheque);
 // ajout de candidat avec cv
 router.patch('/cv/:id', upload.single('file1'), offreController.addCandidatCV);
 router.patch('/cvtheque/:id', offreController.addCandidatCVTheque);
+
+// delete CV
+router.patch('/deleteCV/:id', offreController.deleteCV);
+// delete LM
+router.patch('/deleteLM/:id', offreController.deleteLM);
+// delete doc1
+router.patch('/deleteDocOne/:id', offreController.deleteDocOne);
+// delete doc 2
+router.patch('/deleteDocTwo/:id', offreController.deleteDocTwo);
 module.exports = router;

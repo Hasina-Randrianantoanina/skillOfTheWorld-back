@@ -22,11 +22,15 @@ module.exports.readOffreValide = async (req, res) => {
 };
 
 module.exports.readOffreNonValide = async (req, res) => {
-  const offre = await OffreModel.find({ isValidate: false });
+  const offre = await OffreModel.find({ isValidate: false }).sort({
+    createdAt: -1,
+  });
   res.status(200).json(offre);
 };
 module.exports.readOffreDepublie = async (req, res) => {
-  const offre = await OffreModel.find({ depublie: true });
+  const offre = await OffreModel.find({ depublie: true }).sort({
+    createdAt: -1,
+  });
   res.status(200).json(offre);
 };
 
@@ -129,8 +133,12 @@ module.exports.createOffre = async (req, res) => {
       await receiveEmail(
         `Nouvelle offre d'emploi en attente de l'entreprise ${req.body.nomEntreprise}`,
         `Bonjour,
-      Une nouvelle offre ${req.body.intitulePoste} est en attente de validation. 
-      Cliquez sur ce lien pour consulter les offres en attente ${process.env.CLIENT_URL}/validationOffre `
+      Une nouvelle offre ${
+        req.body.intitulePoste
+      } est en attente de validation. 
+      Cliquez sur ce lien pour consulter les offres en attente ${
+        process.env.CLIENT_URL + '/validationOffre'
+      }`
       );
     }
     const offre = await newOffre.save();
@@ -178,7 +186,9 @@ module.exports.createOffreWithutfile = async (req, res) => {
       `Nouvelle offre d'emploi en attente de l'entreprise ${req.body.nomEntreprise}`,
       `Bonjour,
     Une nouvelle offre ${req.body.intitulePoste} est en attente de validation. 
-    Cliquez sur ce lien pour consulter les offres en attente ${process.env.CLIENT_URL}/validationOffre `
+    Cliquez sur ce lien pour consulter les offres en attente ${
+      process.env.CLIENT_URL + '/validationOffre'
+    }`
     );
     return res.status(201).send(offre);
   } catch (err) {
@@ -212,7 +222,9 @@ module.exports.updateOffre = async (req, res) => {
           "Nouvelles offres d'emploi pour vous",
           `Bonjour,
     
-          Nous avons le plaisir de vous informer que de nouvelles offres qui pourraient vous convenir sont disponible sur notre site https://www.skilloftheworld.com/offreEmploi.
+          Nous avons le plaisir de vous informer que de nouvelles offres qui pourraient vous convenir sont disponible sur notre site ${
+            process.env.CLIENT_URL + '/offreEmploi'
+          }.
           
           A très bientôt.
           L'équipe de Skill Of The World`
@@ -250,7 +262,9 @@ module.exports.updateOffre = async (req, res) => {
           "Nouvelles offres d'emploi pour vous",
           `Bonjour,
     
-          Nous avons le plaisir de vous informer que de nouvelles offres qui pourraient vous convenir sont disponible sur notre site https://www.skilloftheworld.com/offreEmploi.
+          Nous avons le plaisir de vous informer que de nouvelles offres qui pourraient vous convenir sont disponible sur notre site ${
+            process.env.CLIENT_URL + '/offreEmploi'
+          }.
           
           A très bientôt.
           L'équipe de Skill Of The World`
@@ -332,6 +346,9 @@ module.exports.addCandidat = async (req, res) => {
           `Nouvelle candidature en attente: ${req.body.entreprise} et  ${req.body.intitulePoste}`,
           `Bonjour,
           une nouvelle candidature est en attente de validation.
+          Cliquez sur ce lien pour consulter les offres en attente ${
+            process.env.CLIENT_URL + '/offreCandidatureAdmin'
+          }.
           Entreprise: ${req.body.entreprise}
           Poste: ${req.body.intitulePoste}`
         );
@@ -361,6 +378,9 @@ module.exports.addCandidatTheque = (req, res) => {
           `Nouvelle candidature en attente: ${req.body.entreprise} et  ${req.body.intitulePoste}`,
           `Bonjour,
           une nouvelle candidature est en attente de validation.
+          Cliquez sur ce lien pour consulter les offres en attente ${
+            process.env.CLIENT_URL + '/offreCandidatureAdmin'
+          }.
           Entreprise: ${req.body.entreprise}
           Poste: ${req.body.intitulePoste}`
         );
@@ -395,6 +415,9 @@ module.exports.addCandidatCV = async (req, res) => {
           `Nouvelle candidature en attente: ${req.body.entreprise} et  ${req.body.intitulePoste}`,
           `Bonjour,
           une nouvelle candidature est en attente de validation.
+          Cliquez sur ce lien pour consulter les offres en attente ${
+            process.env.CLIENT_URL + '/offreCandidatureAdmin'
+          }.
           Entreprise: ${req.body.entreprise}
           Poste: ${req.body.intitulePoste}`
         );
@@ -422,6 +445,9 @@ module.exports.addCandidatCVTheque = (req, res) => {
           `Nouvelle candidature en attente: ${req.body.entreprise} et  ${req.body.intitulePoste}`,
           `Bonjour,
           une nouvelle candidature est en attente de validation.
+          Cliquez sur ce lien pour consulter les offres en attente ${
+            process.env.CLIENT_URL + '/offreCandidatureAdmin'
+          }.
           Entreprise: ${req.body.entreprise}
           Poste: ${req.body.intitulePoste}`
         );
@@ -455,39 +481,56 @@ module.exports.repondreCandidat = (req, res) => {
   );
 };
 
+// ajout de document 1
+module.exports.addDocument1 = async (req, res) => {
+  const file = req.file;
+  const result = await s3Uploadv2(req.body.candidatId, file);
+  const documentTexte = `uploads/${req.body.candidatId}-${req.file.originalname}`;
+
+  OffreModel.findOneAndUpdate(
+    { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
+    {
+      $set: { 'listCandidat.$.documentTexte': documentTexte },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
+// ajout de document 2
+module.exports.addDocument2 = async (req, res) => {
+  const file = req.file;
+  const result = await s3Uploadv2(req.body.candidatId, file);
+  const documentTexte = `uploads/${req.body.candidatId}-${req.file.originalname}`;
+  OffreModel.findOneAndUpdate(
+    { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
+    {
+      $set: { 'listCandidat.$.documentTexte2': documentTexte },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
+
 module.exports.valideCV = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID inconnu : ' + req.params.id);
-  if (req.file) {
-    const file = req.file;
-    const result = await s3Uploadv2(req.body.candidatId, file);
-
-    const documentTexte = `uploads/${req.body.candidatId}-${req.file.originalname}`;
-
-    const offreUpdate = await OffreModel.findOneAndUpdate(
-      { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
-      {
-        $set: {
-          'listCandidat.$.isValideCV': true,
-          'listCandidat.$.documentTexte': documentTexte,
-        },
-      }
-    );
-
-    res.status(200).send(offreUpdate);
-  } else {
-    OffreModel.findOneAndUpdate(
-      { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
-      {
-        $set: { 'listCandidat.$.isValideCV': req.body.isValideCV },
-      },
-      { new: true },
-      (err, docs) => {
-        if (!err) res.send(docs);
-        else console.log("Erreur de mise à jour de l'offre : " + err);
-      }
-    );
-  }
+  OffreModel.findOneAndUpdate(
+    { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
+    {
+      $set: { 'listCandidat.$.isValideCV': req.body.isValideCV },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
 };
 
 module.exports.valideLM = (req, res) => {
@@ -503,6 +546,83 @@ module.exports.valideLM = (req, res) => {
     (err, docs) => {
       if (!err) res.send(docs);
       else console.log("Erreur de mise à jour de l'offre : " + err);
+    }
+  );
+};
+module.exports.deleteCV = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  OffreModel.findOneAndUpdate(
+    { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
+    {
+      $set: { 'listCandidat.$.file1_path': ' ' },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) {
+        res.send(docs);
+      } else {
+        console.log("Erreur de mise à jour de l'offre : " + err);
+      }
+    }
+  );
+};
+module.exports.deleteLM = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  OffreModel.findOneAndUpdate(
+    { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
+    {
+      $set: { 'listCandidat.$.file2_path': ' ' },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) {
+        res.send(docs);
+      } else {
+        console.log("Erreur de mise à jour de l'offre : " + err);
+      }
+    }
+  );
+};
+
+module.exports.deleteDocOne = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  OffreModel.findOneAndUpdate(
+    { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
+    {
+      $set: { 'listCandidat.$.documentTexte': ' ' },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) {
+        res.send(docs);
+      } else {
+        console.log("Erreur de mise à jour de l'offre : " + err);
+      }
+    }
+  );
+};
+module.exports.deleteDocTwo = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID inconnu : ' + req.params.id);
+
+  OffreModel.findOneAndUpdate(
+    { _id: req.params.id, 'listCandidat.candidatId': req.body.candidatId },
+    {
+      $set: { 'listCandidat.$.documentTexte2': ' ' },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) {
+        res.send(docs);
+      } else {
+        console.log("Erreur de mise à jour de l'offre : " + err);
+      }
     }
   );
 };

@@ -84,7 +84,11 @@ module.exports.createEvenement = async (req, res) => {
       await receiveMail(
         `Une entreprise demande un organiser un évènement`,
         `Bonjour,
-          Une entreprise demande un job dating qui intitule ${req.body.theme}.`
+          Une entreprise demande un job dating qui intitule ${req.body.theme}.
+          Cliquez sur ce lien pour consulter les offres en attente ${
+            process.env.CLIENT_URL + '/validationEvent'
+          }.
+          `
       );
       res.status(200).send(evenement);
     } catch (error) {

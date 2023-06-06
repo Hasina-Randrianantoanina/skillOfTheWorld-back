@@ -151,7 +151,13 @@ module.exports.createJobDating = async (req, res) => {
       await receiveMail(
         `Une entreprise demande un job dating`,
         `Bonjour,
-          Une entreprise demande un job dating qui intitule ${req.body.intitulePoste}.`
+          Une entreprise demande un job dating qui intitule ${
+            req.body.intitulePoste
+          }.
+          Cliquez sur ce lien pour consulter les offres en attente ${
+            process.env.CLIENT_URL + '/validationJD'
+          }.
+          `
       );
       res.status(200).send(jobDating);
     } catch (error) {

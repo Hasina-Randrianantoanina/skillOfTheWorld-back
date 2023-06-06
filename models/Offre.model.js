@@ -137,6 +137,9 @@ const OffreSchema = new mongoose.Schema(
         documentTexte: {
           type: String,
         },
+        documentTexte2: {
+          type: String,
+        },
       },
     ],
   },
