@@ -19,6 +19,7 @@ router.get('/:id/candidat/:idCandidat', offreController.checkCandidat);
 
 //read one offre
 router.get('/:id', offreController.readOneOffre);
+
 router.get('/entreprise/:id', offreController.readOffreEntreprise);
 
 // read status of candidat
